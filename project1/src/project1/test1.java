@@ -8,10 +8,15 @@ public class test1
 		// TODO Auto-generated method stub
 		System.out.println("Hello");
 		System.out.println("Hi");
+
 		
 		
 		//test
 		System.out.println("go home");
+		System.out.println("test");
+		System.out.println("test2");
+		
+
 		
 		
 		
