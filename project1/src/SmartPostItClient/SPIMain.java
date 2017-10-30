@@ -2,6 +2,10 @@ package SmartPostItClient;
 
 import java.util.Vector;
 
+import javax.swing.JFrame;
+
+import org.apache.log4j.Logger;
+
 /**
  * SmartPostIt 메인
  * 모든 포스트잇의 생성/삭제를 관리한다.
@@ -12,10 +16,24 @@ import java.util.Vector;
  */
 public class SPIMain
 {
+	//Variables
+	private final transient static Logger logger = Logger.getLogger(SPIMain.class);
+	//Post It Frames
+	Vector<JFrame> postIt;
+	
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
+		//Variables
 		
+		// Logger Test
+		logger.info("안녕하세요! Test입니다");
+		
+		
+		
+		//Serving
+		while (true) {
+			System.exit(0);
+		}
 	}
 
 }
