@@ -10,7 +10,7 @@ import javax.swing.JPanel;
  * @author		sam
  * @Version		0.1
  */
-public class SPIMemoView extends JPanel
+public class SPIMemoView extends JPanel implements SPIContent
 {
 	private static final long serialVersionUID = 8552143505046031394L;
 

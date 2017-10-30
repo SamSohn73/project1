@@ -16,7 +16,9 @@ import javax.swing.border.EmptyBorder;
 public class SPIFrame extends JFrame
 {
 	private static final long serialVersionUID = 7111347458428723034L;
-	private JPanel contentPane;
+	private JPanel		contentPane;
+	private SPIType		contentType;
+	private SPIContent	contentCont;
 
 	/**
 	 * Launch the application.
