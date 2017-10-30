@@ -11,6 +11,7 @@ public class test1
 		
 		
 		//test
+		System.out.println("go home");
 		
 		
 		
