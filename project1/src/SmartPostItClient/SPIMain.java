@@ -27,7 +27,7 @@ public class SPIMain
 		
 		// Logger Test
 		logger.info("안녕하세요! Test입니다");
-		
+		logger.debug("안녕하세요! Test입니다");
 		
 		
 		//Serving
