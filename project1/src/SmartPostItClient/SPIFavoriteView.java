@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  * @Version		0.1
  * @serial		SmartPostIt 중 즐겨찾기 정보의 저장 및 전송 
  */
-public class SPIFavoriteView extends JPanel
+public class SPIFavoriteView extends JPanel implements SPIContent
 {
 	private static final long serialVersionUID = -7312211150384114749L;
 
@@ -22,5 +22,4 @@ public class SPIFavoriteView extends JPanel
 	{
 
 	}
-
 }
