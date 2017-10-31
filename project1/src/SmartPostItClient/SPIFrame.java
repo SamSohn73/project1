@@ -13,7 +13,7 @@ import javax.swing.border.EmptyBorder;
  * @author		sam
  * @Version		0.1
  */
-public class SPIFrame extends JFrame
+class SPIFrame extends JFrame
 {
 	private static final long serialVersionUID = 7111347458428723034L;
 	private JPanel		contentPane;

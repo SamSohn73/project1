@@ -1,6 +1,6 @@
 package SmartPostItClient;
 
-public class SPIUtil
+class SPIUtil
 {
 
 }
