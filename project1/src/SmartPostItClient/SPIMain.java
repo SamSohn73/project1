@@ -17,7 +17,7 @@ public class SPIMain
 	//Variables
 	private final transient static Logger logger = Logger.getLogger(SPIMain.class);
 	//Post It Frames
-	Vector<JFrame> postIt;
+	Vector<SPIDocument> postIt;
 	
 	public static void main(String[] args)
 	{
