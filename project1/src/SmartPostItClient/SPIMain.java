@@ -1,8 +1,10 @@
 package SmartPostItClient;
 
+import java.awt.EventQueue;
 import java.util.Vector;
-import javax.swing.JFrame;
 import org.apache.log4j.Logger;
+
+
 
 /**
  * SmartPostIt 메인
@@ -12,26 +14,68 @@ import org.apache.log4j.Logger;
  * @author		sam
  * @Version		0.1
  */
-public class SPIMain
+class SPIMain
 {
 	//Variables
-	private final transient static Logger logger = Logger.getLogger(SPIMain.class);
+	// Logger. use transient when you want to serialize this object 
+	//private final transient static Logger logger = Logger.getLogger(SPIMain.class);
+	private final static Logger logger = Logger.getLogger(SPIMain.class);
 	//Post It Frames
-	Vector<SPIDocument> postIt;
+	SPIFactory factory;
+	Vector<SPIDocument> spiDocs;
+	SPIClientFile spiCliFile;
+
+	
+	SPIMain(SPIFactory factory)
+	{
+		super();
+		this.factory = factory;
+		
+		//spiDocs = SPIClientFile.conductFileDeserializing();
+	}
+	
+	
 	
 	public static void main(String[] args)
 	{
 		//Variables
 		
-		// Logger Test
-		logger.info("안녕하세요! Test입니다");
-
+		/*//Logger Test
+		logger.fatal("log4j:logger.fatal()");
+		logger.error("log4j:logger.error()");
+		logger.warn("log4j:logger.warn()");
+		logger.info("log4j:logger.info()");
+		logger.debug("log4j:logger.debug()");*/
 		
+		logger.info("SPI Client Main Start.");
 		
-		//Serving
-		while (true) {
-			System.exit(0);
-		}
+		//Thread for Swing Components
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run()
+			{
+				try {
+					//JFramTest1 frame = new JFramTest1();
+					//frame.setVisible(true);
+					//get the Objects from the files and make them alive or create one new memo Post It 
+					
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		//Thread for File Management (Serialization)
+		Runnable spiFile = new SPIClientFile();
+		Thread fileThread = new Thread(spiFile);
+		fileThread.start();
+		
+		//Thread for Network Management (Serialization)
+		Runnable spiNet = new SPIClientNet();
+		Thread netThread = new Thread(spiNet);
+		netThread.start();
+		
 	}
 
 }

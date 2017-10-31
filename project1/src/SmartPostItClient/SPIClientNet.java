@@ -6,7 +6,10 @@ package SmartPostItClient;
  * @author		sam
  * @version		0.1
  */
-public class SPIClientNet
+class SPIClientNet implements Runnable
 {
-
+	public void run()
+	{
+	
+	}
 }

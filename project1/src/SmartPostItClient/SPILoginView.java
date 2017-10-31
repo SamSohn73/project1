@@ -8,7 +8,7 @@ import javax.swing.JPanel;
  * @author		sam
  * @Version		0.1
  */
-public class SPILoginView extends JPanel
+class SPILoginView extends JPanel
 {
 	private static final long serialVersionUID = 1106406913255186751L;
 

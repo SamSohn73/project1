@@ -23,4 +23,14 @@ class SPIDocument implements Serializable
 	SPIFrame	frame;
 	SPIType		type;
 	SPIContent	content;
+	
+	
+	public SPIDocument(SPIType type)
+	{
+		super();
+	}
+
+	
+	
+	
 }

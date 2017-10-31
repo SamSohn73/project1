@@ -1,6 +1,6 @@
 package SmartPostItClient;
 
-public enum SPIType
+enum SPIType
 {
 	MEMO,
 	TODO,
