@@ -9,7 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 class SPIToDoAlarm extends JFrame
 {
-
+	private static final long serialVersionUID = 4475055436434896148L;
 	private JPanel contentPane;
 
 	/**

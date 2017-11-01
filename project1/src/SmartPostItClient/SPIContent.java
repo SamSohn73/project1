@@ -2,7 +2,7 @@ package SmartPostItClient;
 
 import java.io.Serializable;
 
-import javax.swing.JTree;
+
 
 /**
  * 다양한 SmartPostIt 실제 내용과 객체 윈도우 표현을 위한 정보와 연결

@@ -1,7 +1,7 @@
 package SmartPostItClient;
 
 import java.io.Serializable;
-import javax.swing.JFrame;
+
 
 /**
  * SmartPostIt 객체 클래스. 이 객체 하나가 포스트잇 한 장에 해당하는 셈.
