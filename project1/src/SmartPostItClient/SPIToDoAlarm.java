@@ -7,11 +7,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.log4j.Logger;
+
 class SPIToDoAlarm extends JFrame
 {
 	private static final long serialVersionUID = 4475055436434896148L;
 	private JPanel contentPane;
 
+	private final transient static Logger logger = Logger.getLogger(SPIToDoAlarm.class);
 	/**
 	 * Launch the application.
 	 */
@@ -25,6 +28,7 @@ class SPIToDoAlarm extends JFrame
 					SPIToDoAlarm frame = new SPIToDoAlarm();
 					frame.setVisible(true);
 				} catch (Exception e) {
+					logger.fatal("Thread Fail.");
 					e.printStackTrace();
 				}
 			}

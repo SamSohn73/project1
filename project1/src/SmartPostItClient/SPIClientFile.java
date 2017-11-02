@@ -12,7 +12,12 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 /**
- * SmartPostIt 네트워크 파일 관리 기능 구현을 위한 클래스
+ * SmartPostIt 파일 관리 기능 구현을 위한 클래스.
+ * 벡터 컬렉션의 SmartPostIt 객체들을 직렬화하여 파일로 저장하거나
+ * 파일에서 역직렬화하여 객체로 바꿔주는 기능을 수행.
+ * 역직렬화의 경우는 최초 실행 시 한 번만 수행하면 되지만
+ * 직렬화의 경우는 객체들 중 메모의 내용이 바뀌는 것이 있을 때마다 수행해주어야 하므로
+ * 스레드에서 수행해주는 것이 좋다.
  * 
  * @author sam
  * @version 0.1
@@ -23,10 +28,11 @@ class SPIClientFile implements Runnable
 	
 	public void run()
 	{
+		// ToDo 스레드 구현 필요.
 		//conductFileSerializing(spiDocs);
 	}
 
-	public static void conductFileSerializing(Vector<SPIDocument> spiDocs)
+	public static void doFileSerializing(Vector<SPIDocument> spiDocs)
 	{
 		FileOutputStream		fos = null;
 		BufferedOutputStream	bos = null;
@@ -40,7 +46,7 @@ class SPIClientFile implements Runnable
 			out.writeObject(spiDocs);
 
 		} catch (Exception e) {
-			logger.info("Serialization Failed");
+			logger.fatal("Serialization Failed");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -48,7 +54,7 @@ class SPIClientFile implements Runnable
 				bos.close();
 				fos.close();
 			} catch (IOException e) {
-				logger.info("Serialization stream closing Failed");
+				logger.fatal("Serialization stream closing Failed");
 				e.printStackTrace();
 			}
 
@@ -56,7 +62,7 @@ class SPIClientFile implements Runnable
 		}
 	}
 
-	private static Vector<SPIDocument> conductFileDeserializing()
+	private static Vector<SPIDocument> doFileDeserializing()
 	{
 		FileInputStream		fis = null;
 		BufferedInputStream	bis = null;
@@ -75,7 +81,7 @@ class SPIClientFile implements Runnable
 				logger.debug(spiDoc.toString());
 			
 		} catch (Exception e) {
-			logger.info("Deerialization Failed");
+			logger.fatal("Deerialization Failed");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -83,7 +89,7 @@ class SPIClientFile implements Runnable
 				bis.close();
 				fis.close();
 			} catch (IOException e) {
-				logger.info("Deserialization stream closing Failed");
+				logger.fatal("Deserialization stream closing Failed");
 				e.printStackTrace();
 			}
 		}

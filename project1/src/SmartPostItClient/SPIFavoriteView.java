@@ -2,6 +2,8 @@ package SmartPostItClient;
 
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * SmartPostIt 타입 중 즐겨찾기 정보 관리 포스트잇 화면
@@ -15,6 +17,7 @@ class SPIFavoriteView extends JPanel implements SPIContent
 {
 	private static final long serialVersionUID = -7312211150384114749L;
 
+	private final transient Logger logger = Logger.getLogger(this.getClass());
 	/**
 	 * Create the panel.
 	 */

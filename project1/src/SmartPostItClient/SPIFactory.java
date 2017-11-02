@@ -1,5 +1,7 @@
 package SmartPostItClient;
 
+import org.apache.log4j.Logger;
+
 /**
  * Smart Post It 객체 생성 공장
  * 
@@ -8,18 +10,38 @@ package SmartPostItClient;
  */
 class SPIFactory
 {
+	//SPIDocument spi;
+	SPIFrame	frame;
+	SPIContent	content;
+	SPIPopup	popup;
+	
+	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	public SPIDocument createSPIDoc(SPIType type)
 	{
-		SPIDocument spi = null;
-		spi = new SPIDocument(type);
-		
-		/*		if (type == SPIType.MEMO) {
-			spi = new SPIDocument(SPIType.MEMO);
-		}
+		SPIDocument spi=new SPIDocument();
+		if (type == SPIType.MEMO) {
+			frame	= new SPIFrame();
+			content	= new SPIMemoView();
+			popup	= new SPIMemoPopup();
+			
+			spi.setType(type);
+			spi.setFrame(frame);
+			spi.setContent(content);
+			spi.setPopup(popup);
+		}/*
 		else if (type == SPIType.TODO) {
-			spi = new SPIDocument(SPIType.TODO);
+			spi		= null;
+			frame	= new SPIFrame();
+			content	= new SPIToDoView();
+			popup	= new SPIToDoPopup();
+			
+			spi.setFrame(frame);
+			spi.setType(type);
+			spi.setContent(content);
+			spi.setPopup(popup);
 		}
+		
 		else if (type == SPIType.FAVORITE) {
 			spi = new SPIDocument(SPIType.TODO);
 		}

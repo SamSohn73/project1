@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
  * SmartPostIt 메인
  * 모든 포스트잇의 생성/삭제를 관리한다.
  * 또한 로깅, 파일관리, 네트워크 기능을 스레드로 구현.
+ * 실행을 위해서는 log4j 프레임워크와 cron4j.jar의 추가가 필요하다. 
  * 
  * @author		sam
  * @Version		0.1
@@ -24,7 +25,6 @@ class SPIMain
 	SPIFactory factory;
 	Vector<SPIDocument> spiDocs;
 	SPIClientFile spiCliFile;
-
 	
 	SPIMain(SPIFactory factory)
 	{
@@ -49,8 +49,25 @@ class SPIMain
 		
 		logger.info("SPI Client Main Start.");
 		
+		SPIFactory factory = new SPIFactory();
+		logger.info("SPI Factory Created.");
+		
+		SPIDocument a = factory.createSPIDoc(SPIType.MEMO);
+		a.getFrame().setVisible(true);
+		
+		/*QQQQQQQQQQ Start from here
+		/*JPanel cp = (SPIMemoView)a.getContent()       ..getContentPane();
+		contentPane = new SPIMemoView();
+		contentPane.setBackground(SPIUtil.YELLOW);	//YELLOW
+		contentPane.setBorder(new EmptyBorder(5,5,5,5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		*/
+		
+		
+		
 		//Thread for Swing Components
-		EventQueue.invokeLater(new Runnable()
+		/*EventQueue.invokeLater(new Runnable()
 		{
 			public void run()
 			{
@@ -61,6 +78,7 @@ class SPIMain
 					
 					
 				} catch (Exception e) {
+					logger.fatal("Thread Exception");
 					e.printStackTrace();
 				}
 			}
@@ -74,7 +92,7 @@ class SPIMain
 		//Thread for Network Management (Serialization)
 		Runnable spiNet = new SPIClientNet();
 		Thread netThread = new Thread(spiNet);
-		netThread.start();
+		netThread.start();*/
 		
 	}
 

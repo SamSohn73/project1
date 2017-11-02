@@ -1,5 +1,7 @@
 package SmartPostItClient;
 
+import org.apache.log4j.Logger;
+
 /**
  * SmartPostIt 네트워크 클라이언트 기능 구현을 위한 클래스
  * 
@@ -8,6 +10,8 @@ package SmartPostItClient;
  */
 class SPIClientNet implements Runnable
 {
+	private final Logger logger = Logger.getLogger(this.getClass());
+	
 	public void run()
 	{
 	
