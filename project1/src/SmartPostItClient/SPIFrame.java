@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import org.apache.log4j.Logger;
 
 import java.awt.Toolkit;
+import java.awt.Color;
 
 /**
  * SmartPostIt 프레임
@@ -20,10 +21,38 @@ import java.awt.Toolkit;
 class SPIFrame extends JFrame
 {
 	private static final long serialVersionUID = 7111347458428723034L;
-	SPIFrame frame;
-	private JPanel		contentPane;
-
 	private static final transient Logger logger = Logger.getLogger(SPIFrame.class);
+	
+	SPIFrame	frame;
+	JPanel		panel;
+	SPIPopup	popup;
+
+	SPIFrame getFrame()
+	{
+		return frame;
+	}
+	void setFrame(SPIFrame frame)
+	{
+		this.frame = frame;
+	}
+
+	JPanel getPanel()
+	{
+		return panel;
+	}
+	void setPanel(JPanel panel)
+	{
+		this.panel = panel;
+	}
+	
+	public SPIPopup getPopup()
+	{
+		return popup;
+	}
+	public void setPopup(SPIPopup popup)
+	{
+		this.popup = popup;
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -50,15 +79,18 @@ class SPIFrame extends JFrame
 	 */
 	public SPIFrame()
 	{
+
 		//frame = new SPIFrame();
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		/*setBounds(100, 100, 300, 300);
-		contentPane = new JPanel();
-		contentPane.setBackground(SPIUtil.PINK);	//YELLOW
-		contentPane.setBorder(new EmptyBorder(5,5,5,5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);*/
+		setBounds(100, 100, 300, 300);
+		setBackground(SPIUtil.YELLOW);
+		
+		panel = new JPanel();
+		panel.setBackground(SPIUtil.YELLOW);	//PINK
+		panel.setBorder(new EmptyBorder(5,5,5,5));
+		panel.setLayout(new BorderLayout());
+		setContentPane(panel);
 	}
 
 }

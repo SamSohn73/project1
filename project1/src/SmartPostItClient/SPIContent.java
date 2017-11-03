@@ -2,6 +2,8 @@ package SmartPostItClient;
 
 import java.io.Serializable;
 
+import javax.swing.JPanel;
+
 import org.apache.log4j.Logger;
 
 
@@ -15,5 +17,8 @@ import org.apache.log4j.Logger;
  */
 interface SPIContent extends Serializable
 {
-
+	JPanel getPanel();
+	void setPanel(JPanel panel);
+	SPIMemoPopup getPopup();
+	void setPopup(SPIMemoPopup popup);
 }

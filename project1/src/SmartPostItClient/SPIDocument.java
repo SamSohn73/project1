@@ -44,9 +44,9 @@ class SPIDocument implements Serializable
 	}
 	void setType(SPIType type)
 	{
-		logger.debug("QQQQQ setType Start type = " + type);
+		//logger.debug("QQQQQ setType Start type = " + type);
 		this.type = type;
-		logger.debug("QQQQQ setType Start this.type = " + this.type);
+		//logger.debug("QQQQQ setType Start this.type = " + this.type);
 	}
 	
 	SPIContent getContent()

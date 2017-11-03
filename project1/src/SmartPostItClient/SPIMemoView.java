@@ -3,6 +3,7 @@ package SmartPostItClient;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.Insets;
 
 import javax.swing.Action;
@@ -13,6 +14,10 @@ import javax.swing.text.StyledEditorKit;
 
 import org.apache.log4j.Logger;
 
+import project1.JFramTest1;
+
+import javax.swing.JButton;
+
 /**
  * SmartPostIt 메모장 화면. rtf 문서 형식을 이용.
  * 
@@ -22,31 +27,78 @@ import org.apache.log4j.Logger;
 class SPIMemoView extends JPanel implements SPIContent
 {
 	private static final long serialVersionUID = 8552143505046031394L;
-	private JPanel contentPane;
-	private JEditorPane editorPane;
 
 	private final transient Logger logger = Logger.getLogger(this.getClass());
+	private JEditorPane editorPane;
+	private JPanel panel;
+	private SPIMemoPopup popup;
+	
+	
+	JEditorPane getEditorPane()
+	{
+		return editorPane;
+	}
+	void setEditorPane(JEditorPane editorPane)
+	{
+		this.editorPane = editorPane;
+	}
+
+	public JPanel getPanel()
+	{
+		return panel;
+	}
+	public void setPanel(JPanel panel)
+	{
+		this.panel = panel;
+	}
+	
+	public SPIMemoPopup getPopup()
+	{
+		return popup;
+	}
+	public void setPopup(SPIMemoPopup popup)
+	{
+		this.popup = popup;
+	}
+	
+	
+	
+	public static void main(String[] args)
+	{
+
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run()
+			{
+				try {
+					SPIMemoView a = new SPIMemoView();
+					a.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	/**
 	 * Create the panel.
 	 */
 	public SPIMemoView()
 	{
+		setSize(250, 250);
+		setLocation(100, 100);
+		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
+		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel.setLayout(new BorderLayout(0, 0));
 		add(panel, BorderLayout.CENTER);
-		setLayout(new BorderLayout(0, 0));
-
+		
 		editorPane = new JEditorPane("text/rtf", "");
 		editorPane.setMargin(new Insets(3, 5, 0, 0));
-		add(editorPane, BorderLayout.CENTER);
-		
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		setSize(250, 250);
-		setLocation(50, 50);
+		editorPane.setBackground(SPIUtil.YELLOW);
+		panel.add(editorPane, BorderLayout.CENTER);
 
 		Action boldAction = new StyledEditorKit.BoldAction();
 		boldAction.putValue(Action.NAME, "굵게");
@@ -79,22 +131,7 @@ class SPIMemoView extends JPanel implements SPIContent
 	}
 
 
-	JPanel getContentPane()
-	{
-		return contentPane;
-	}
-	void setContentPane(JPanel contentPane)
-	{
-		this.contentPane = contentPane;
-	}
 
-	JEditorPane getEditorPane()
-	{
-		return editorPane;
-	}
-	void setEditorPane(JEditorPane editorPane)
-	{
-		this.editorPane = editorPane;
-	}
-	
+
+
 }
