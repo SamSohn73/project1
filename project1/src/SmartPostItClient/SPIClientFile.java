@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
  */
 class SPIClientFile implements Runnable
 {
-	private final static Logger logger = Logger.getLogger(SPIClientFile.class);
+	private final static Logger log = Logger.getLogger(SPIClientFile.class);
 	
 	public void run()
 	{
@@ -46,7 +46,7 @@ class SPIClientFile implements Runnable
 			out.writeObject(spiDocs);
 
 		} catch (Exception e) {
-			logger.fatal("Serialization Failed");
+			log.fatal("Serialization Failed");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -54,11 +54,11 @@ class SPIClientFile implements Runnable
 				bos.close();
 				fos.close();
 			} catch (IOException e) {
-				logger.fatal("Serialization stream closing Failed");
+				log.fatal("Serialization stream closing Failed");
 				e.printStackTrace();
 			}
 
-			logger.info("Successfully Serialized");
+			log.info("Successfully Serialized");
 		}
 	}
 
@@ -78,10 +78,10 @@ class SPIClientFile implements Runnable
 			spiDocs = (Vector<SPIDocument>) in.readObject();
 
 			for (SPIDocument spiDoc: spiDocs)
-				logger.debug(spiDoc.toString());
+				log.debug(spiDoc.toString());
 			
 		} catch (Exception e) {
-			logger.fatal("Deerialization Failed");
+			log.fatal("Deerialization Failed");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -89,11 +89,11 @@ class SPIClientFile implements Runnable
 				bis.close();
 				fis.close();
 			} catch (IOException e) {
-				logger.fatal("Deserialization stream closing Failed");
+				log.fatal("Deserialization stream closing Failed");
 				e.printStackTrace();
 			}
 		}
-		logger.info("Successfully Deserialized");
+		log.info("Successfully Deserialized");
 		return spiDocs;
 	}
 }

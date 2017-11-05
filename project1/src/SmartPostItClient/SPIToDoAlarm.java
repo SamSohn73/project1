@@ -14,7 +14,7 @@ class SPIToDoAlarm extends JFrame
 	private static final long serialVersionUID = 4475055436434896148L;
 	private JPanel contentPane;
 
-	private final transient static Logger logger = Logger.getLogger(SPIToDoAlarm.class);
+	private final transient static Logger log = Logger.getLogger(SPIToDoAlarm.class);
 	/**
 	 * Launch the application.
 	 */
@@ -28,7 +28,7 @@ class SPIToDoAlarm extends JFrame
 					SPIToDoAlarm frame = new SPIToDoAlarm();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					logger.fatal("Thread Fail.");
+					log.fatal("Thread Fail.");
 					e.printStackTrace();
 				}
 			}

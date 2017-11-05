@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
  */
 class SPIClientNet implements Runnable
 {
-	private final Logger logger = Logger.getLogger(this.getClass());
+	private final Logger log = Logger.getLogger(this.getClass());
 	
 	public void run()
 	{

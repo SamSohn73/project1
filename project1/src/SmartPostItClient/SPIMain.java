@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.util.Vector;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -12,10 +13,11 @@ import org.apache.log4j.Logger;
 
 
 /**
- * SmartPostIt 메인
- * 모든 포스트잇의 생성/삭제를 관리한다.
- * 또한 로깅, 파일관리, 네트워크 기능을 스레드로 구현.
- * 실행을 위해서는 log4j 프레임워크와 cron4j.jar의 추가가 필요하다. 
+ * SmartPostIt Main Class
+ * Managing Creation and Deletion of Every Posts. 
+ * Also Managing Logging, Saving and Loading Post from the file
+ * and Networking under the threads
+ * You need log4j framework and cron4j.jar libraries to start.
  * 
  * @author		sam
  * @Version		0.1
@@ -23,57 +25,90 @@ import org.apache.log4j.Logger;
 class SPIMain
 {
 	//Variables
-	// Logger. use transient when you want to serialize this object 
-	//private final transient static Logger logger = Logger.getLogger(SPIMain.class);
-	private final static Logger logger = Logger.getLogger(SPIMain.class);
-	//Post It Frames
-	SPIFactory factory;
-	Vector<SPIDocument> spiDocs;
-	SPIClientFile spiCliFile;
-	static SPIDocument a; 
+	// Logger. use "transient" when you don't want to serialize this object 
+	//private final transient static Logger log = Logger.getLogger(SPIMain.class);
+	private final static Logger log = Logger.getLogger(SPIMain.class);
+
+	SPIFactory				factory;
+
+	static Vector<SPIDocument>		spiDocs;
+	SPIDocument				spiDoc;
 	
-	SPIMain(SPIFactory factory)
+	
+	SPIMain()
 	{
-		super();
-		this.factory = factory;
+		log.info("SPI Client Main Constructor Starts.");
 		
-		//spiDocs = SPIClientFile.conductFileDeserializing();
+		log.info("SPI Factory Creation Starts.");
+		try {
+			factory = new SPIFactory();
+			log.info("SPI Factory Created Successfully.");
+		} catch (Exception e) {log.fatal("SPI Factory Creation Failed.");}
+		
+		log.info("SPI Factory Creation Ends.");
+		log.info("SPI Client Main Constructor Ends.");
 	}
 	
+	
+	//QQQQQQQQQQ Test Creation
+	SPIDocument createADoc()
+	{
+		//QQQQQQQQQQ Test Start from here 
+		log.debug("Start to create a Document.");
+		spiDoc = null;
+		try {
+			log.debug("Request a new Document to Factory.");
+			spiDoc = factory.createSPIDoc(SPIType.MEMO);
+			log.debug("Create a new Document successfully.");
+		} catch (Exception e) {
+			log.debug("Fail to Create a new Document.");
+		}
+
+		log.debug("Create links for me.");
+		SPIFrame ff = spiDoc.getFrame();
+		SPIContent pp = spiDoc.getContent();
+		
+		log.debug("Connecting objects together.");
+		ff.setVisible(true);
+		ff.setPanel(pp.getPanel());
+		ff.setPopup(pp.getPopup());
+		ff.setBackground(SPIUtil.YELLOW);
+		
+		log.debug("Basic Settings for the new document.");
+		JPanel pan = ff.getPanel();
+		pan.setBackground(SPIUtil.YELLOW);	//PINK
+		pan.setBorder(new EmptyBorder(5,5,5,5));
+		pan.setLayout(new BorderLayout());
+		ff.setContentPane(pan);
+		log.debug("Creating a Document Finished Successfully.");
+		
+		return spiDoc;
+	}
 	
 	
 	public static void main(String[] args)
 	{
 		//Variables
 		
-		/*//Logger Test
-		logger.fatal("log4j:logger.fatal()");
-		logger.error("log4j:logger.error()");
-		logger.warn("log4j:logger.warn()");
-		logger.info("log4j:logger.info()");
-		logger.debug("log4j:logger.debug()");*/
+		/*//Logger Example
+		log.fatal("log4j:log.fatal()");
+		log.error("log4j:log.error()");
+		log.warn("log4j:log.warn()");
+		log.info("log4j:log.info()");
+		log.debug("log4j:log.debug()");*/
 		
-		logger.info("SPI Client Main Start.");
+		log.info("********************************************************************************");
+		log.info("Starting SPI Client.");
+		log.info("********************************************************************************");
 		
-		SPIFactory factory = new SPIFactory();
-		logger.info("SPI Factory Created.");
+		SPIMain spiMain = new SPIMain();
 		
 		
-		//QQQQQQQQQQ Test Start from here 
-		SPIDocument a = factory.createSPIDoc(SPIType.MEMO);
-		a.getFrame().setVisible(true);
-		a.getFrame().setPanel(a.getContent().getPanel());
-		a.getFrame().setPopup(a.getContent().getPopup());
-		a.getFrame().setBackground(SPIUtil.YELLOW);
+		spiDocs.add(spiMain.createADoc());
 		
-		JPanel pan = a.getFrame().getPanel();
-		pan.setBackground(SPIUtil.YELLOW);	//PINK
-		pan.setBorder(new EmptyBorder(5,5,5,5));
-		pan.setLayout(new BorderLayout());
-		a.getFrame().setContentPane(pan);
-
+		
 		//Thread for Swing Components
-		/*EventQueue.invokeLater(new Runnable()
+		EventQueue.invokeLater(new Runnable()
 		{
 			public void run()
 			{
@@ -81,16 +116,16 @@ class SPIMain
 					//JFramTest1 frame = new JFramTest1();
 					//frame.setVisible(true);
 					//get the Objects from the files and make them alive or create one new memo Post It 
-					a = factory.createSPIDoc(SPIType.MEMO);
-					a.getFrame().setVisible(true);
+					//SPIMain spiMain = new SPIMain();
+					//spiMain.spiDocs.add(spiMain.createADoc());
 
 					
 				} catch (Exception e) {
-					logger.fatal("Thread Exception");
+					log.fatal("SPI Main Thread Exception.");
 					e.printStackTrace();
 				}
 			}
-		});*/
+		});
 		
 		/*//Thread for File Management (Serialization)
 		Runnable spiFile = new SPIClientFile();
@@ -101,7 +136,7 @@ class SPIMain
 		Runnable spiNet = new SPIClientNet();
 		Thread netThread = new Thread(spiNet);
 		netThread.start();*/
-		
+		System.exit(0);
 	}
 
 

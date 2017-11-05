@@ -10,27 +10,39 @@ import org.apache.log4j.Logger;
  */
 class SPIFactory
 {
-	//SPIDocument spi;
+	SPIDocument spi;
 	SPIFrame	frame;
 	SPIContent	content;
 	SPIPopup	popup;
 	
-	private final Logger logger = Logger.getLogger(this.getClass());
+	private final Logger log = Logger.getLogger(this.getClass());
 	
 	public SPIDocument createSPIDoc(SPIType type)
 	{
-		SPIDocument spi=new SPIDocument();
+		log.info("Start to Create a new SPI Document.");
+		spi=new SPIDocument();
+		log.debug("A new SPIDocument Object created. spi = " + spi.toString());
 		if (type == SPIType.MEMO) {
+			log.debug("Document Type MEMO.");
+			try {
 			frame	= new SPIFrame();
+			} catch (Exception e) {
+				log.fatal("Fail to create a SPIFrame fram = " + frame);
+			}
+			log.debug("Frame created successfully. frame = " + frame.toString());
 			content	= new SPIMemoView();
+			log.debug("Panel creation successfully");
 			popup	= new SPIMemoPopup();
+			log.debug("Popup created successfully");
 			
 			spi.setType(type);
 			spi.setFrame(frame);
 			spi.setContent(content);
 			spi.setPopup(popup);
-		}/*
-		else if (type == SPIType.TODO) {
+			log.debug("A New SPI Memo Created successfully.");
+		}
+		/*
+			else if (type == SPIType.TODO) {
 			spi		= null;
 			frame	= new SPIFrame();
 			content	= new SPIToDoView();

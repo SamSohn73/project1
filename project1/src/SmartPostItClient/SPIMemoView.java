@@ -14,8 +14,6 @@ import javax.swing.text.StyledEditorKit;
 
 import org.apache.log4j.Logger;
 
-import project1.JFramTest1;
-
 import javax.swing.JButton;
 
 /**
@@ -28,7 +26,7 @@ class SPIMemoView extends JPanel implements SPIContent
 {
 	private static final long serialVersionUID = 8552143505046031394L;
 
-	private final transient Logger logger = Logger.getLogger(this.getClass());
+	private final transient Logger log = Logger.getLogger(this.getClass());
 	private JEditorPane editorPane;
 	private JPanel panel;
 	private SPIMemoPopup popup;

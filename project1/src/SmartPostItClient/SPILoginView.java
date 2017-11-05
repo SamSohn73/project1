@@ -14,7 +14,7 @@ class SPILoginView extends JPanel
 {
 	private static final long serialVersionUID = 1106406913255186751L;
 
-	private final transient Logger logger = Logger.getLogger(this.getClass());
+	private final transient Logger log = Logger.getLogger(this.getClass());
 	/**
 	 * Create the panel.
 	 */

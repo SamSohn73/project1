@@ -20,7 +20,7 @@ class SPIToDoPopup extends SPIPopup
 	JMenuItem mntmDeleteToDo;
 	JSeparator separator_2;
 	
-	private final transient Logger logger = Logger.getLogger(this.getClass());
+	private final transient Logger log = Logger.getLogger(this.getClass());
 	
 	/**
 	 * Create the panel.
