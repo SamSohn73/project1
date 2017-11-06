@@ -1,4 +1,4 @@
-package SmartPostItClient;
+package project1;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -9,26 +9,27 @@ import javax.swing.border.EmptyBorder;
 
 import org.apache.log4j.Logger;
 
-class SPIToDoAlarm extends JFrame
+import javax.swing.JEditorPane;
+
+public class JFramTest1 extends JFrame
 {
-	private static final long serialVersionUID = 4475055436434896148L;
+	private final static Logger logger = Logger.getLogger(JFramTest1.class);
 	private JPanel contentPane;
 
-	private final transient static Logger log = Logger.getLogger(SPIToDoAlarm.class);
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args)
 	{
+		logger.info("JFrameTest1 Start");
 		EventQueue.invokeLater(new Runnable()
 		{
 			public void run()
 			{
 				try {
-					SPIToDoAlarm frame = new SPIToDoAlarm();
+					JFramTest1 frame = new JFramTest1();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					log.fatal("Thread Fail.");
 					e.printStackTrace();
 				}
 			}
@@ -38,7 +39,7 @@ class SPIToDoAlarm extends JFrame
 	/**
 	 * Create the frame.
 	 */
-	public SPIToDoAlarm()
+	public JFramTest1()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -46,6 +47,10 @@ class SPIToDoAlarm extends JFrame
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
+		JEditorPane editorPane = new JEditorPane();
+		contentPane.add(editorPane, BorderLayout.CENTER);
+		logger.info("JEditorPane Start");
 	}
 
 }

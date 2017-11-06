@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 class SPIFavoriteView extends JPanel implements SPIContent
 {
 	private static final long serialVersionUID = -7312211150384114749L;
-	private final transient Logger logger = Logger.getLogger(this.getClass());
+	private final transient Logger log = Logger.getLogger(this.getClass());
 	private JPanel panel;
 	private SPIMemoPopup popup;
 	

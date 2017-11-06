@@ -12,7 +12,7 @@ class SPIUtil implements Serializable
 	 */
 	private static final long serialVersionUID = -5726585300553268829L;
 
-	private final transient Logger logger = Logger.getLogger(this.getClass());
+	private final transient Logger log = Logger.getLogger(this.getClass());
 	
 	static Color YELLOW	= new Color(255, 255, 153);	//YELLOW
 	static Color GREEN	= new Color(204, 255, 153);	//GREEN
