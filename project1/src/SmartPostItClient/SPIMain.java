@@ -1,12 +1,7 @@
 package SmartPostItClient;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.util.Vector;
-
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import org.apache.log4j.Logger;
 
 
@@ -30,7 +25,6 @@ class SPIMain
 	SPIFactory factory;
 	Vector<SPIDocument> spiDocs;
 	SPIClientFile spiCliFile;
-	static SPIDocument a; 
 	
 	SPIMain(SPIFactory factory)
 	{
@@ -58,20 +52,20 @@ class SPIMain
 		SPIFactory factory = new SPIFactory();
 		logger.info("SPI Factory Created.");
 		
-		
-		//QQQQQQQQQQ Test Start from here 
 		SPIDocument a = factory.createSPIDoc(SPIType.MEMO);
 		a.getFrame().setVisible(true);
-		a.getFrame().setPanel(a.getContent().getPanel());
-		a.getFrame().setPopup(a.getContent().getPopup());
-		a.getFrame().setBackground(SPIUtil.YELLOW);
 		
-		JPanel pan = a.getFrame().getPanel();
-		pan.setBackground(SPIUtil.YELLOW);	//PINK
-		pan.setBorder(new EmptyBorder(5,5,5,5));
-		pan.setLayout(new BorderLayout());
-		a.getFrame().setContentPane(pan);
-
+		/*QQQQQQQQQQ Start from here
+		/*JPanel cp = (SPIMemoView)a.getContent()       ..getContentPane();
+		contentPane = new SPIMemoView();
+		contentPane.setBackground(SPIUtil.YELLOW);	//YELLOW
+		contentPane.setBorder(new EmptyBorder(5,5,5,5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		*/
+		
+		
+		
 		//Thread for Swing Components
 		/*EventQueue.invokeLater(new Runnable()
 		{
@@ -81,18 +75,16 @@ class SPIMain
 					//JFramTest1 frame = new JFramTest1();
 					//frame.setVisible(true);
 					//get the Objects from the files and make them alive or create one new memo Post It 
-					a = factory.createSPIDoc(SPIType.MEMO);
-					a.getFrame().setVisible(true);
-
+					
 					
 				} catch (Exception e) {
 					logger.fatal("Thread Exception");
 					e.printStackTrace();
 				}
 			}
-		});*/
+		});
 		
-		/*//Thread for File Management (Serialization)
+		//Thread for File Management (Serialization)
 		Runnable spiFile = new SPIClientFile();
 		Thread fileThread = new Thread(spiFile);
 		fileThread.start();
@@ -103,6 +95,5 @@ class SPIMain
 		netThread.start();*/
 		
 	}
-
 
 }
