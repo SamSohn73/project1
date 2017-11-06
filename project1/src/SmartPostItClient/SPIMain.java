@@ -7,10 +7,12 @@ import org.apache.log4j.Logger;
 
 
 /**
- * SmartPostIt 메인
- * 모든 포스트잇의 생성/삭제를 관리한다.
- * 또한 로깅, 파일관리, 네트워크 기능을 스레드로 구현.
- * 실행을 위해서는 log4j 프레임워크와 cron4j.jar의 추가가 필요하다. 
+ * SmartPostIt Client Main
+ * Manage all Post It Document.
+ * And Saving / Loading personal post it file on proper times.
+ * Also Save and Load personal post it information with the server.
+ * You need to add log4j framework for logging
+ * And cron4j.jar for ToDo Alarms
  * 
  * @author		sam
  * @Version		0.1
@@ -18,29 +20,25 @@ import org.apache.log4j.Logger;
 class SPIMain
 {
 	//Variables
+	SPIFactory factory;
+	Vector<SPIDocument> spiDocs;
+	
 	// Logger. use transient when you want to serialize this object 
 	//private final transient static Logger logger = Logger.getLogger(SPIMain.class);
 	private final static Logger log = Logger.getLogger(SPIMain.class);
-	//Post It Frames
-	SPIFactory factory;
-	Vector<SPIDocument> spiDocs;
-	SPIClientFile spiCliFile;
+
 	
-	SPIMain(SPIFactory factory)
+	SPIMain()
 	{
 		super();
-		this.factory = factory;
-		
-		//spiDocs = SPIClientFile.conductFileDeserializing();
 	}
-	
 	
 	
 	public static void main(String[] args)
 	{
 		//Variables
 		
-		/*//Logger Test
+		/*//Logger HowTo
 		logger.fatal("log4j:logger.fatal()");
 		logger.error("log4j:logger.error()");
 		logger.warn("log4j:logger.warn()");
@@ -48,13 +46,19 @@ class SPIMain
 		logger.debug("log4j:logger.debug()");*/
 		
 		log.info("SPI Client Main Start.");
-		
-		SPIFactory factory = new SPIFactory();
+		SPIMain spi = new SPIMain();
+		// Create a Factory
+		spi.factory = new SPIFactory();
 		log.info("SPI Factory Created.");
 		
-		SPIDocument a = factory.createSPIDoc(SPIType.MEMO);
-		a.getFrame().setVisible(true);
+		// Create Vector
+		spi.spiDocs = new Vector<SPIDocument>();
 		
+		// Create a Doc for Test
+		SPIDocument spiDoc = null;
+		spiDoc = spi.factory.createSPIDoc(SPIType.MEMO);
+		spi.spiDocs.add(spiDoc);
+
 		
 		//Thread for Swing Components
 		/*EventQueue.invokeLater(new Runnable()

@@ -41,9 +41,9 @@ class SPIFactory
 			((SPIMemoPanel) panel).setPopup((SPIMemoPopup) spi.getPopup());
 			//log.debug("popup = " + ((SPIMemoPanel) spi.getPanel()).getPopup());
 			
-			
 			spi.getFrame().setContentPane((Container) spi.getPanel());
 			//log.debug("setContentPane = " + spi.getFrame().getContentPane());
+			spi.getFrame().setVisible(true);
 			
 			log.info("A New SPI Memo Created successfully.");
 		}
