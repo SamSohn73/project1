@@ -11,7 +11,7 @@ import javax.swing.JTree;
  * @Version		0.1
  * @serial		SmartPostIt 의 저장 및 전송을 위한 Strategy 패턴 연결자.
  */
-public interface SPIContent extends Serializable
+public interface SPIPanel extends Serializable
 {
 
 }

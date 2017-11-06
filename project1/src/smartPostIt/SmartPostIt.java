@@ -21,7 +21,7 @@ import javax.swing.text.html.HTMLDocument;
  * @serialField	frameSize	Dimension	포스트잇 윈도우 길이와 높이
  * @serialField	framecolor	Color		포스트잇 윈도우 색깔
  * @serialField	SPIType		int			포스트잇 종류. enum
- * @serialField	content		SPIContent	실제 사용자의 포스트잇 내용. 빈 인터페이스. Strategy 패턴
+ * @serialField	content		SPIPanel	실제 사용자의 포스트잇 내용. 빈 인터페이스. Strategy 패턴
  */
 public class SmartPostIt implements Serializable
 {
@@ -32,5 +32,5 @@ public class SmartPostIt implements Serializable
 	private Color			framecolor;
 	
 	private SPIType			type;
-	private SPIContent		content;
+	private SPIPanel		panel;
 }

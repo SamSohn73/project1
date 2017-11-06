@@ -12,7 +12,7 @@ import javax.swing.text.DefaultStyledDocument;
  * @serial		SmartPostIt 중 즐겨찾기 정보의 저장 및 전송 
  * @serialField	contents	DefaultStyledDocument		RTF타입 문서.
  */
-public class SPIMemo extends SmartPostIt implements SPIContent
+public class SPIMemo extends SmartPostIt implements SPIPanel
 {
 	private static final long serialVersionUID = -4214733835693339513L;
 	private		DefaultStyledDocument	contents;

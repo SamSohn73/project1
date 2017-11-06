@@ -12,7 +12,7 @@ import javax.swing.text.html.HTMLDocument;
  * @serial		SmartPostIt 중 즐겨찾기 정보의 저장 및 전송 
  * @serialField	contents	JTree			즐겨찾기 내용을 JTree에 저장
  */
-public class SPIFavorite extends SmartPostIt implements SPIContent
+public class SPIFavorite extends SmartPostIt implements SPIPanel
 {
 	private static final long serialVersionUID = 61222214647227547L;
 	private		JTree	contents;
