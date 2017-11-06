@@ -1,11 +1,8 @@
 package SmartPostItClient;
 
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-
-import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import org.apache.log4j.Logger;
@@ -29,21 +26,21 @@ class SPIToDoPopup extends SPIPopup
 	{
 		super();
 
-		popupMenu.setPopupSize(new Dimension(130, 300));
+		setPopupSize(new Dimension(130, 300));
 		
 		mntmAddToDo = new JMenuItem("할 일 추가");
-		popupMenu.add(mntmAddToDo, 3);
+		add(mntmAddToDo, 3);
 		
 		mntmModifyToDo = new JMenuItem("할 일 수정");
-		popupMenu.add(mntmModifyToDo, 4);
+		add(mntmModifyToDo, 4);
 		
 		mntmDeleteToDo = new JMenuItem("할 일 삭제");
-		popupMenu.add(mntmDeleteToDo, 5);
+		add(mntmDeleteToDo, 5);
 		
 		separator_2 = new JSeparator();
-		popupMenu.add(separator_2, 6);
+		add(separator_2, 6);
 		
-		popupMenu.setFocusTraversalPolicy(new FocusTraversalOnArray(
+		setFocusTraversalPolicy(new FocusTraversalOnArray(
 				new Component[]{mntmAddNewNote, mntmAddNewTodo,  separator,
 						mntmAddToDo, mntmModifyToDo, mntmDeleteToDo, separator_2, 
 						mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow}));

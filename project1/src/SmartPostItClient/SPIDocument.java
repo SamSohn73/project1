@@ -24,7 +24,7 @@ class SPIDocument implements Serializable
 	//Post It Frames
 	private SPIFrame	frame;
 	private SPIType		type;
-	private SPIContent	content;
+	private SPIPanel	panel;
 	private SPIPopup	popup;
 	
 	private final transient Logger log = Logger.getLogger(this.getClass());
@@ -44,18 +44,16 @@ class SPIDocument implements Serializable
 	}
 	void setType(SPIType type)
 	{
-		//log.debug("QQQQQ setType Start type = " + type);
 		this.type = type;
-		//log.debug("QQQQQ setType Start this.type = " + this.type);
 	}
 	
-	SPIContent getContent()
+	SPIPanel getPanel()
 	{
-		return content;
+		return panel;
 	}
-	void setContent(SPIContent content)
+	void setPanel(SPIPanel panel)
 	{
-		this.content = content;
+		this.panel = panel;
 	}
 	
 	SPIPopup getPopup()
@@ -66,6 +64,5 @@ class SPIDocument implements Serializable
 	{
 		this.popup = popup;
 	}
-	
 	
 }

@@ -1,16 +1,15 @@
 package SmartPostItClient;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import java.awt.Insets;
+import java.awt.Toolkit;
+
 import org.apache.log4j.Logger;
 
-import java.awt.Toolkit;
-import java.awt.Color;
+
 
 /**
  * SmartPostIt 프레임
@@ -24,7 +23,6 @@ class SPIFrame extends JFrame
 	private static final transient Logger log = Logger.getLogger(SPIFrame.class);
 	
 	JPanel		panel;
-	SPIPopup	popup;
 
 	JPanel getPanel()
 	{
@@ -35,14 +33,6 @@ class SPIFrame extends JFrame
 		this.panel = panel;
 	}
 	
-	public SPIPopup getPopup()
-	{
-		return popup;
-	}
-	public void setPopup(SPIPopup popup)
-	{
-		this.popup = popup;
-	}
 	/**
 	 * Launch the application.
 	 */
@@ -70,23 +60,13 @@ class SPIFrame extends JFrame
 	public SPIFrame()
 	{
 		super();
-		log.debug("SPIFrame Constructor Starts.");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		log.debug("SPIFrame Constructor 1.");
-		setBounds(100, 100, 300, 300);
-		log.debug("SPIFrame Constructor 2.");
-		setBackground(SPIUtil.YELLOW);
-		log.debug("SPIFrame Constructor 3.");
+		setBounds(100, 100, 250, 250);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));
-		log.debug("SPIFrame Constructor 4.");
-		
-		log.debug("SPIFrame Constructor Ends.");
-		/*panel = new JPanel();
-		panel.setBackground(SPIUtil.YELLOW);	//PINK
-		panel.setBorder(new EmptyBorder(5,5,5,5));
-		panel.setLayout(new BorderLayout());
-		setContentPane(panel);*/
+		//this.getRootPane().setBorder(new EmptyBorder(0, 0, 0, 0));
+		//setUndecorated(true);
+		//this.setShape(Shape shape);
 	}
-
+	
 }

@@ -16,7 +16,8 @@ import javax.swing.ImageIcon;
 class SPIPopup extends JPopupMenu
 {
 	private static final long serialVersionUID = -2925244852858865203L;
-	JPopupMenu popupMenu;
+	private final transient Logger log = Logger.getLogger(this.getClass());
+	
 	JMenuItem mntmAddNewNote;
 	JMenuItem mntmAddNewTodo;
 	
@@ -28,52 +29,53 @@ class SPIPopup extends JPopupMenu
 	JMenuItem mntmYellow;
 	JSeparator separator;
 
-	private final transient Logger log = Logger.getLogger(this.getClass());
+	
+	
 	/**
 	 * Create the panel.
 	 */
 	public SPIPopup()
 	{
-		popupMenu = new JPopupMenu();
-		popupMenu.setPopupSize(new Dimension(130, 300));
-		popupMenu.setBorderPainted(false);   
+		super();
+		setPopupSize(new Dimension(130, 300));
+		setBorderPainted(false);   
 		//addPopup(this, popupMenu);
 		
 		mntmAddNewNote = new JMenuItem("새 메모");
 		mntmAddNewNote.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
-		popupMenu.add(mntmAddNewNote);
+		add(mntmAddNewNote);
 		
 		mntmAddNewTodo = new JMenuItem("새 할 일");
-		popupMenu.add(mntmAddNewTodo);
+		add(mntmAddNewTodo);
 		
 		
 		separator = new JSeparator();
-		popupMenu.add(separator);
+		add(separator);
 		
 		mntmBlue = new JMenuItem("파랑");
 		mntmBlue.setIcon(new ImageIcon("C:\\Program Files\\Java\\Blue.png"));
-		popupMenu.add(mntmBlue);
+		add(mntmBlue);
 		
 		mntmGreen = new JMenuItem("녹색");
 		mntmGreen.setIcon(new ImageIcon("C:\\Program Files\\Java\\Green.png"));
-		popupMenu.add(mntmGreen);
+		add(mntmGreen);
 		
 		mntmPink = new JMenuItem("분홍");
 		mntmPink.setIcon(new ImageIcon("C:\\Program Files\\Java\\Pink.png"));
-		popupMenu.add(mntmPink);
+		add(mntmPink);
 		
 		mntmPurple = new JMenuItem("자주");
 		mntmPurple.setIcon(new ImageIcon("C:\\Program Files\\Java\\Purple.png"));
-		popupMenu.add(mntmPurple);
+		add(mntmPurple);
 		
 		mntmWhite = new JMenuItem("흰색");
 		mntmWhite.setIcon(new ImageIcon("C:\\Program Files\\Java\\White.png"));
-		popupMenu.add(mntmWhite);
+		add(mntmWhite);
 		
 		mntmYellow = new JMenuItem("노랑");
 		mntmYellow.setIcon(new ImageIcon("C:\\Program Files\\Java\\Yellow.png"));
-		popupMenu.add(mntmYellow);
-		popupMenu.setFocusTraversalPolicy(new FocusTraversalOnArray(
+		add(mntmYellow);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(
 				new Component[]{mntmAddNewNote, mntmAddNewTodo, separator, 
 								mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow}));
 

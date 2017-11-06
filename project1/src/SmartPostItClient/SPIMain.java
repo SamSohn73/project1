@@ -20,7 +20,7 @@ class SPIMain
 	//Variables
 	// Logger. use transient when you want to serialize this object 
 	//private final transient static Logger logger = Logger.getLogger(SPIMain.class);
-	private final static Logger logger = Logger.getLogger(SPIMain.class);
+	private final static Logger log = Logger.getLogger(SPIMain.class);
 	//Post It Frames
 	SPIFactory factory;
 	Vector<SPIDocument> spiDocs;
@@ -47,23 +47,13 @@ class SPIMain
 		logger.info("log4j:logger.info()");
 		logger.debug("log4j:logger.debug()");*/
 		
-		logger.info("SPI Client Main Start.");
+		log.info("SPI Client Main Start.");
 		
 		SPIFactory factory = new SPIFactory();
-		logger.info("SPI Factory Created.");
+		log.info("SPI Factory Created.");
 		
 		SPIDocument a = factory.createSPIDoc(SPIType.MEMO);
 		a.getFrame().setVisible(true);
-		
-		/*QQQQQQQQQQ Start from here
-		/*JPanel cp = (SPIMemoView)a.getContent()       ..getContentPane();
-		contentPane = new SPIMemoView();
-		contentPane.setBackground(SPIUtil.YELLOW);	//YELLOW
-		contentPane.setBorder(new EmptyBorder(5,5,5,5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-		*/
-		
 		
 		
 		//Thread for Swing Components

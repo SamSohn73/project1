@@ -1,6 +1,5 @@
 package SmartPostItClient;
 
-import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
@@ -14,10 +13,11 @@ import org.apache.log4j.Logger;
  * @Version		0.1
  * @serial		SmartPostIt 중 즐겨찾기 정보의 저장 및 전송 
  */
-class SPIFavoriteView extends JPanel implements SPIContent
+class SPIFavoritePanel extends JPanel implements SPIPanel
 {
 	private static final long serialVersionUID = -7312211150384114749L;
 	private final transient Logger log = Logger.getLogger(this.getClass());
+	
 	private JPanel panel;
 	private SPIMemoPopup popup;
 	
@@ -41,7 +41,7 @@ class SPIFavoriteView extends JPanel implements SPIContent
 	/**
 	 * Create the panel.
 	 */
-	public SPIFavoriteView()
+	public SPIFavoritePanel()
 	{
 
 	}

@@ -1,9 +1,7 @@
 package SmartPostItClient;
 
-import javax.swing.JPopupMenu;
 import java.awt.Component;
 
-import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
@@ -34,35 +32,35 @@ class SPIMemoPopup extends SPIPopup
 	public SPIMemoPopup()
 	{
 		super();
-		popupMenu.setPopupSize(new Dimension(130, 350));
+		setPopupSize(new Dimension(130, 350));
 
 		mntmCut = new JMenuItem("잘라내기");
 		mntmCut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
-		popupMenu.add(mntmCut);
+		add(mntmCut);
 		
 		mntmCopy = new JMenuItem("복사");
 		mntmCopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
-		popupMenu.add(mntmCopy);
+		add(mntmCopy);
 		
 		mntmPaste = new JMenuItem("붙여넣기");
 		mntmPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
-		popupMenu.add(mntmPaste);
+		add(mntmPaste);
 		
 		mntmDelete = new JMenuItem("삭제");
 		mntmDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_MASK));
-		popupMenu.add(mntmDelete);
+		add(mntmDelete);
 		
 		separator_2 = new JSeparator();
-		popupMenu.add(separator_2);
+		add(separator_2);
 		
 		mntmSelAll = new JMenuItem("모두 선택");
 		mntmDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
-		popupMenu.add(mntmSelAll);
+		add(mntmSelAll);
 		
 		separator_3 = new JSeparator();
-		popupMenu.add(separator_3);
+		add(separator_3);
 		
-		popupMenu.setFocusTraversalPolicy(new FocusTraversalOnArray(
+		setFocusTraversalPolicy(new FocusTraversalOnArray(
 				new Component[]{mntmAddNewNote, mntmAddNewTodo,  //separator,
 						mntmCut, mntmCopy, mntmPaste, mntmDelete, separator_2, mntmSelAll, separator_3,
 						mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow}));

@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import org.apache.log4j.Logger;
 
 
-class SPIToDoView extends JPanel implements SPIContent
+class SPIToDoPanel extends JPanel implements SPIPanel
 {
 	private static final long serialVersionUID = 7915069899691710000L;
 	private final transient Logger log = Logger.getLogger(this.getClass());
@@ -34,7 +34,7 @@ class SPIToDoView extends JPanel implements SPIContent
 	/**
 	 * Create the panel.
 	 */
-	public SPIToDoView()
+	public SPIToDoPanel()
 	{
 
 	}

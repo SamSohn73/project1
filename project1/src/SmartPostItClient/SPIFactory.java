@@ -1,5 +1,7 @@
 package SmartPostItClient;
 
+import java.awt.Container;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -12,7 +14,7 @@ class SPIFactory
 {
 	SPIDocument spi;
 	SPIFrame	frame;
-	SPIContent	content;
+	SPIPanel	panel;
 	SPIPopup	popup;
 	
 	private final Logger log = Logger.getLogger(this.getClass());
@@ -21,28 +23,32 @@ class SPIFactory
 	{
 		log.info("Start to Create a new SPI Document.");
 		spi=new SPIDocument();
-		log.debug("A new SPIDocument Object created. spi = " + spi.toString());
+		
 		if (type == SPIType.MEMO) {
 			log.debug("Document Type MEMO.");
-			try {
-			frame	= new SPIFrame();
-			} catch (Exception e) {
-				log.fatal("Fail to create a SPIFrame fram = " + frame);
-			}
-			log.debug("Frame created successfully. frame = " + frame.toString());
-			content	= new SPIMemoView();
-			log.debug("Panel creation successfully");
 			popup	= new SPIMemoPopup();
-			log.debug("Popup created successfully");
+			//log.debug("Popup created successfully popup = " + popup.toString());
+			panel	= new SPIMemoPanel((SPIMemoPopup) popup);
+			//log.debug("Panel creation successfully panel = " + panel.toString());
+			frame	= new SPIFrame();
+			//log.debug("Frame created successfully. frame = " + frame.toString());
 			
 			spi.setType(type);
-			spi.setFrame(frame);
-			spi.setContent(content);
 			spi.setPopup(popup);
-			log.debug("A New SPI Memo Created successfully.");
+			spi.setPanel(panel);
+			spi.setFrame(frame);
+
+			((SPIMemoPanel) panel).setPopup((SPIMemoPopup) spi.getPopup());
+			//log.debug("popup = " + ((SPIMemoPanel) spi.getPanel()).getPopup());
+			
+			
+			spi.getFrame().setContentPane((Container) spi.getPanel());
+			//log.debug("setContentPane = " + spi.getFrame().getContentPane());
+			
+			log.info("A New SPI Memo Created successfully.");
 		}
 		/*
-			else if (type == SPIType.TODO) {
+		else if (type == SPIType.TODO) {
 			spi		= null;
 			frame	= new SPIFrame();
 			content	= new SPIToDoView();

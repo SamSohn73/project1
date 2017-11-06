@@ -3,8 +3,10 @@ package SmartPostItClient;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.Action;
 import javax.swing.JEditorPane;
@@ -14,7 +16,8 @@ import javax.swing.text.StyledEditorKit;
 
 import org.apache.log4j.Logger;
 
-import javax.swing.JButton;
+import javafx.geometry.Insets;
+
 
 /**
  * SmartPostIt 메모장 화면. rtf 문서 형식을 이용.
@@ -22,13 +25,12 @@ import javax.swing.JButton;
  * @author sam
  * @Version 0.1
  */
-class SPIMemoView extends JPanel implements SPIContent
+class SPIMemoPanel extends JPanel implements SPIPanel
 {
 	private static final long serialVersionUID = 8552143505046031394L;
 
-	private final transient Logger log = Logger.getLogger(this.getClass());
+	private final transient static Logger log = Logger.getLogger(SPIMemoPanel.class);
 	private JEditorPane editorPane;
-	private JPanel panel;
 	private SPIMemoPopup popup;
 	
 	
@@ -41,15 +43,6 @@ class SPIMemoView extends JPanel implements SPIContent
 		this.editorPane = editorPane;
 	}
 
-	public JPanel getPanel()
-	{
-		return panel;
-	}
-	public void setPanel(JPanel panel)
-	{
-		this.panel = panel;
-	}
-	
 	public SPIMemoPopup getPopup()
 	{
 		return popup;
@@ -69,7 +62,7 @@ class SPIMemoView extends JPanel implements SPIContent
 			public void run()
 			{
 				try {
-					SPIMemoView a = new SPIMemoView();
+					SPIMemoPanel a = new SPIMemoPanel();
 					a.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -81,22 +74,26 @@ class SPIMemoView extends JPanel implements SPIContent
 	/**
 	 * Create the panel.
 	 */
-	public SPIMemoView()
+	public SPIMemoPanel()
 	{
+		super();
 		setSize(250, 250);
 		setLocation(100, 100);
-		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new BorderLayout(0, 0));
-		
-		panel = new JPanel();
+		setBorder(new EmptyBorder(0, 0, 0, 0));
+/*		panel = new JPanel();
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.setLayout(new BorderLayout(0, 0));
-		add(panel, BorderLayout.CENTER);
+		add(panel, BorderLayout.CENTER);*/
 		
 		editorPane = new JEditorPane("text/rtf", "");
-		editorPane.setMargin(new Insets(3, 5, 0, 0));
+		//editorPane.add(popup);
+
+		//.setMargin(new Insets(0, 0, 0, 0));
 		editorPane.setBackground(SPIUtil.YELLOW);
-		panel.add(editorPane, BorderLayout.CENTER);
+		editorPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+		add(editorPane, BorderLayout.CENTER);
+		editorPane.setVisible(true);
 
 		Action boldAction = new StyledEditorKit.BoldAction();
 		boldAction.putValue(Action.NAME, "굵게");
@@ -109,9 +106,22 @@ class SPIMemoView extends JPanel implements SPIContent
 		Action underlineAction = new StyledEditorKit.UnderlineAction();
 		underlineAction.putValue(Action.NAME, "밑줄");
 		underlineAction.putValue(Action.ACCELERATOR_KEY, makeAccelerator("U"));
+		
+/*		if (popup != null) {			log.debug("popup - " + popup.toString());
+										addPopup(editorPane, popup);
+		} else {						log.debug("QQQQQQQQQQ popup = null");}*/
+	}	
+		
+		
+	public SPIMemoPanel(SPIMemoPopup popup)
+	{
+		this();
+		this.popup = popup;
+		
+		if (popup != null) {		addPopup(editorPane, popup);
+		} else {					log.fatal("popup object = null");}
 	}
 
-	
 	/**
 	 * Create a KeyStroke that uses the control key 
 	 * 
@@ -127,9 +137,27 @@ class SPIMemoView extends JPanel implements SPIContent
 
 		return KeyStroke.getKeyStroke(commandKey + " " + description);
 	}
-
-
-
-
-
+	
+	private static void addPopup(Component component, final SPIMemoPopup popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					//log.debug("Popup Triggered.");
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				//log.debug("e.getComponent() = " + e.getComponent());
+				//log.debug("e.getX() = " + e.getX());
+				//log.debug("e.getY() = " + e.getY());
+				//log.debug("popup = " + popup.toString());
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
 }

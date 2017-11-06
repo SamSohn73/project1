@@ -63,11 +63,11 @@ public class test extends JFrame
 			public void mouseClicked(MouseEvent e) {
 
 				System.out.println("QQQQ test1");
-				popup.popupMenu.show(e.getComponent(), e.getX(), e.getY());
+				popup.show(e.getComponent(), e.getX(), e.getY());
 				//QQQQQQQQQQ
 				if (e.getButton() == 3) {
 					System.out.println("QQQQ test2 " + e.getComponent()+ " " + e.getX() + " " + e.getY());
-					popup.popupMenu.show(e.getComponent(), e.getX(), e.getY());
+					popup.show(e.getComponent(), e.getX(), e.getY());
 					System.out.println("QQQQ test3");
 				}
 			}
