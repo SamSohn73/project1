@@ -48,9 +48,9 @@ class SPIPopup extends JPopupMenu
 		mntmAddNewTodo = new JMenuItem("새 할 일");
 		add(mntmAddNewTodo);
 		
-		
 		separator = new JSeparator();
 		add(separator);
+		
 		
 		mntmBlue = new JMenuItem("파랑");
 		mntmBlue.setIcon(new ImageIcon("C:\\Program Files\\Java\\Blue.png"));
@@ -80,24 +80,5 @@ class SPIPopup extends JPopupMenu
 								mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow}));
 
 	}
-
-/*	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
-	}*/
-
 
 }

@@ -13,36 +13,52 @@ import org.apache.log4j.Logger;
 class SPIFactory
 {
 	SPIDocument spi;
-	SPIFrame	frame;
-	SPIPanel	panel;
-	SPIPopup	popup;
+	SPIPopup popup;
+	SPIPanel panel;
+	SPIFrame frame;
 	
 	private final Logger log = Logger.getLogger(this.getClass());
 	
+	
+	/**
+	 * Create real SPIDocument here
+	 * 
+	 * @param		type		type of the Post It to create 
+	 * @return					SPIDocument Object  
+	 */
 	public SPIDocument createSPIDoc(SPIType type)
 	{
 		log.info("Start to Create a new SPI Document.");
-		spi=new SPIDocument();
+		// I still can't understand why this is required.
+		// I can't assign created frame, panel, popup object to SPIDocument without this.
+		spi = new SPIDocument();		
+		if (spi == null)	log.fatal("fail to get SPIDocument Object");
 		
 		if (type == SPIType.MEMO) {
 			log.debug("Document Type MEMO.");
-			popup	= new SPIMemoPopup();
-			//log.debug("Popup created successfully popup = " + popup.toString());
-			panel	= new SPIMemoPanel((SPIMemoPopup) popup);
-			//log.debug("Panel creation successfully panel = " + panel.toString());
-			frame	= new SPIFrame();
-			//log.debug("Frame created successfully. frame = " + frame.toString());
+			//Create Frame, Panel, Popup Object
+			try {
+				popup	= new SPIMemoPopup();
+				//log.debug("Popup created successfully popup = " + popup.toString());
+				panel	= new SPIMemoPanel((SPIMemoPopup) popup);
+				//log.debug("Panel creation successfully panel = " + panel.toString());
+				frame	= new SPIFrame();
+				//log.debug("Frame created successfully. frame = " + frame.toString());
+			} catch (Exception e){
+				log.fatal("Fail to Create Swing Object");
+			}
 			
+			// Connect them to spiDoc object
 			spi.setType(type);
 			spi.setPopup(popup);
 			spi.setPanel(panel);
 			spi.setFrame(frame);
-
-			((SPIMemoPanel) panel).setPopup((SPIMemoPopup) spi.getPopup());
-			//log.debug("popup = " + ((SPIMemoPanel) spi.getPanel()).getPopup());
 			
+			// Connect popup object to panel object
+			((SPIMemoPanel) panel).setPopup((SPIMemoPopup) spi.getPopup());
+			// Connect panel object to frame object
 			spi.getFrame().setContentPane((Container) spi.getPanel());
-			//log.debug("setContentPane = " + spi.getFrame().getContentPane());
+			// Make it Visible
 			spi.getFrame().setVisible(true);
 			
 			log.info("A New SPI Memo Created successfully.");

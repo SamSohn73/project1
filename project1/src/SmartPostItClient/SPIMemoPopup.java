@@ -33,38 +33,33 @@ class SPIMemoPopup extends SPIPopup
 	{
 		super();
 		setPopupSize(new Dimension(130, 350));
-
+		
 		mntmCut = new JMenuItem("잘라내기");
 		mntmCut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
-		add(mntmCut);
+		add(mntmCut, 3);
 		
 		mntmCopy = new JMenuItem("복사");
 		mntmCopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
-		add(mntmCopy);
+		add(mntmCopy, 4);
 		
 		mntmPaste = new JMenuItem("붙여넣기");
 		mntmPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
-		add(mntmPaste);
-		
-		mntmDelete = new JMenuItem("삭제");
-		mntmDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_MASK));
-		add(mntmDelete);
+		add(mntmPaste, 5);
 		
 		separator_2 = new JSeparator();
-		add(separator_2);
+		add(separator_2, 6);
 		
 		mntmSelAll = new JMenuItem("모두 선택");
-		mntmDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
-		add(mntmSelAll);
+		mntmSelAll.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
+		add(mntmSelAll, 7);
 		
 		separator_3 = new JSeparator();
-		add(separator_3);
+		add(separator_3, 8);
 		
 		setFocusTraversalPolicy(new FocusTraversalOnArray(
 				new Component[]{mntmAddNewNote, mntmAddNewTodo,  //separator,
-						mntmCut, mntmCopy, mntmPaste, mntmDelete, separator_2, mntmSelAll, separator_3,
+						mntmCut, mntmCopy, mntmPaste,separator_2, mntmSelAll, separator_3,
 						mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow}));
-
 	}
 
 }

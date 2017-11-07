@@ -32,6 +32,10 @@ class SPIClientFile implements Runnable
 		//conductFileSerializing(spiDocs);
 	}
 
+	/**
+	 * 
+	 * @param spiDocs
+	 */
 	public static void doFileSerializing(Vector<SPIDocument> spiDocs)
 	{
 		FileOutputStream		fos = null;
@@ -62,6 +66,12 @@ class SPIClientFile implements Runnable
 		}
 	}
 
+	
+	/**
+	 * 
+	 * @return
+	 */
+			
 	private static Vector<SPIDocument> doFileDeserializing()
 	{
 		FileInputStream		fis = null;

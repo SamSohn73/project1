@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 
 /**
- * 다양한 SmartPostIt 실제 내용과 객체 윈도우 표현을 위한 정보와 연결
+ * Interface for the various JPanel connection with JFrame
  * 
  * @author		sam
  * @Version		0.1

@@ -54,6 +54,11 @@ class SPIMain
 		// Create Vector
 		spi.spiDocs = new Vector<SPIDocument>();
 		
+		// 사용자 파일이 없으면 하나의 기본 문서를 열고
+		// 있으면 사용자 파일을 읽어 객체화
+		
+		// PostIt 문서의 추가/삭제
+		
 		// Create a Doc for Test
 		SPIDocument spiDoc = null;
 		spiDoc = spi.factory.createSPIDoc(SPIType.MEMO);

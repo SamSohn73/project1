@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 
 
 /**
- * SmartPostIt 객체 클래스. 이 객체 하나가 포스트잇 한 장에 해당하는 셈.
+ * SmartPostIt Object Class. One Post It Document.
  * 
  * @author		sam
  * @Version		0.1
