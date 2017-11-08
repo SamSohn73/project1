@@ -68,13 +68,15 @@ class SPIFrame extends JFrame
 		
 		this.spiDocs = spiDocs;
 		
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 250, 250);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));
+		//Close All together if you open following line
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//How to remove the side frame on windows 7
 		//this.getRootPane().setBorder(new EmptyBorder(0, 0, 0, 0));
 		//setUndecorated(true);
 		//this.setShape(Shape shape);
-		
 	}
 	
 	
