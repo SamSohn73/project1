@@ -1,6 +1,7 @@
 package SmartPostItClient;
 
 import java.awt.Container;
+import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
@@ -12,13 +13,18 @@ import org.apache.log4j.Logger;
  */
 class SPIFactory
 {
-	SPIDocument spi;
+	private final Logger log = Logger.getLogger(this.getClass());
+
+	transient Vector<SPIDocument> spiDocs;
+
 	SPIPopup popup;
 	SPIPanel panel;
 	SPIFrame frame;
 	
-	private final Logger log = Logger.getLogger(this.getClass());
-	
+	SPIFactory(Vector<SPIDocument> spiDocs)
+	{
+		this.spiDocs = spiDocs;
+	}
 	
 	/**
 	 * Create real SPIDocument here
@@ -26,19 +32,17 @@ class SPIFactory
 	 * @param		type		type of the Post It to create 
 	 * @return					SPIDocument Object  
 	 */
-	public SPIDocument createSPIDoc(SPIType type)
+	public void createSPIDoc(SPIType type)
 	{
 		log.info("Start to Create a new SPI Document.");
-		// I still can't understand why this is required.
-		// I can't assign created frame, panel, popup object to SPIDocument without this.
-		spi = new SPIDocument();		
-		if (spi == null)	log.fatal("fail to get SPIDocument Object");
+
+		SPIDocument spiDoc = new SPIDocument();		
 		
 		if (type == SPIType.MEMO) {
 			log.debug("Document Type MEMO.");
 			//Create Frame, Panel, Popup Object
 			try {
-				popup	= new SPIMemoPopup();
+				popup	= new SPIMemoPopup(this, spiDocs);
 				//log.debug("Popup created successfully popup = " + popup.toString());
 				panel	= new SPIMemoPanel((SPIMemoPopup) popup);
 				//log.debug("Panel creation successfully panel = " + panel.toString());
@@ -49,17 +53,19 @@ class SPIFactory
 			}
 			
 			// Connect them to spiDoc object
-			spi.setType(type);
-			spi.setPopup(popup);
-			spi.setPanel(panel);
-			spi.setFrame(frame);
+			spiDoc.setType(type);
+			spiDoc.setPopup(popup);
+			spiDoc.setPanel(panel);
+			spiDoc.setFrame(frame);
 			
 			// Connect popup object to panel object
-			((SPIMemoPanel) panel).setPopup((SPIMemoPopup) spi.getPopup());
+			((SPIMemoPanel) panel).setPopup((SPIMemoPopup) spiDoc.getPopup());
 			// Connect panel object to frame object
-			spi.getFrame().setContentPane((Container) spi.getPanel());
+			spiDoc.getFrame().setContentPane((Container) spiDoc.getPanel());
 			// Make it Visible
-			spi.getFrame().setVisible(true);
+			spiDoc.getFrame().setVisible(true);
+			//Add it to Vector List
+			spiDocs.add(spiDoc);
 			
 			log.info("A New SPI Memo Created successfully.");
 		}
@@ -100,7 +106,6 @@ class SPIFactory
 		else if (type == SPIType.STOPWATCH) {
 			spi = new SPIDocument(SPIType.TODO);
 		}*/
-		
-		return spi; 
+
 	}
 }

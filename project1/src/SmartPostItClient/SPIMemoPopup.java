@@ -7,20 +7,22 @@ import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.util.Vector;
 
 import org.apache.log4j.Logger;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
-class SPIMemoPopup extends SPIPopup
+class SPIMemoPopup extends SPIPopup implements ActionListener
 {
 	private static final long serialVersionUID = -2925244852858865203L;
 
 	JMenuItem mntmCut;
 	JMenuItem mntmCopy;
 	JMenuItem mntmPaste;
-	JMenuItem mntmDelete;
 	JMenuItem mntmSelAll;
 	JSeparator separator_2;
 	JSeparator separator_3;
@@ -29,9 +31,9 @@ class SPIMemoPopup extends SPIPopup
 	/**
 	 * Create the panel.
 	 */
-	public SPIMemoPopup()
+	public SPIMemoPopup(SPIFactory factory, Vector<SPIDocument> spiDocs)
 	{
-		super();
+		super(factory, spiDocs);
 		setPopupSize(new Dimension(130, 350));
 		
 		mntmCut = new JMenuItem("잘라내기");
@@ -60,6 +62,65 @@ class SPIMemoPopup extends SPIPopup
 				new Component[]{mntmAddNewNote, mntmAddNewTodo,  //separator,
 						mntmCut, mntmCopy, mntmPaste,separator_2, mntmSelAll, separator_3,
 						mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow}));
+		
+		mntmAddNewNote.addActionListener(this);
+		mntmAddNewTodo.addActionListener(this);
+		
+		mntmBlue.addActionListener(this);
+		mntmGreen.addActionListener(this);
+		mntmPink.addActionListener(this);
+		mntmPurple.addActionListener(this);
+		mntmWhite.addActionListener(this);
+		mntmYellow.addActionListener(this);
+		
+		mntmCut.addActionListener(this);
+		mntmCopy.addActionListener(this);
+		mntmPaste.addActionListener(this);
+		mntmSelAll.addActionListener(this);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		// TODO Auto-generated method stub
+		if (e.getSource() == mntmAddNewNote) {
+			factory.createSPIDoc(SPIType.MEMO);
+		}
+		if (e.getSource() == mntmAddNewTodo) {
+			
+		}
+		
+		if (e.getSource() == mntmBlue) {
+			
+		}
+		if (e.getSource() == mntmGreen) {
+			
+		}
+		if (e.getSource() == mntmPink) {
+			
+		}
+		if (e.getSource() == mntmPurple) {
+			
+		}
+		if (e.getSource() == mntmWhite) {
+			
+		}
+		if (e.getSource() == mntmYellow) {
+			
+		}
+		
+		if (e.getSource() == mntmCut) {
+			
+		}
+		if (e.getSource() == mntmCopy) {
+			
+		}
+		if (e.getSource() == mntmPaste) {
+			
+		}
+		if (e.getSource() == mntmSelAll) {
+			
+		}
 	}
 
 }

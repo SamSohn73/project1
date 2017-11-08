@@ -60,7 +60,7 @@ class SPIFrame extends JFrame
 	public SPIFrame()
 	{
 		super();
-
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 250, 250);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));

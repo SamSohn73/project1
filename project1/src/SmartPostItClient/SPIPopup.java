@@ -10,13 +10,19 @@ import org.apache.log4j.Logger;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
+import java.util.Vector;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import javax.swing.ImageIcon;
 
-class SPIPopup extends JPopupMenu
+class SPIPopup extends JPopupMenu implements ActionListener
 {
 	private static final long serialVersionUID = -2925244852858865203L;
 	private final transient Logger log = Logger.getLogger(this.getClass());
+	
+	SPIFactory factory;
+	Vector<SPIDocument> spiDocs;
 	
 	JMenuItem mntmAddNewNote;
 	JMenuItem mntmAddNewTodo;
@@ -34,9 +40,12 @@ class SPIPopup extends JPopupMenu
 	/**
 	 * Create the panel.
 	 */
-	public SPIPopup()
+	public SPIPopup(SPIFactory factory, Vector<SPIDocument> spiDocs)
 	{
 		super();
+		this.factory = factory;
+		this.spiDocs = spiDocs;
+		
 		setPopupSize(new Dimension(130, 300));
 		setBorderPainted(false);   
 		//addPopup(this, popupMenu);
@@ -78,7 +87,13 @@ class SPIPopup extends JPopupMenu
 		setFocusTraversalPolicy(new FocusTraversalOnArray(
 				new Component[]{mntmAddNewNote, mntmAddNewTodo, separator, 
 								mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow}));
+	}
 
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }
