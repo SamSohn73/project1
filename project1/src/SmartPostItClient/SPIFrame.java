@@ -22,6 +22,8 @@ class SPIFrame extends JFrame
 	private static final long serialVersionUID = 7111347458428723034L;
 	private static final transient Logger log = Logger.getLogger(SPIFrame.class);
 	
+	transient SPIFactory  factory;
+	
 	JPanel		panel;
 
 	JPanel getPanel()
@@ -57,10 +59,10 @@ class SPIFrame extends JFrame
 	/**
 	 * Create the frame.
 	 */
-	public SPIFrame()
+	public SPIFrame(SPIFactory factory)
 	{
 		super();
-
+		this.factory = factory;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 250, 250);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));

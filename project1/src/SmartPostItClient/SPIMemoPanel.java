@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -50,7 +52,7 @@ class SPIMemoPanel extends JPanel implements SPIPanel
 	/**
 	 * Create the panel.
 	 */
-	public SPIMemoPanel(SPIMemoPopup popup)
+	public SPIMemoPanel(SPIMemoPopup popup) 
 	{
 		super();
 		setSize(250, 250);
@@ -87,4 +89,6 @@ class SPIMemoPanel extends JPanel implements SPIPanel
 			}
 		});
 	}
+
+	
 }

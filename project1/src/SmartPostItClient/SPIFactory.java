@@ -42,7 +42,7 @@ class SPIFactory
 				//log.debug("Popup created successfully popup = " + popup.toString());
 				panel	= new SPIMemoPanel((SPIMemoPopup) popup);
 				//log.debug("Panel creation successfully panel = " + panel.toString());
-				frame	= new SPIFrame();
+				frame	= new SPIFrame(this);
 				//log.debug("Frame created successfully. frame = " + frame.toString());
 			} catch (Exception e){
 				log.fatal("Fail to Create Swing Object");
