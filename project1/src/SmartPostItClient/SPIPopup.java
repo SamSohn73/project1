@@ -23,6 +23,7 @@ class SPIPopup extends JPopupMenu implements ActionListener
 	
 	SPIFactory factory;
 	Vector<SPIDocument> spiDocs;
+	SPIDocument spiDoc;
 	
 	JMenuItem mntmAddNewNote;
 	JMenuItem mntmAddNewTodo;
@@ -33,20 +34,24 @@ class SPIPopup extends JPopupMenu implements ActionListener
 	JMenuItem mntmPurple;
 	JMenuItem mntmWhite;
 	JMenuItem mntmYellow;
+	
+	JMenuItem mntmExit;
+	
 	JSeparator separator;
-
+	JSeparator separator_e;
 	
 	
 	/**
 	 * Create the panel.
 	 */
-	public SPIPopup(SPIFactory factory, Vector<SPIDocument> spiDocs)
+	public SPIPopup(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
 	{
 		super();
 		this.factory = factory;
 		this.spiDocs = spiDocs;
+		this.spiDoc = spiDoc;
 		
-		setPopupSize(new Dimension(130, 300));
+		setPopupSize(new Dimension(150, 300));
 		setBorderPainted(false);   
 		//addPopup(this, popupMenu);
 		
@@ -84,9 +89,18 @@ class SPIPopup extends JPopupMenu implements ActionListener
 		mntmYellow = new JMenuItem("노랑");
 		mntmYellow.setIcon(new ImageIcon("C:\\Program Files\\Java\\Yellow.png"));
 		add(mntmYellow);
+		
+		separator_e = new JSeparator();
+		add(separator_e);
+				
+		mntmExit = new JMenuItem("종료");
+		//QQQQQQQQQQ key does not work
+		mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.CTRL_MASK + InputEvent.ALT_MASK));
+		add(mntmExit);
+		
 		setFocusTraversalPolicy(new FocusTraversalOnArray(
 				new Component[]{mntmAddNewNote, mntmAddNewTodo, separator, 
-								mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow}));
+								mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow, separator_e, mntmExit}));
 	}
 
 	@Override

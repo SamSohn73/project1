@@ -23,9 +23,9 @@ class SPIToDoPopup extends SPIPopup
 	/**
 	 * Create the panel.
 	 */
-	public SPIToDoPopup(SPIFactory factory, Vector<SPIDocument> spiDocs)
+	public SPIToDoPopup(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
 	{
-		super(factory, spiDocs);
+		super(factory, spiDocs, spiDoc);
 
 		setPopupSize(new Dimension(130, 300));
 		

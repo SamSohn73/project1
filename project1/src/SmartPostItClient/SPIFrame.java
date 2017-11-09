@@ -25,9 +25,9 @@ class SPIFrame extends JFrame
 	private static final long serialVersionUID = 7111347458428723034L;
 	private static final transient Logger log = Logger.getLogger(SPIFrame.class);
 	
-	Vector<SPIDocument> spiDocs;
-	
-	JPanel		panel;
+	//private Vector<SPIDocument> spiDocs;
+	//private SPIDocument spiDoc;	
+	private JPanel panel;
 
 	JPanel getPanel()
 	{
@@ -62,11 +62,12 @@ class SPIFrame extends JFrame
 	/**
 	 * Create the frame.
 	 */
-	public SPIFrame(Vector<SPIDocument> spiDocs)
+	public SPIFrame(Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
 	{
 		super();
 		
-		this.spiDocs = spiDocs;
+		//this.spiDocs = spiDocs;
+		//this.spiDoc = spiDoc;
 		
 		setBounds(100, 100, 250, 250);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));
@@ -77,6 +78,30 @@ class SPIFrame extends JFrame
 		//this.getRootPane().setBorder(new EmptyBorder(0, 0, 0, 0));
 		//setUndecorated(true);
 		//this.setShape(Shape shape);
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				//spiDocs.add
+				if (spiDocs.contains(spiDoc)) {
+					//QQQQQQQQQQ
+					//Need Save to File and Network Code here
+					
+					spiDocs.remove(spiDoc);
+					log.info("One Document removed by the user.");
+				}
+				//Finish if there's no Document left
+				if (spiDocs.isEmpty()) {
+					//QQQQQQQQQQ
+					//Need Save to File and Network Code here
+					
+					log.info("**************************************************");
+					log.info("SPI Client Service Exit.");
+					log.info("**************************************************");
+					System.exit(0);
+				}
+			}
+		});
 	}
 	
 	

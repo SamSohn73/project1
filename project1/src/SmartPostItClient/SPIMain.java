@@ -38,6 +38,10 @@ class SPIMain
 		// Create a Factory
 		factory = new SPIFactory(spiDocs);
 		log.info("SPI Factory Created.");
+		
+		//File/Network Management
+		
+		
 	}
 	
 	
@@ -46,7 +50,9 @@ class SPIMain
 		//Variables
 		
 		// Create a Main class
+		log.info("**************************************************");
 		log.info("SPI Client Main Start.");
+		log.info("**************************************************");
 		SPIMain spi = new SPIMain();
 		
 		// Create a PostIt for test
@@ -64,7 +70,6 @@ class SPIMain
 		*/
 		
 		//Login Window
-		
 		
 	}
 

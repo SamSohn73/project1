@@ -14,13 +14,40 @@ import org.apache.log4j.Logger;
 class SPIFactory
 {
 	private final Logger log = Logger.getLogger(this.getClass());
-
-	transient Vector<SPIDocument> spiDocs;
-
-	SPIPopup popup;
-	SPIPanel panel;
-	SPIFrame frame;
 	
+	private Vector<SPIDocument> spiDocs;
+	private SPIPopup popup;
+	private SPIPanel panel;
+	private SPIFrame frame;
+
+
+	private Vector<SPIDocument> getSpiDocs()
+	{
+		return spiDocs;
+	}
+	private void setSpiDocs(Vector<SPIDocument> spiDocs)
+	{
+		this.spiDocs = spiDocs;
+	}
+
+	private SPIPopup getPopup()
+	{
+		return popup;
+	}
+	private void setPopup(SPIPopup popup)
+	{
+		this.popup = popup;
+	}
+
+	private SPIPanel getPanel()
+	{
+		return panel;
+	}
+	private void setPanel(SPIPanel panel)
+	{
+		this.panel = panel;
+	}
+
 	SPIFactory(Vector<SPIDocument> spiDocs)
 	{
 		this.spiDocs = spiDocs;
@@ -42,11 +69,11 @@ class SPIFactory
 			log.debug("Document Type MEMO.");
 			//Create Frame, Panel, Popup Object
 			try {
-				popup	= new SPIMemoPopup(this, spiDocs);
+				popup	= new SPIMemoPopup(this, spiDocs, spiDoc);
 				//log.debug("Popup created successfully popup = " + popup.toString());
-				panel	= new SPIMemoPanel((SPIMemoPopup) popup);
+				panel	= new SPIMemoPanel((SPIMemoPopup) popup, spiDocs, spiDoc);
 				//log.debug("Panel creation successfully panel = " + panel.toString());
-				frame	= new SPIFrame(spiDocs);
+				frame	= new SPIFrame(spiDocs, spiDoc);
 				//log.debug("Frame created successfully. frame = " + frame.toString());
 			} catch (Exception e){
 				log.fatal("Fail to Create Swing Object");
@@ -65,9 +92,10 @@ class SPIFactory
 			// Make it Visible
 			spiDoc.getFrame().setVisible(true);
 			//Add it to Vector List
-			spiDocs.add(spiDoc);
-			
-			log.info("A New SPI Memo Created successfully.");
+			boolean res;	res = spiDocs.add(spiDoc);
+			if (!res)	log.error("Fail to add Docs to Vector List");
+
+			log.info("A New SPI Memo Created successfully. Doc count = " + spiDocs.size());
 		}
 		/*
 		else if (type == SPIType.TODO) {
