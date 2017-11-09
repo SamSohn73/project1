@@ -96,7 +96,7 @@ class SPIFrame extends JFrame
 					//Need Save to File and Network Code here
 					
 					log.info("**************************************************");
-					log.info("SPI Client Service Exit.");
+					log.info("SPI Client Service Exited.");
 					log.info("**************************************************");
 					System.exit(0);
 				}
