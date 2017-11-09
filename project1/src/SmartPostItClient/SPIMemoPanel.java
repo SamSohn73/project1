@@ -1,14 +1,19 @@
 package SmartPostItClient;
 
-import javax.swing.JPanel;
+import java.util.Vector;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JPanel;
 import javax.swing.JEditorPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.text.Document;
+import javax.swing.undo.UndoManager;
 
 import org.apache.log4j.Logger;
 
@@ -19,13 +24,16 @@ import org.apache.log4j.Logger;
  * @author sam
  * @Version 0.1
  */
-class SPIMemoPanel extends JPanel implements SPIPanel
+class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListener
 {
 	private static final long serialVersionUID = 8552143505046031394L;
-
 	private final transient static Logger log = Logger.getLogger(SPIMemoPanel.class);
+	transient private UndoManager undoMgr; 
+	transient private SPIMemoPopup popup;
+	
 	private JEditorPane editorPane;
-	private SPIMemoPopup popup;
+	private Vector<SPIDocument> spiDocs; 
+	private SPIDocument spiDoc;
 	
 	
 	JEditorPane getEditorPane()
@@ -46,11 +54,20 @@ class SPIMemoPanel extends JPanel implements SPIPanel
 		this.popup = popup;
 	}
 	
+	public UndoManager getUndoMgr()
+	{
+		return undoMgr;
+	}
+	public void setUndoMgr(UndoManager undoMgr)
+	{
+		this.undoMgr = undoMgr;
+	}
+	
 	
 	/**
 	 * Create the panel.
 	 */
-	public SPIMemoPanel(SPIMemoPopup popup)
+	public SPIMemoPanel(SPIMemoPopup popup, Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
 	{
 		super();
 		setSize(250, 250);
@@ -63,8 +80,19 @@ class SPIMemoPanel extends JPanel implements SPIPanel
 		editorPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		add(editorPane, BorderLayout.CENTER);
 		
-		this.popup = popup;
+		undoMgr = new UndoManager();
+		Document doc = editorPane.getDocument();
+		doc.addUndoableEditListener(this);
 		
+		//QQQQQQQQQQ
+		//if too much contents loaded in a editorPane, you have to do something
+		
+		
+		//QQQQQQQQQQ
+		//Add new function to enlarge / en
+				
+		
+		this.popup = popup;		
 		if (popup != null) {		addPopup(editorPane, popup);
 		} else {					log.fatal("popup object = null");}
 	}
@@ -87,4 +115,12 @@ class SPIMemoPanel extends JPanel implements SPIPanel
 			}
 		});
 	}
+	
+	
+	@Override
+	public void undoableEditHappened(UndoableEditEvent e)
+	{
+		undoMgr.addEdit(e.getEdit());
+	}
+
 }

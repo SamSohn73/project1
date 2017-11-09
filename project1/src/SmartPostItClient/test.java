@@ -25,7 +25,7 @@ public class test extends JFrame
 	static test frame;
 	private JPanel contentPane;
 	//QQQQQQQQQQ
-	SPIMemoPopup popup = new SPIMemoPopup();
+	//SPIMemoPopup popup = new SPIMemoPopup();
 	/**
 	 * Launch the application.
 	 */
@@ -63,11 +63,11 @@ public class test extends JFrame
 			public void mouseClicked(MouseEvent e) {
 
 				System.out.println("QQQQ test1");
-				popup.show(e.getComponent(), e.getX(), e.getY());
+				//popup.show(e.getComponent(), e.getX(), e.getY());
 				//QQQQQQQQQQ
 				if (e.getButton() == 3) {
 					System.out.println("QQQQ test2 " + e.getComponent()+ " " + e.getX() + " " + e.getY());
-					popup.show(e.getComponent(), e.getX(), e.getY());
+					//popup.show(e.getComponent(), e.getX(), e.getY());
 					System.out.println("QQQQ test3");
 				}
 			}

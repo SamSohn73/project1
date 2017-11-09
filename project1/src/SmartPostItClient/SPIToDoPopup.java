@@ -4,6 +4,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.Vector;
 
 import org.apache.log4j.Logger;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
@@ -22,9 +23,9 @@ class SPIToDoPopup extends SPIPopup
 	/**
 	 * Create the panel.
 	 */
-	public SPIToDoPopup()
+	public SPIToDoPopup(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
 	{
-		super();
+		super(factory, spiDocs, spiDoc);
 
 		setPopupSize(new Dimension(130, 300));
 		

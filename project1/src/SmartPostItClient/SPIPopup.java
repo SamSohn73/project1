@@ -10,13 +10,20 @@ import org.apache.log4j.Logger;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
+import java.util.Vector;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import javax.swing.ImageIcon;
 
-class SPIPopup extends JPopupMenu
+class SPIPopup extends JPopupMenu implements ActionListener
 {
 	private static final long serialVersionUID = -2925244852858865203L;
 	private final transient Logger log = Logger.getLogger(this.getClass());
+	
+	SPIFactory factory;
+	Vector<SPIDocument> spiDocs;
+	SPIDocument spiDoc;
 	
 	JMenuItem mntmAddNewNote;
 	JMenuItem mntmAddNewTodo;
@@ -27,20 +34,28 @@ class SPIPopup extends JPopupMenu
 	JMenuItem mntmPurple;
 	JMenuItem mntmWhite;
 	JMenuItem mntmYellow;
+	
+	JMenuItem mntmExit;
+	
 	JSeparator separator;
-
+	JSeparator separator_e;
 	
 	
 	/**
 	 * Create the panel.
 	 */
-	public SPIPopup()
+	public SPIPopup(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
 	{
 		super();
-		setPopupSize(new Dimension(130, 300));
+		this.factory = factory;
+		this.spiDocs = spiDocs;
+		this.spiDoc = spiDoc;
+		
+		setPopupSize(new Dimension(150, 300));
 		setBorderPainted(false);   
 		//addPopup(this, popupMenu);
 		
+		//QQQQQQQQQQ Every shortcut keys not working
 		mntmAddNewNote = new JMenuItem("새 메모");
 		mntmAddNewNote.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 		add(mntmAddNewNote);
@@ -75,10 +90,25 @@ class SPIPopup extends JPopupMenu
 		mntmYellow = new JMenuItem("노랑");
 		mntmYellow.setIcon(new ImageIcon("C:\\Program Files\\Java\\Yellow.png"));
 		add(mntmYellow);
+		
+		separator_e = new JSeparator();
+		add(separator_e);
+				
+		mntmExit = new JMenuItem("종료");
+		//QQQQQQQQQQ key does not work
+		mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.CTRL_MASK + InputEvent.ALT_MASK));
+		add(mntmExit);
+		
 		setFocusTraversalPolicy(new FocusTraversalOnArray(
 				new Component[]{mntmAddNewNote, mntmAddNewTodo, separator, 
-								mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow}));
+								mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow, separator_e, mntmExit}));
+	}
 
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

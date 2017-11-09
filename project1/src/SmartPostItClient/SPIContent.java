@@ -3,8 +3,6 @@ package SmartPostItClient;
 import java.io.Serializable;
 
 
-
-
 /**
  * Interface for the various JPanel connection with JFrame
  * 

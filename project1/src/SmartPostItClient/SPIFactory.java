@@ -1,6 +1,7 @@
 package SmartPostItClient;
 
 import java.awt.Container;
+import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
@@ -12,13 +13,45 @@ import org.apache.log4j.Logger;
  */
 class SPIFactory
 {
-	SPIDocument spi;
-	SPIPopup popup;
-	SPIPanel panel;
-	SPIFrame frame;
-	
 	private final Logger log = Logger.getLogger(this.getClass());
 	
+	private Vector<SPIDocument> spiDocs;
+	private SPIPopup popup;
+	private SPIPanel panel;
+	private SPIFrame frame;
+
+
+	private Vector<SPIDocument> getSpiDocs()
+	{
+		return spiDocs;
+	}
+	private void setSpiDocs(Vector<SPIDocument> spiDocs)
+	{
+		this.spiDocs = spiDocs;
+	}
+
+	private SPIPopup getPopup()
+	{
+		return popup;
+	}
+	private void setPopup(SPIPopup popup)
+	{
+		this.popup = popup;
+	}
+
+	private SPIPanel getPanel()
+	{
+		return panel;
+	}
+	private void setPanel(SPIPanel panel)
+	{
+		this.panel = panel;
+	}
+
+	SPIFactory(Vector<SPIDocument> spiDocs)
+	{
+		this.spiDocs = spiDocs;
+	}
 	
 	/**
 	 * Create real SPIDocument here
@@ -26,42 +59,43 @@ class SPIFactory
 	 * @param		type		type of the Post It to create 
 	 * @return					SPIDocument Object  
 	 */
-	public SPIDocument createSPIDoc(SPIType type)
+	public void createSPIDoc(SPIType type)
 	{
 		log.info("Start to Create a new SPI Document.");
-		// I still can't understand why this is required.
-		// I can't assign created frame, panel, popup object to SPIDocument without this.
-		spi = new SPIDocument();		
-		if (spi == null)	log.fatal("fail to get SPIDocument Object");
+
+		SPIDocument spiDoc = new SPIDocument();		
 		
 		if (type == SPIType.MEMO) {
 			log.debug("Document Type MEMO.");
 			//Create Frame, Panel, Popup Object
 			try {
-				popup	= new SPIMemoPopup();
+				popup	= new SPIMemoPopup(this, spiDocs, spiDoc);
 				//log.debug("Popup created successfully popup = " + popup.toString());
-				panel	= new SPIMemoPanel((SPIMemoPopup) popup);
+				panel	= new SPIMemoPanel((SPIMemoPopup) popup, spiDocs, spiDoc);
 				//log.debug("Panel creation successfully panel = " + panel.toString());
-				frame	= new SPIFrame();
+				frame	= new SPIFrame(spiDocs, spiDoc);
 				//log.debug("Frame created successfully. frame = " + frame.toString());
 			} catch (Exception e){
 				log.fatal("Fail to Create Swing Object");
 			}
 			
 			// Connect them to spiDoc object
-			spi.setType(type);
-			spi.setPopup(popup);
-			spi.setPanel(panel);
-			spi.setFrame(frame);
+			spiDoc.setType(type);
+			spiDoc.setPopup(popup);
+			spiDoc.setPanel(panel);
+			spiDoc.setFrame(frame);
 			
 			// Connect popup object to panel object
-			((SPIMemoPanel) panel).setPopup((SPIMemoPopup) spi.getPopup());
+			((SPIMemoPanel) panel).setPopup((SPIMemoPopup) spiDoc.getPopup());
 			// Connect panel object to frame object
-			spi.getFrame().setContentPane((Container) spi.getPanel());
+			spiDoc.getFrame().setContentPane((Container) spiDoc.getPanel());
 			// Make it Visible
-			spi.getFrame().setVisible(true);
-			
-			log.info("A New SPI Memo Created successfully.");
+			spiDoc.getFrame().setVisible(true);
+			//Add it to Vector List
+			boolean res;	res = spiDocs.add(spiDoc);
+			if (!res)	log.error("Fail to add Docs to Vector List");
+
+			log.info("A New SPI Memo Created successfully. Doc count = " + spiDocs.size());
 		}
 		/*
 		else if (type == SPIType.TODO) {
@@ -100,7 +134,6 @@ class SPIFactory
 		else if (type == SPIType.STOPWATCH) {
 			spi = new SPIDocument(SPIType.TODO);
 		}*/
-		
-		return spi; 
+
 	}
 }
