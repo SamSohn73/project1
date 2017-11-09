@@ -26,7 +26,6 @@ class SPIMain
 	// Logger. use transient when you want to serialize this object 
 	//private final transient static Logger logger = Logger.getLogger(SPIMain.class);
 	private final static Logger log = Logger.getLogger(SPIMain.class);
-
 	
 	SPIMain()
 	{

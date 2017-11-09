@@ -1,8 +1,6 @@
 package SmartPostItClient;
 
 import java.awt.Component;
-import java.awt.Container;
-
 import javax.swing.JEditorPane;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
@@ -22,12 +20,15 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 {
 	private static final long serialVersionUID = -2925244852858865203L;
 
-/*	transient JMenuItem mntmUndo;
-	transient JMenuItem mntmRedo;*/
+	transient JMenuItem mntmUndo;
+	transient JMenuItem mntmRedo;
+	
 	transient JMenuItem mntmCut;
 	transient JMenuItem mntmCopy;
 	transient JMenuItem mntmPaste;
+	
 	transient JMenuItem mntmSelAll;
+	
 	transient JSeparator separator_2;
 	transient JSeparator separator_3;
 	transient JSeparator separator_4;
@@ -39,44 +40,44 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 	public SPIMemoPopup(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
 	{
 		super(factory, spiDocs, spiDoc);
-		setPopupSize(new Dimension(180, 320));
+		setPopupSize(new Dimension(180, 350));
 		
-/*		mntmUndo = new JMenuItem("실행 취소");
+		mntmUndo = new JMenuItem("실행 취소");
 		mntmUndo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK));
-		add(mntmPaste, 3);
+		add(mntmUndo, 3);
 		
 		mntmRedo = new JMenuItem("다시 실행");
 		mntmRedo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_MASK));
-		add(mntmPaste, 4);*/
+		add(mntmRedo, 4);
 		
-		separator_3 = new JSeparator();
-		add(separator_3, 8);
+		separator_2 = new JSeparator();
+		add(separator_2, 5);
 		
 		mntmCut = new JMenuItem("잘라내기");
 		mntmCut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
-		add(mntmCut, 3);
+		add(mntmCut, 6);
 		
 		mntmCopy = new JMenuItem("복사");
 		mntmCopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
-		add(mntmCopy, 4);
+		add(mntmCopy, 7);
 		
 		mntmPaste = new JMenuItem("붙여넣기");
 		mntmPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
-		add(mntmPaste, 5);
+		add(mntmPaste, 8);
 		
-		separator_2 = new JSeparator();
-		add(separator_2, 6);
+		separator_3 = new JSeparator();
+		add(separator_3, 9);
 		
 		mntmSelAll = new JMenuItem("모두 선택");
 		mntmSelAll.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
-		add(mntmSelAll, 7);
+		add(mntmSelAll, 10);
 		
 		separator_4 = new JSeparator();
-		add(separator_3, 8);
+		add(separator_4, 11);
 		
 		setFocusTraversalPolicy(new FocusTraversalOnArray(
-				new Component[]{mntmAddNewNote, mntmAddNewTodo,  //separator,
-						mntmCut, mntmCopy, mntmPaste,separator_2, mntmSelAll, separator_3,
+				new Component[]{mntmUndo, mntmRedo, separator_2, mntmAddNewNote, mntmAddNewTodo,  //separator,
+						mntmCut, mntmCopy, mntmPaste,separator_3, mntmSelAll, separator_4,
 						mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow}));
 		
 		mntmAddNewNote.addActionListener(this);
@@ -91,8 +92,8 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 		
 		mntmExit.addActionListener(this);
 		
-/*		mntmUndo.addActionListener(this);
-		mntmRedo.addActionListener(this);*/
+		mntmUndo.addActionListener(this);
+		mntmRedo.addActionListener(this);
 		
 		mntmCut.addActionListener(this);
 		mntmCopy.addActionListener(this);
@@ -104,6 +105,7 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		SPIMemoPanel spiMemoPanel = (SPIMemoPanel) spiDoc.getPanel();
 		JEditorPane editorPane = ((SPIMemoPanel) spiDoc.getPanel()).getEditorPane();
 		
 		// TODO Auto-generated method stub
@@ -132,16 +134,16 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 		if (e.getSource() == mntmYellow) {
 			editorPane.setBackground(SPIUtil.YELLOW);
 		}
-		/*
+		
 		if (e.getSource() == mntmUndo) {
-			if(((SPIMemoPanel) spiDoc.getPanel()).getUndoMgr().canUndo())	
-				((SPIMemoPanel) spiDoc.getPanel()).getUndoMgr().undo();
+			if(spiMemoPanel.getUndoMgr().canUndo())	
+					spiMemoPanel.getUndoMgr().undo();
 		}
 		if (e.getSource() == mntmRedo) {
-			if(((SPIMemoPanel) spiDoc.getPanel()).getUndoMgr().canRedo())	
-				((SPIMemoPanel) spiDoc.getPanel()).getUndoMgr().redo();
+			if(spiMemoPanel.getUndoMgr().canRedo())	
+				spiMemoPanel.getUndoMgr().redo();
 		}
-		*/
+		
 		if (e.getSource() == mntmCut) {
 			editorPane.cut();
 		}

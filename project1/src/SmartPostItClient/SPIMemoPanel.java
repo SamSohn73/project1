@@ -1,13 +1,13 @@
 package SmartPostItClient;
 
-import javax.swing.JPanel;
+import java.util.Vector;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Vector;
 
+import javax.swing.JPanel;
 import javax.swing.JEditorPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.UndoableEditEvent;
@@ -24,11 +24,11 @@ import org.apache.log4j.Logger;
  * @author sam
  * @Version 0.1
  */
-class SPIMemoPanel extends JPanel implements SPIPanel//, UndoableEditListener
+class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListener
 {
 	private static final long serialVersionUID = 8552143505046031394L;
 	private final transient static Logger log = Logger.getLogger(SPIMemoPanel.class);
-	//transient private UndoManager undoMgr; 
+	transient private UndoManager undoMgr; 
 	transient private SPIMemoPopup popup;
 	
 	private JEditorPane editorPane;
@@ -54,14 +54,14 @@ class SPIMemoPanel extends JPanel implements SPIPanel//, UndoableEditListener
 		this.popup = popup;
 	}
 	
-/*	public UndoManager getUndoMgr()
+	public UndoManager getUndoMgr()
 	{
 		return undoMgr;
 	}
 	public void setUndoMgr(UndoManager undoMgr)
 	{
 		this.undoMgr = undoMgr;
-	}*/
+	}
 	
 	
 	/**
@@ -80,13 +80,17 @@ class SPIMemoPanel extends JPanel implements SPIPanel//, UndoableEditListener
 		editorPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		add(editorPane, BorderLayout.CENTER);
 		
-/*		undoMgr = new UndoManager();
+		undoMgr = new UndoManager();
 		Document doc = editorPane.getDocument();
-		doc.addUndoableEditListener(this);*/
+		doc.addUndoableEditListener(this);
 		
 		//QQQQQQQQQQ
 		//if too much contents loaded in a editorPane, you have to do something
 		
+		
+		//QQQQQQQQQQ
+		//Add new function to enlarge / en
+				
 		
 		this.popup = popup;		
 		if (popup != null) {		addPopup(editorPane, popup);
@@ -111,10 +115,12 @@ class SPIMemoPanel extends JPanel implements SPIPanel//, UndoableEditListener
 			}
 		});
 	}
-/*	@Override
+	
+	
+	@Override
 	public void undoableEditHappened(UndoableEditEvent e)
 	{
 		undoMgr.addEdit(e.getEdit());
-	}*/
+	}
 
 }

@@ -55,6 +55,7 @@ class SPIPopup extends JPopupMenu implements ActionListener
 		setBorderPainted(false);   
 		//addPopup(this, popupMenu);
 		
+		//QQQQQQQQQQ Every shortcut keys not working
 		mntmAddNewNote = new JMenuItem("새 메모");
 		mntmAddNewNote.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 		add(mntmAddNewNote);
