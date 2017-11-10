@@ -13,10 +13,10 @@ class SPIToDoPopup extends SPIPopup
 {
 	private static final long serialVersionUID = 6767648445085689234L;
 	
-	JMenuItem mntmAddToDo;
-	JMenuItem mntmModifyToDo;
-	JMenuItem mntmDeleteToDo;
-	JSeparator separator_2;
+	transient JMenuItem mntmAddToDo;
+	transient JMenuItem mntmModifyToDo;
+	transient JMenuItem mntmDeleteToDo;
+	transient JSeparator separator_2;
 	
 	private final transient Logger log = Logger.getLogger(this.getClass());
 	

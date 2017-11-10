@@ -1,6 +1,7 @@
 package project1;
 
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.JComboBox;
 import java.awt.BorderLayout;
 import javax.swing.JEditorPane;
@@ -13,6 +14,7 @@ public class test2 extends JPanel
 	 */
 	public test2()
 	{
+
 		setLayout(new BorderLayout(0, 0));
 		
 		JEditorPane editorPane = new JEditorPane();

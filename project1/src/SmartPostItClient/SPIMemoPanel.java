@@ -4,6 +4,8 @@ import java.util.Vector;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -28,13 +30,13 @@ class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListener
 {
 	private static final long serialVersionUID = 8552143505046031394L;
 	private final transient static Logger log = Logger.getLogger(SPIMemoPanel.class);
-	transient private UndoManager undoMgr; 
-	transient private SPIMemoPopup popup;
+	transient private UndoManager undoMgr;
 	
-	private JEditorPane editorPane;
+	private SPIMemoPopup popup;
 	private Vector<SPIDocument> spiDocs; 
 	private SPIDocument spiDoc;
 	
+	private JEditorPane editorPane;
 	
 	JEditorPane getEditorPane()
 	{
@@ -76,13 +78,18 @@ class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListener
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		
 		editorPane = new JEditorPane("text/rtf", "");
+
 		editorPane.setBackground(SPIUtil.YELLOW);
-		editorPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		editorPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		add(editorPane, BorderLayout.CENTER);
 		
 		undoMgr = new UndoManager();
 		Document doc = editorPane.getDocument();
 		doc.addUndoableEditListener(this);
+		
+		this.popup = popup;	
+		editorPane.add(this.popup);
+
 		
 		//QQQQQQQQQQ
 		//if too much contents loaded in a editorPane, you have to do something
@@ -91,14 +98,25 @@ class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListener
 		//QQQQQQQQQQ
 		//Add new function to enlarge / en
 				
+		/*if (this.popup != null) {		addPopup(editorPane, this.popup);
+		} else {						log.fatal("popup object = null");}*/
 		
-		this.popup = popup;		
-		if (popup != null) {		addPopup(editorPane, popup);
-		} else {					log.fatal("popup object = null");}
+		editorPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getButton() == 3)
+					popup.show((Component)e.getSource(), e.getX(), e.getY());
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if(e.getButton() == 3)
+					popup.show((Component)e.getSource(), e.getX(), e.getY());
+			}
+		});
 	}
 	
 	
-	private static void addPopup(Component component, final SPIMemoPopup popup) {
+	/*private static void addPopup(Component component, final SPIMemoPopup popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (e.isPopupTrigger()) {
@@ -114,7 +132,7 @@ class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListener
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
-	}
+	}*/
 	
 	
 	@Override
@@ -122,5 +140,7 @@ class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListener
 	{
 		undoMgr.addEdit(e.getEdit());
 	}
+	
+	
 
 }

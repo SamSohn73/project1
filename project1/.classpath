@@ -2,7 +2,14 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/cron4j-2.2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/library/cron4j-2.2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/library/log4j-1.2.17.jar"/>
+	<classpathentry kind="src" path="/swing"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/library/idw-gpl.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/library/JTattoo.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/library/liquidlnf.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/library/quaqua.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/library/syntheticaPlain.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/library/synthetica.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -13,16 +13,15 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
-
-import de.javasoft.plaf.synthetica.SyntheticaLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel;
-
 import java.awt.event.WindowAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
+import de.javasoft.plaf.synthetica.SyntheticaLookAndFeel;
+//import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
+
+import org.apache.log4j.Logger;
 
 
 /**
@@ -76,21 +75,25 @@ class SPIFrame extends JDialog	// Without minimize, maximize button
 	 */
 	public SPIFrame(Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
 	{
-		super();
+		//This LookAndFeel is quite beautiful but you can't use Korean Language with it
+		/*try {UIManager.setLookAndFeel(new SyntheticaPlainLookAndFeel());} 
+		catch (Exception e) {e.printStackTrace();}*/
+		//super();
+		
 		setBounds(100, 100, 250, 250);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));
 		//Close All together if you open following line
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//How to remove the left, right side frame on windows 7 ???
-		//this.getRootPane().setBorder(new EmptyBorder(0, 0, 0, 0));
+		//getRootPane().setBorder(new EmptyBorder(0, 0, 0, 0));
 		//setUndecorated(true);
 		//this.setShape(Shape shape);
 		
-		/*setDefaultLookAndFeelDecorated(true);*/
+		//setDefaultLookAndFeelDecorated(true);
 		
-		/*setUndecorated(true);
-		getRootPane().setWindowDecorationStyle(JRootPane.FRAME);*/
+		//setUndecorated(true);
+		//().setWindowDecorationStyle(JRootPane.FRAME);
 		
 		//QQQQQQQQQQ Hope this will do the work for me
 		//getRootPane().setBorder(new LineBorder(new Color(0xEE0000), 0));
@@ -98,17 +101,16 @@ class SPIFrame extends JDialog	// Without minimize, maximize button
 		//getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 		
 		
-		
 		// www.javasoft.de
 		//getRootPane().putClientProperty("Synthetica.titlePane.enabled", false);
 		  
-		/* 		// www.javasoft.de
- 		JRootPane root = getRootPane();
+		// www.javasoft.de
+/* 		JRootPane root = getRootPane();
 		SyntheticaLookAndFeel.findComponent("RootPane.titlePane.closeButton", root).setVisible(true);
 		SyntheticaLookAndFeel.findComponent("RootPane.titlePane.toggleButton", root).setVisible(false);
 		SyntheticaLookAndFeel.findComponent("RootPane.titlePane.iconifyButton", root).setVisible(false);
-		SyntheticaLookAndFeel.findComponent("RootPane.titlePane.menuButton", root).setVisible(false);
-*/
+		SyntheticaLookAndFeel.findComponent("RootPane.titlePane.menuButton", root).setVisible(false);*/
+
 		
 		
 		//QQQQQQQQQQ
@@ -116,12 +118,10 @@ class SPIFrame extends JDialog	// Without minimize, maximize button
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1) {
+				if (e.getClickCount() == 2) {
 					if (spiDoc.getFrame().getContentPane().isVisible()) {
-						log.debug("QQQQQQQQQQ fffff");
 						spiDoc.getFrame().getContentPane().setVisible(false);
 					} else {
-						log.debug("QQQQQQQQQQ ttttt");
 						spiDoc.getFrame().getContentPane().setVisible(true);
 					}
 				}

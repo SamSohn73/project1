@@ -25,20 +25,20 @@ class SPIPopup extends JPopupMenu implements ActionListener
 	Vector<SPIDocument> spiDocs;
 	SPIDocument spiDoc;
 	
-	JMenuItem mntmAddNewNote;
-	JMenuItem mntmAddNewTodo;
+	transient JMenuItem mntmAddNewNote;
+	transient JMenuItem mntmAddNewTodo;
 	
-	JMenuItem mntmBlue;
-	JMenuItem mntmGreen;
-	JMenuItem mntmPink;
-	JMenuItem mntmPurple;
-	JMenuItem mntmWhite;
-	JMenuItem mntmYellow;
+	transient JMenuItem mntmBlue;
+	transient JMenuItem mntmGreen;
+	transient JMenuItem mntmPink;
+	transient JMenuItem mntmPurple;
+	transient JMenuItem mntmWhite;
+	transient JMenuItem mntmYellow;
 	
-	JMenuItem mntmExit;
+	transient JMenuItem mntmExit;
 	
-	JSeparator separator;
-	JSeparator separator_e;
+	transient JSeparator separator;
+	transient JSeparator separator_e;
 	
 	
 	/**

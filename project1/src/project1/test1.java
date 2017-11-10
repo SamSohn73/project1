@@ -1,5 +1,7 @@
 package project1;
 
+import javax.swing.UIManager;
+
 public class test1
 {
 
@@ -16,7 +18,10 @@ public class test1
 		System.out.println("test");
 		System.out.println("test2");
 		
-		
+		UIManager.LookAndFeelInfo[] looks = UIManager.getInstalledLookAndFeels();
+	    for (UIManager.LookAndFeelInfo look : looks) {
+	      System.out.println(look.getClassName());
+	    }
 	}
 
 }

@@ -19,6 +19,7 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 class SPIMemoPopup extends SPIPopup implements ActionListener
 {
 	private static final long serialVersionUID = -2925244852858865203L;
+	private final transient Logger log = Logger.getLogger(this.getClass());
 
 	transient JMenuItem mntmUndo;
 	transient JMenuItem mntmRedo;
@@ -33,7 +34,6 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 	transient JSeparator separator_3;
 	transient JSeparator separator_4;
 
-	private final transient Logger log = Logger.getLogger(this.getClass());
 	/**
 	 * Create the panel.
 	 */
