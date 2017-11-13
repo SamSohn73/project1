@@ -133,15 +133,12 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 		}
 		if (e.getSource() == mntmYellow) {
 			editorPane.setBackground(SPIUtil.YELLOW);
-		}
-		
+		}		
 		if (e.getSource() == mntmUndo) {
-			if(spiMemoPanel.getUndoMgr().canUndo())	
-					spiMemoPanel.getUndoMgr().undo();
+			spiMemoPanel.undo();
 		}
 		if (e.getSource() == mntmRedo) {
-			if(spiMemoPanel.getUndoMgr().canRedo())	
-				spiMemoPanel.getUndoMgr().redo();
+			spiMemoPanel.redo();
 		}
 		
 		if (e.getSource() == mntmCut) {
