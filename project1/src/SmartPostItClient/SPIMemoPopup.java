@@ -35,7 +35,10 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 	transient JSeparator separator_4;
 
 	/**
-	 * Create the panel.
+	 * Create the Memo Popup 
+	 * You can not add it to EditorPane, you can make it show.
+	 * This means your shorcut keys in popup menu will not work in your EditorPane.
+	 *
 	 */
 	public SPIMemoPopup(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
 	{
@@ -76,12 +79,21 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 		add(separator_4, 11);
 		
 		setFocusTraversalPolicy(new FocusTraversalOnArray(
-				new Component[]{mntmUndo, mntmRedo, separator_2, mntmAddNewNote, mntmAddNewTodo,  //separator,
+				new Component[]{  mntmAddNewNote, mntmAddNewTodo, separator, mntmUndo, mntmRedo, separator_2,
 						mntmCut, mntmCopy, mntmPaste,separator_3, mntmSelAll, separator_4,
-						mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow}));
+						mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow, separator_e, 
+						mntmExit}));
 		
 		mntmAddNewNote.addActionListener(this);
 		mntmAddNewTodo.addActionListener(this);
+		
+		mntmRedo.addActionListener(this);
+		mntmUndo.addActionListener(this);
+		
+		mntmCut.addActionListener(this);
+		mntmCopy.addActionListener(this);
+		mntmPaste.addActionListener(this);
+		mntmSelAll.addActionListener(this);
 		
 		mntmBlue.addActionListener(this);
 		mntmGreen.addActionListener(this);
@@ -91,14 +103,6 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 		mntmYellow.addActionListener(this);
 		
 		mntmExit.addActionListener(this);
-		
-		mntmUndo.addActionListener(this);
-		mntmRedo.addActionListener(this);
-		
-		mntmCut.addActionListener(this);
-		mntmCopy.addActionListener(this);
-		mntmPaste.addActionListener(this);
-		mntmSelAll.addActionListener(this);
 	}
 	
 	//QQQQQQQQQQ You have to do something with this. You can't write the same code here and there
@@ -108,7 +112,6 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 		SPIMemoPanel spiMemoPanel = (SPIMemoPanel) spiDoc.getPanel();
 		JEditorPane editorPane = ((SPIMemoPanel) spiDoc.getPanel()).getEditorPane();
 		
-		// TODO Auto-generated method stub
 		if (e.getSource() == mntmAddNewNote) {
 			factory.createSPIDoc(SPIType.MEMO);
 		}
@@ -133,7 +136,7 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 		}
 		if (e.getSource() == mntmYellow) {
 			editorPane.setBackground(SPIUtil.YELLOW);
-		}		
+		}
 		if (e.getSource() == mntmUndo) {
 			spiMemoPanel.undo();
 		}

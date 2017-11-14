@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JEditorPane;
 
 class SPIPopup extends JPopupMenu implements ActionListener
 {
@@ -53,9 +54,7 @@ class SPIPopup extends JPopupMenu implements ActionListener
 		
 		setPopupSize(new Dimension(150, 300));
 		setBorderPainted(false);   
-		//addPopup(this, popupMenu);
 		
-		//QQQQQQQQQQ Every shortcut keys not working
 		mntmAddNewNote = new JMenuItem("새 메모");
 		mntmAddNewNote.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 		add(mntmAddNewNote);
@@ -101,14 +100,10 @@ class SPIPopup extends JPopupMenu implements ActionListener
 		
 		setFocusTraversalPolicy(new FocusTraversalOnArray(
 				new Component[]{mntmAddNewNote, mntmAddNewTodo, separator, 
-								mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow, separator_e, mntmExit}));
+								mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow, separator_e, 
+								mntmExit}));
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void actionPerformed(ActionEvent e){}
 }

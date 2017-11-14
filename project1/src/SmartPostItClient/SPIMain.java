@@ -40,7 +40,6 @@ class SPIMain
 		
 		//File/Network Management
 		
-		
 	}
 	
 	
