@@ -29,7 +29,7 @@ class SPIClientFile implements Runnable
 	public void run()
 	{
 		// ToDo 스레드 구현 필요.
-		//conductFileSerializing(spiDocs);
+		//init(spiDocs);
 	}
 
 	/**
@@ -38,12 +38,13 @@ class SPIClientFile implements Runnable
 	 */
 	public static void doFileSerializing(Vector<SPIDocument> spiDocs)
 	{
-		FileOutputStream		fos = null;
-		BufferedOutputStream	bos = null;
-		ObjectOutputStream		out = null;
+		FileOutputStream		fos			= null;
+		BufferedOutputStream	bos			= null;
+		ObjectOutputStream		out			= null;
+
 		
 		try {
-			fos = new FileOutputStream("C:/serial.obj");
+			fos = new FileOutputStream(getSaveFilePath());
 			bos = new BufferedOutputStream(fos);
 			out = new ObjectOutputStream(bos);
 
@@ -74,16 +75,24 @@ class SPIClientFile implements Runnable
 			
 	private static Vector<SPIDocument> doFileDeserializing()
 	{
-		FileInputStream		fis = null;
-		BufferedInputStream	bis = null;
-		ObjectInputStream	in = null;
-		Vector<SPIDocument> spiDocs = null;
+		FileInputStream		fis			= null;
+		BufferedInputStream	bis			= null;
+		ObjectInputStream	in			= null;
+		Vector<SPIDocument> spiDocs		= null;
+		String				filePath	= null;
 		
 		try {
-			fis = new FileInputStream("C:/serial.obj");
+			String osname = (System.getProperty("os.name")).toUpperCase();
+			if (osname.contains("WIN"))
+				filePath =  System.getenv("APPDATA") + "\\spiData\\savedata.dat";
+			else
+				filePath =  System.getProperty("user.home") + "\\spiData\\savedata.dat";
+			
+			fis = new FileInputStream(getSaveFilePath());
 			bis = new BufferedInputStream(fis);
 			in = new ObjectInputStream(bis);
 
+			//QQQQQQQQQQ Looks very very suspicious
 			//@SuppressWarnings("unchecked")
 			spiDocs = (Vector<SPIDocument>) in.readObject();
 
@@ -105,5 +114,18 @@ class SPIClientFile implements Runnable
 		}
 		log.info("Successfully Deserialized");
 		return spiDocs;
+	}
+	
+	static String getSaveFilePath()
+	{
+		String	filePath	=	null;
+		
+		String osname = (System.getProperty("os.name")).toUpperCase();
+		if (osname.contains("WIN"))
+			filePath =  System.getenv("APPDATA") + "\\spiData\\savedata.dat";
+		else
+			filePath =  System.getProperty("user.home") + "\\spiData\\savedata.dat";
+		
+		return filePath;
 	}
 }

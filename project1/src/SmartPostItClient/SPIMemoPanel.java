@@ -36,16 +36,14 @@ class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListener, Key
 {
 	private static final long serialVersionUID = 8552143505046031394L;
 	private final transient static Logger log = Logger.getLogger(SPIMemoPanel.class);
-	private UndoManager undoMgr;
+	private UndoManager			undoMgr;
 	
-	private SPIMemoPopup popup;
+	private SPIMemoPopup		popup;
 	private Vector<SPIDocument> spiDocs; 
-	private SPIDocument spiDoc;
+	private SPIDocument			spiDoc;
 	
-	private JEditorPane editorPane;
-	private int size = 0;
+	private JEditorPane			editorPane;
 	
-
 	
 	JEditorPane getEditorPane()
 	{

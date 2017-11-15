@@ -82,6 +82,7 @@ class SPIFrame extends JDialog	// Without minimize, maximize button
 		
 		setBounds(100, 100, 250, 250);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));
+		
 		//Close All together if you open following line
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -115,7 +116,7 @@ class SPIFrame extends JDialog	// Without minimize, maximize button
 		
 		//QQQQQQQQQQ
 		// make control pane invisible when you double click Frame Bar
-		addMouseListener(new MouseAdapter() {
+/*		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
@@ -126,7 +127,7 @@ class SPIFrame extends JDialog	// Without minimize, maximize button
 					}
 				}
 			}
-		});
+		});*/
 		
 		addWindowListener(new WindowAdapter() {
 			@Override

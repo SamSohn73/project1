@@ -84,33 +84,33 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 						mntmBlue, mntmGreen, mntmPink, mntmPurple, mntmWhite, mntmYellow, separator_e, 
 						mntmExit}));
 		
-		mntmAddNewNote.addActionListener(this);
-		mntmAddNewTodo.addActionListener(this);
+		mntmAddNewNote	.addActionListener(this);
+		mntmAddNewTodo	.addActionListener(this);
 		
-		mntmRedo.addActionListener(this);
-		mntmUndo.addActionListener(this);
+		mntmRedo		.addActionListener(this);
+		mntmUndo		.addActionListener(this);
 		
-		mntmCut.addActionListener(this);
-		mntmCopy.addActionListener(this);
-		mntmPaste.addActionListener(this);
-		mntmSelAll.addActionListener(this);
+		mntmCut			.addActionListener(this);
+		mntmCopy		.addActionListener(this);
+		mntmPaste		.addActionListener(this);
+		mntmSelAll		.addActionListener(this);
 		
-		mntmBlue.addActionListener(this);
-		mntmGreen.addActionListener(this);
-		mntmPink.addActionListener(this);
-		mntmPurple.addActionListener(this);
-		mntmWhite.addActionListener(this);
-		mntmYellow.addActionListener(this);
+		mntmBlue		.addActionListener(this);
+		mntmGreen		.addActionListener(this);
+		mntmPink		.addActionListener(this);
+		mntmPurple		.addActionListener(this);
+		mntmWhite		.addActionListener(this);
+		mntmYellow		.addActionListener(this);
 		
-		mntmExit.addActionListener(this);
+		mntmExit		.addActionListener(this);
 	}
 	
 	//QQQQQQQQQQ You have to do something with this. You can't write the same code here and there
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		SPIMemoPanel spiMemoPanel = (SPIMemoPanel) spiDoc.getPanel();
-		JEditorPane editorPane = ((SPIMemoPanel) spiDoc.getPanel()).getEditorPane();
+		SPIMemoPanel	spiMemoPanel	= (SPIMemoPanel) spiDoc.getPanel();
+		JEditorPane		editorPane		= ((SPIMemoPanel) spiDoc.getPanel()).getEditorPane();
 		
 		if (e.getSource() == mntmAddNewNote) {
 			factory.createSPIDoc(SPIType.MEMO);

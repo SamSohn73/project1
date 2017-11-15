@@ -21,29 +21,29 @@ class SPIFactory
 	private SPIFrame frame;
 
 
-	private Vector<SPIDocument> getSpiDocs()
+	Vector<SPIDocument> getSpiDocs()
 	{
 		return spiDocs;
 	}
-	private void setSpiDocs(Vector<SPIDocument> spiDocs)
+	void setSpiDocs(Vector<SPIDocument> spiDocs)
 	{
 		this.spiDocs = spiDocs;
 	}
 
-	private SPIPopup getPopup()
+	SPIPopup getPopup()
 	{
 		return popup;
 	}
-	private void setPopup(SPIPopup popup)
+	void setPopup(SPIPopup popup)
 	{
 		this.popup = popup;
 	}
 
-	private SPIPanel getPanel()
+	SPIPanel getPanel()
 	{
 		return panel;
 	}
-	private void setPanel(SPIPanel panel)
+	void setPanel(SPIPanel panel)
 	{
 		this.panel = panel;
 	}
@@ -70,11 +70,11 @@ class SPIFactory
 			//Create Frame, Panel, Popup Object
 			try {
 				popup	= new SPIMemoPopup(this, spiDocs, spiDoc);
-				//log.debug("Popup created successfully popup = " + popup.toString());
+				log.debug("Popup created successfully popup = " + popup.toString());
 				panel	= new SPIMemoPanel((SPIMemoPopup) popup, spiDocs, spiDoc);
-				//log.debug("Panel creation successfully panel = " + panel.toString());
+				log.debug("Panel creation successfully panel = " + panel.toString());
 				frame	= new SPIFrame(spiDocs, spiDoc);
-				//log.debug("Frame created successfully. frame = " + frame.toString());
+				log.debug("Frame created successfully. frame = " + frame.toString());
 			} catch (Exception e){
 				log.fatal("Fail to Create Swing Object");
 			}
@@ -91,6 +91,7 @@ class SPIFactory
 			spiDoc.getFrame().setContentPane((Container) spiDoc.getPanel());
 			// Make it Visible
 			spiDoc.getFrame().setVisible(true);
+			
 			//Add it to Vector List
 			boolean res;	res = spiDocs.add(spiDoc);
 			if (!res)	log.error("Fail to add Docs to Vector List");
