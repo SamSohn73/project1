@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
  */
 class SPIClientFile implements Runnable
 {
-	private final static Logger log = Logger.getLogger(SPIClientFile.class);
+	private final static transient Logger log = Logger.getLogger(SPIClientFile.class);
 	
 	public void run()
 	{
@@ -41,7 +41,6 @@ class SPIClientFile implements Runnable
 		FileOutputStream		fos			= null;
 		BufferedOutputStream	bos			= null;
 		ObjectOutputStream		out			= null;
-
 		
 		try {
 			fos = new FileOutputStream(getSaveFilePath());

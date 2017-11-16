@@ -1,7 +1,9 @@
 package SmartPostItClient;
 
+
 import java.awt.EventQueue;
 import java.util.Vector;
+
 import org.apache.log4j.Logger;
 
 
@@ -25,7 +27,7 @@ class SPIMain
 	
 	// Logger. use transient when you want to serialize this object 
 	//private final transient static Logger logger = Logger.getLogger(SPIMain.class);
-	private final static Logger log = Logger.getLogger(SPIMain.class);
+	private final static transient Logger log = Logger.getLogger(SPIMain.class);
 	
 	SPIMain()
 	{
@@ -51,10 +53,35 @@ class SPIMain
 		log.info("**************************************************");
 		log.info("SPI Client Main Start.");
 		log.info("**************************************************");
+		
+	
+/*		try {
+			UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+		} catch (Exception e) {
+			log.fatal("SeaGlassLookAndFeel library loading fail.");
+			e.printStackTrace();
+		}*/
+		
 		SPIMain spi = new SPIMain();
 		
-		// Create a PostIt for test
-		spi.factory.createSPIDoc(SPIType.MEMO);
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run()
+			{
+				try {
+					// Create a PostIt for test - remove first PostIt because the L&F is not the one I want.
+					spi.factory.createSPIDoc(SPIType.MEMO);
+					spi.factory.createSPIDoc(SPIType.MEMO);
+					spi.spiDocs.get(0).getFrame().dispose();
+					spi.spiDocs.remove(0);
+					log.info("One Document removed by the system. Doc count = " + spi.spiDocs.size());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		
 		/*
 		//Thread for File Management (Serialization)
 		Runnable spiFile = new SPIClientFile();

@@ -13,13 +13,12 @@ import org.apache.log4j.Logger;
  */
 class SPIFactory
 {
-	private final Logger log = Logger.getLogger(this.getClass());
+	private final transient Logger log = Logger.getLogger(this.getClass());
 	
 	private Vector<SPIDocument> spiDocs;
 	private SPIPopup popup;
 	private SPIPanel panel;
 	private SPIFrame frame;
-
 
 	Vector<SPIDocument> getSpiDocs()
 	{
@@ -73,7 +72,7 @@ class SPIFactory
 				log.debug("Popup created successfully popup = " + popup.toString());
 				panel	= new SPIMemoPanel((SPIMemoPopup) popup, spiDocs, spiDoc);
 				log.debug("Panel creation successfully panel = " + panel.toString());
-				frame	= new SPIFrame(spiDocs, spiDoc);
+				frame	= new SPIFrame(this, spiDocs, spiDoc);
 				log.debug("Frame created successfully. frame = " + frame.toString());
 			} catch (Exception e){
 				log.fatal("Fail to Create Swing Object");
@@ -90,7 +89,7 @@ class SPIFactory
 			// Connect panel object to frame object
 			spiDoc.getFrame().setContentPane((Container) spiDoc.getPanel());
 			// Make it Visible
-			spiDoc.getFrame().setVisible(true);
+			spiDoc.getFrame().setVisible(true);	
 			
 			//Add it to Vector List
 			boolean res;	res = spiDocs.add(spiDoc);

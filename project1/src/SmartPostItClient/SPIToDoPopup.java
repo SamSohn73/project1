@@ -1,24 +1,26 @@
 package SmartPostItClient;
 
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
+import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
+
+import java.awt.Component;
+import java.awt.Dimension;
+
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+import org.apache.log4j.Logger;
 
 class SPIToDoPopup extends SPIPopup
 {
 	private static final long serialVersionUID = 6767648445085689234L;
+	private final transient Logger log = Logger.getLogger(this.getClass());
 	
 	transient JMenuItem mntmAddToDo;
 	transient JMenuItem mntmModifyToDo;
 	transient JMenuItem mntmDeleteToDo;
 	transient JSeparator separator_2;
 	
-	private final transient Logger log = Logger.getLogger(this.getClass());
 	
 	/**
 	 * Create the panel.

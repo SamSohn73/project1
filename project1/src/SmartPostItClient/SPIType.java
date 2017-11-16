@@ -1,6 +1,8 @@
 package SmartPostItClient;
 
-enum SPIType
+import java.io.Serializable;
+
+enum SPIType implements Serializable
 {
 	MEMO,
 	TODO,

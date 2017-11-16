@@ -4,7 +4,6 @@ import java.util.Vector;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -35,7 +34,7 @@ import org.apache.log4j.Logger;
 class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListener, KeyListener
 {
 	private static final long serialVersionUID = 8552143505046031394L;
-	private final transient static Logger log = Logger.getLogger(SPIMemoPanel.class);
+	private final static transient Logger log = Logger.getLogger(SPIMemoPanel.class);
 	private UndoManager			undoMgr;
 	
 	private SPIMemoPopup		popup;

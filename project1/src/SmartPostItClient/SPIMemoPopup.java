@@ -1,17 +1,18 @@
 package SmartPostItClient;
 
-import java.awt.Component;
+import java.util.Vector;
+
 import javax.swing.JEditorPane;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.util.Vector;
 
 import org.apache.log4j.Logger;
 import org.eclipse.wb.swing.FocusTraversalOnArray;

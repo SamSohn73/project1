@@ -1,21 +1,23 @@
 package SmartPostItClient;
 
+import java.util.Vector;
+
 import javax.swing.JPopupMenu;
-import java.awt.Component;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
-import java.awt.Dimension;
+import javax.swing.ImageIcon;
 
-import org.apache.log4j.Logger;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
+import java.awt.Dimension;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
-import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JEditorPane;
+
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import org.apache.log4j.Logger;
+
 
 class SPIPopup extends JPopupMenu implements ActionListener
 {
