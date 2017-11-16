@@ -131,7 +131,6 @@ class SPIFrame extends JDialog	// Without minimize, maximize button
 				if (spiDocs.isEmpty()) {
 					//QQQQQQQQQQ
 					//Need Code to Save File and Network here
-					
 					log.info("**************************************************");
 					log.info("SPI Client Service Exited.");
 					log.info("**************************************************");

@@ -63,7 +63,7 @@ class SPIFactory
 		log.info("Start to Create a new SPI Document.");
 
 		SPIDocument spiDoc = new SPIDocument();		
-		
+		//QQQQQQQQQQ Create new PostIt near the requested PostIt.
 		if (type == SPIType.MEMO) {
 			log.debug("Document Type MEMO.");
 			//Create Frame, Panel, Popup Object
