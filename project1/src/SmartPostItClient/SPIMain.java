@@ -36,11 +36,22 @@ class SPIMain
 		// Create Vector Document List
 		spiDocs = new Vector<SPIDocument>();
 		
-		// Create a Factory
-		factory = new SPIFactory(spiDocs);
-		log.info("SPI Factory Created.");
+		/*
+		//Thread for Network Management (Serialization)
+		Runnable spiNet = new SPIClientNet();
+		Thread netThread = new Thread(spiNet);
+		netThread.start();
+		 */
+
+		//Thread for File Management (Serialization)
+		//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+		Thread spiClientFileThread = new SPIClientFile(spiDocs);
+		spiClientFileThread.start();
+		log.info("File Service Thread started.");
 		
-		//File/Network Management
+		// Create a Factory
+		factory = new SPIFactory(spiDocs, spiClientFileThread);
+		log.info("SPI Factory Created.");
 		
 	}
 	
@@ -48,22 +59,29 @@ class SPIMain
 	public static void main(String[] args)
 	{
 		//Variables
+
 		
 		// Create a Main class
 		log.info("**************************************************");
 		log.info("SPI Client Main Start.");
 		log.info("**************************************************");
 		
-	
-/*		try {
+		//Sea Glass Look & Feel - Looks very unstable
+		/*try {
 			UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
 		} catch (Exception e) {
 			log.fatal("SeaGlassLookAndFeel library loading fail.");
 			e.printStackTrace();
 		}*/
 		
+		//Start Main thread
+		//QQQQQQQQQQ Need to think over Factory and spiDocs could be in the main() method.
 		SPIMain spi = new SPIMain();
 		
+		
+		//Login Window
+		
+		//Start PostIt Swing thread
 		EventQueue.invokeLater(new Runnable()
 		{
 			public void run()
@@ -76,25 +94,11 @@ class SPIMain
 					spi.spiDocs.remove(0);
 					log.info("One Document removed by the system. Doc count = " + spi.spiDocs.size());
 				} catch (Exception e) {
+					log.fatal("EventQueue.invokeLater Thread failed.");
 					e.printStackTrace();
 				}
 			}
 		});
-		
-		
-		/*
-		//Thread for File Management (Serialization)
-		Runnable spiFile = new SPIClientFile();
-		Thread fileThread = new Thread(spiFile);
-		fileThread.start();
-		
-		//Thread for Network Management (Serialization)
-		Runnable spiNet = new SPIClientNet();
-		Thread netThread = new Thread(spiNet);
-		netThread.start();
-		*/
-		
-		//Login Window
 		
 	}
 

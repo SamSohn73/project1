@@ -27,6 +27,7 @@ class SPIPopup extends JPopupMenu implements ActionListener
 	SPIFactory factory;
 	Vector<SPIDocument> spiDocs;
 	SPIDocument spiDoc;
+	transient Thread spiClientFileThread;
 	
 	transient JMenuItem mntmAddNewNote;
 	transient JMenuItem mntmAddNewTodo;
@@ -47,12 +48,13 @@ class SPIPopup extends JPopupMenu implements ActionListener
 	/**
 	 * Create the panel.
 	 */
-	public SPIPopup(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
+	public SPIPopup(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument  spiDoc, Thread spiClientFileThread)
 	{
 		super();
 		this.factory = factory;
 		this.spiDocs = spiDocs;
 		this.spiDoc = spiDoc;
+		this.spiClientFileThread = spiClientFileThread;
 		
 		setPopupSize(new Dimension(150, 300));
 		setBorderPainted(false);   

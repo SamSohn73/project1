@@ -2,6 +2,7 @@ package SmartPostItClient;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,35 +23,87 @@ import org.apache.log4j.Logger;
  * @author sam
  * @version 0.1
  */
-class SPIClientFile implements Runnable
+class SPIClientFile extends Thread
 {
 	private final static transient Logger log = Logger.getLogger(SPIClientFile.class);
 	
+	Vector<SPIDocument> spiDocs;
+	private boolean fileSaveFlag;
+	
+	
+	public boolean isFileSaveFlag()
+	{
+		return fileSaveFlag;
+	}
+	public void setFileSaveFlag(boolean fileSaveFlag)
+	{
+		this.fileSaveFlag = fileSaveFlag;
+	}
+
+	public SPIClientFile(Vector<SPIDocument> spiDocs)
+	{
+		this.fileSaveFlag = false;
+		this.spiDocs = spiDocs;
+		
+		init();
+	}
+	
+	/**
+	 * 
+	 */
 	public void run()
 	{
-		// ToDo 스레드 구현 필요.
-		//init(spiDocs);
+		log.info("SPIClientFile Thread Starts.");
+		
+		//QQQQQQQQQQ
+		while(true) {
+			try {Thread.sleep(1000);} catch (InterruptedException e) {}
+			if (this.fileSaveFlag) {
+				log.info("QQQQQQQQQQ fileSaveFlag true");
+				doFileSerializing();
+			}
+		}
 	}
 
 	/**
 	 * 
+	 * 
+	 * @return
+	 */
+	public void init()
+	{
+		log.info("SPIClientFile Initialization.");
+		doFileDeserializing();
+	}
+	
+	/**
+	 * 
 	 * @param spiDocs
 	 */
-	public static void doFileSerializing(Vector<SPIDocument> spiDocs)
+	public void doFileSerializing()
 	{
-		FileOutputStream		fos			= null;
-		BufferedOutputStream	bos			= null;
-		ObjectOutputStream		out			= null;
+		FileOutputStream		fos	= null;
+		BufferedOutputStream	bos	= null;
+		ObjectOutputStream		out	= null;
+		
+		log.info("SPIClientFile Serialization Start.");
+		
+		//check save file exist	
+		String filePath = getSaveFilePathByOS();
+		File file = new File(filePath);
 		
 		try {
-			fos = new FileOutputStream(getSaveFilePath());
+			fos = new FileOutputStream(file);
 			bos = new BufferedOutputStream(fos);
 			out = new ObjectOutputStream(bos);
 
+			//QQQQQQQQQQ Probably this would be more complicated
 			out.writeObject(spiDocs);
-
+			fileSaveFlag = false;
+			log.info("Successfully Serialized");
 		} catch (Exception e) {
-			log.fatal("Serialization Failed");
+			fileSaveFlag = false;
+			log.fatal("Serialization Failed.");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -58,11 +111,10 @@ class SPIClientFile implements Runnable
 				bos.close();
 				fos.close();
 			} catch (IOException e) {
+				fileSaveFlag = false;
 				log.fatal("Serialization stream closing Failed");
 				e.printStackTrace();
 			}
-
-			log.info("Successfully Serialized");
 		}
 	}
 
@@ -71,59 +123,84 @@ class SPIClientFile implements Runnable
 	 * 
 	 * @return
 	 */
-			
-	private static Vector<SPIDocument> doFileDeserializing()
+	public Vector<SPIDocument> doFileDeserializing()
 	{
 		FileInputStream		fis			= null;
 		BufferedInputStream	bis			= null;
 		ObjectInputStream	in			= null;
-		Vector<SPIDocument> spiDocs		= null;
-		String				filePath	= null;
+
+		log.info("SPIClientFile Deserialization Start.");
+		//check save file exist	
+		String filePath = getSaveFilePathByOS();
+		File file = new File(filePath);
+		// if not exists, it's first time running. return it
+		if (!file.isFile()) {
+			log.info("Save file not exists.");
+			return spiDocs;
+		}
 		
 		try {
-			String osname = (System.getProperty("os.name")).toUpperCase();
-			if (osname.contains("WIN"))
-				filePath =  System.getenv("APPDATA") + "\\spiData\\savedata.dat";
-			else
-				filePath =  System.getProperty("user.home") + "\\spiData\\savedata.dat";
-			
-			fis = new FileInputStream(getSaveFilePath());
+			//if exists, deserialize it
+			//if deserialize fail, return with message dialog.
+			fis = new FileInputStream(file);
 			bis = new BufferedInputStream(fis);
 			in = new ObjectInputStream(bis);
-
+			
 			//QQQQQQQQQQ Looks very very suspicious
+			//QQQQQQQQQQ Probably this would be more complicated
 			//@SuppressWarnings("unchecked")
 			spiDocs = (Vector<SPIDocument>) in.readObject();
 
-			for (SPIDocument spiDoc: spiDocs)
-				log.debug(spiDoc.toString());
+			//QQQQQQQQQQ Just for checking - will be removed
+			for (SPIDocument spiDoc: spiDocs)	log.debug(spiDoc.toString());
 			
+			fileSaveFlag = false;
+			log.info("Successfully Deserialized.");
 		} catch (Exception e) {
-			log.fatal("Deerialization Failed");
+			fileSaveFlag = false;
+			log.fatal("Deserialization Failed");
 			e.printStackTrace();
 		} finally {
 			try {
-				in.close();
-				bis.close();
 				fis.close();
+				bis.close();
+				in.close();
 			} catch (IOException e) {
+				fileSaveFlag = false;
 				log.fatal("Deserialization stream closing Failed");
 				e.printStackTrace();
 			}
 		}
-		log.info("Successfully Deserialized");
+
 		return spiDocs;
 	}
 	
-	static String getSaveFilePath()
+	/**
+	 * 
+	 * @return
+	 */
+	static String getSaveFilePathByOS()
 	{
 		String	filePath	=	null;
 		
 		String osname = (System.getProperty("os.name")).toUpperCase();
 		if (osname.contains("WIN"))
+			filePath =  System.getenv("APPDATA") + "\\spiData";
+		else
+			filePath =  System.getProperty("user.home") + "/spiData";
+		
+		File targetDir = new File(filePath);
+		if(!targetDir.exists()) {
+			targetDir.mkdirs();
+			log.info(filePath + " Directory Created.");
+		}
+		
+		if (osname.contains("WIN"))
 			filePath =  System.getenv("APPDATA") + "\\spiData\\savedata.dat";
 		else
-			filePath =  System.getProperty("user.home") + "\\spiData\\savedata.dat";
+			filePath =  System.getProperty("user.home") + "/spiData/savedata.dat";
+		
+		log.debug("file path= " + filePath);
 		
 		return filePath;
 	}

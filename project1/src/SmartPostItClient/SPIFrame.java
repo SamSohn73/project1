@@ -14,6 +14,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import org.apache.log4j.Logger;
+import java.awt.event.WindowFocusListener;
 
 
 /**
@@ -39,31 +40,13 @@ class SPIFrame extends JDialog	// Without minimize, maximize button
 		this.panel = panel;
 	}
 	
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args)
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				try {
-					SPIFrame frame = new SPIFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					log.fatal("Thread fail.");
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public SPIFrame(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
+	public SPIFrame(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, Thread spiClientFileThread)
 	{
+
 		//super();
 	
 		//SyntheticaPlainLookAndFeel LookAndFeel is beautiful but you can't use Korean Language with it
@@ -106,6 +89,9 @@ class SPIFrame extends JDialog	// Without minimize, maximize button
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					factory.createSPIDoc(spiDoc.getType());
+					//Save to file
+					((SPIClientFile) spiClientFileThread).setFileSaveFlag(true);
+					log.info("File saving flag setted - Create New PostIt Document by mouse double click.");
 				}
 			}
 		});
@@ -121,11 +107,12 @@ class SPIFrame extends JDialog	// Without minimize, maximize button
 			public void windowClosing(WindowEvent e) {
 				//spiDocs.add
 				if (spiDocs.contains(spiDoc)) {
-					//QQQQQQQQQQ
-					//Need Code to Save File and Network here
-					
 					spiDocs.remove(spiDoc);
 					log.info("One Document removed by the user. Doc count = " + spiDocs.size());
+					
+					//Save to file
+					((SPIClientFile) spiClientFileThread).setFileSaveFlag(true);
+					log.info("File saving flag setted - One  Document removed.");
 				}
 				//Finish if there's no Document left
 				if (spiDocs.isEmpty()) {
@@ -136,6 +123,18 @@ class SPIFrame extends JDialog	// Without minimize, maximize button
 					log.info("**************************************************");
 					System.exit(0);
 				}
+			}
+		});
+		
+		/**
+		 * 
+		 */
+		addWindowFocusListener(new WindowFocusListener() {
+			public void windowGainedFocus(WindowEvent e) {}
+			public void windowLostFocus(WindowEvent e) {
+				//Save to file
+				((SPIClientFile) spiClientFileThread).setFileSaveFlag(true);
+				log.info("File saving flag setted - WindowsLostFocus().");
 			}
 		});
 	}

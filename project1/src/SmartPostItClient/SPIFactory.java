@@ -14,7 +14,8 @@ import org.apache.log4j.Logger;
 class SPIFactory
 {
 	private final transient Logger log = Logger.getLogger(this.getClass());
-	
+
+	private transient Thread spiClientFileThread;
 	private Vector<SPIDocument> spiDocs;
 	private SPIPopup popup;
 	private SPIPanel panel;
@@ -46,10 +47,11 @@ class SPIFactory
 	{
 		this.panel = panel;
 	}
-
-	SPIFactory(Vector<SPIDocument> spiDocs)
+	
+	SPIFactory(Vector<SPIDocument> spiDocs, Thread spiClientFileThread)
 	{
 		this.spiDocs = spiDocs;
+		this.spiClientFileThread = spiClientFileThread;
 	}
 	
 	/**
@@ -68,11 +70,11 @@ class SPIFactory
 			log.debug("Document Type MEMO.");
 			//Create Frame, Panel, Popup Object
 			try {
-				popup	= new SPIMemoPopup(this, spiDocs, spiDoc);
+				popup	= new SPIMemoPopup(this, spiDocs, spiDoc, spiClientFileThread);
 				log.debug("Popup created successfully popup = " + popup.toString());
 				panel	= new SPIMemoPanel((SPIMemoPopup) popup, spiDocs, spiDoc);
 				log.debug("Panel creation successfully panel = " + panel.toString());
-				frame	= new SPIFrame(this, spiDocs, spiDoc);
+				frame	= new SPIFrame(this, spiDocs, spiDoc, spiClientFileThread);
 				log.debug("Frame created successfully. frame = " + frame.toString());
 			} catch (Exception e){
 				log.fatal("Fail to Create Swing Object");

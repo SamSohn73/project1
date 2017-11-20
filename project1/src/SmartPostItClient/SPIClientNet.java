@@ -14,6 +14,6 @@ class SPIClientNet implements Runnable
 	
 	public void run()
 	{
-	
+		//QQQQQQQQQQ Use watcher service to update server side file
 	}
 }

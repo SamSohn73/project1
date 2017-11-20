@@ -41,9 +41,9 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 	 * This means your shorcut keys in popup menu will not work in your EditorPane.
 	 *
 	 */
-	public SPIMemoPopup(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
+	public SPIMemoPopup(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, Thread spiClientFileThread)
 	{
-		super(factory, spiDocs, spiDoc);
+		super(factory, spiDocs, spiDoc, spiClientFileThread);
 		setPopupSize(new Dimension(180, 350));
 		
 		mntmUndo = new JMenuItem("실행 취소");
@@ -115,6 +115,10 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 		
 		if (e.getSource() == mntmAddNewNote) {
 			factory.createSPIDoc(SPIType.MEMO);
+			//Save to file
+			//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+			((SPIClientFile) spiClientFileThread).setFileSaveFlag(true);
+			log.info("File saving flag setted - Create New PostIt Document by click new memo menu.");
 		}
 		if (e.getSource() == mntmAddNewTodo) {
 			
