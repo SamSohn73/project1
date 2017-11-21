@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 class SPIToDoPopup extends SPIPopup
 {
-	private static final long serialVersionUID = 6767648445085689234L;
+	private static final long serialVersionUID = 1L;
 	private final transient Logger log = Logger.getLogger(this.getClass());
 	
 	transient JMenuItem mntmAddToDo;
@@ -25,9 +25,9 @@ class SPIToDoPopup extends SPIPopup
 	/**
 	 * Create the panel.
 	 */
-	public SPIToDoPopup(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
+	public SPIToDoPopup(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, Thread spiClientFileThread)
 	{
-		super(factory, spiDocs, spiDoc);
+		super(factory, spiDocs, spiDoc, spiClientFileThread);
 
 		setPopupSize(new Dimension(130, 300));
 		

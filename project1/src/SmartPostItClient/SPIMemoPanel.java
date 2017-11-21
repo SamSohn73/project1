@@ -33,15 +33,15 @@ import org.apache.log4j.Logger;
  */
 class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListener, KeyListener
 {
-	private static final long serialVersionUID = 8552143505046031394L;
-	private final static transient Logger log = Logger.getLogger(SPIMemoPanel.class);
-	private UndoManager			undoMgr;
+	private static final long serialVersionUID	= 1L;
+	private final static transient Logger log	= Logger.getLogger(SPIMemoPanel.class);
 	
-	private SPIMemoPopup		popup;
-	private Vector<SPIDocument> spiDocs; 
-	private SPIDocument			spiDoc;
+	transient private SPIMemoPopup			popup;
+	transient private Vector<SPIDocument>	spiDocs; 
+	transient private SPIDocument			spiDoc;
 	
-	private JEditorPane			editorPane;
+	private JEditorPane						editorPane;
+	transient private UndoManager			undoMgr;
 	
 	
 	JEditorPane getEditorPane()

@@ -20,13 +20,13 @@ class SPIDocument implements Serializable
 	 * @serialField	type	SPIType		PostIt Type, enum type
 	 * @serialField	content	SPIContent	PostIt Content. Interface. Will be Strategy Pattern.
 	 */
-	private static final long serialVersionUID = 426972755561118174L;
+	private static final long serialVersionUID = 1L;
 	private final transient Logger log = Logger.getLogger(this.getClass());
-	//Post It Frames
-	private SPIFrame	frame;
-	private SPIType		type;
-	private SPIPanel	panel;
-	private SPIPopup	popup;
+	//PostIt Frames
+	private				SPIFrame	frame;
+	private				SPIType		type;
+	private				SPIPanel	panel;
+	private transient	SPIPopup	popup;
 	
 	
 	SPIFrame getFrame()

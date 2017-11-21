@@ -21,12 +21,13 @@ import org.apache.log4j.Logger;
 
 class SPIPopup extends JPopupMenu implements ActionListener
 {
-	private static final long serialVersionUID = -2925244852858865203L;
+	private static final long serialVersionUID = 1L;
 	private final transient Logger log = Logger.getLogger(this.getClass());
 	
-	SPIFactory factory;
-	Vector<SPIDocument> spiDocs;
-	SPIDocument spiDoc;
+	transient SPIFactory factory;
+	transient Vector<SPIDocument> spiDocs;
+	transient SPIDocument spiDoc;
+	
 	transient Thread spiClientFileThread;
 	
 	transient JMenuItem mntmAddNewNote;

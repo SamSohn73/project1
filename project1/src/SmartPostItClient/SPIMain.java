@@ -51,8 +51,8 @@ class SPIMain
 		
 		// Create a Factory
 		factory = new SPIFactory(spiDocs, spiClientFileThread);
+		((SPIClientFile) spiClientFileThread).setFactory(factory);
 		log.info("SPI Factory Created.");
-		
 	}
 	
 	

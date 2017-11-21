@@ -19,7 +19,7 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 class SPIMemoPopup extends SPIPopup implements ActionListener
 {
-	private static final long serialVersionUID = -2925244852858865203L;
+	private static final long serialVersionUID = 1L;
 	private final transient Logger log = Logger.getLogger(this.getClass());
 
 	transient JMenuItem mntmUndo;

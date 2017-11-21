@@ -27,7 +27,8 @@ class SPIClientFile extends Thread
 {
 	private final static transient Logger log = Logger.getLogger(SPIClientFile.class);
 	
-	Vector<SPIDocument> spiDocs;
+	private Vector<SPIDocument> spiDocs;
+	private SPIFactory factory;
 	private boolean fileSaveFlag;
 	
 	
@@ -38,6 +39,15 @@ class SPIClientFile extends Thread
 	public void setFileSaveFlag(boolean fileSaveFlag)
 	{
 		this.fileSaveFlag = fileSaveFlag;
+	}
+	
+	public SPIFactory getFactory()
+	{
+		return factory;
+	}
+	public void setFactory(SPIFactory factory)
+	{
+		this.factory = factory;
 	}
 
 	public SPIClientFile(Vector<SPIDocument> spiDocs)
@@ -55,7 +65,7 @@ class SPIClientFile extends Thread
 	{
 		log.info("SPIClientFile Thread Starts.");
 		
-		//QQQQQQQQQQ
+		//QQQQQQQQQQ Need to make a thread pool or something
 		while(true) {
 			try {Thread.sleep(1000);} catch (InterruptedException e) {}
 			if (this.fileSaveFlag) {
@@ -96,9 +106,50 @@ class SPIClientFile extends Thread
 			fos = new FileOutputStream(file);
 			bos = new BufferedOutputStream(fos);
 			out = new ObjectOutputStream(bos);
-
-			//QQQQQQQQQQ Probably this would be more complicated
-			out.writeObject(spiDocs);
+			//out.writeObject(spiDocs); //Serialize all together. may not work properly
+			for (SPIDocument spiDoc: spiDocs)	{
+				switch (spiDoc.getType()) {
+				case MEMO:
+					out.writeObject(spiDoc.getFrame());
+					out.writeObject(spiDoc.getType());
+					out.writeObject((SPIMemoPanel) spiDoc.getPanel());
+					break;
+				case TODO:
+					out.writeObject(spiDoc.getFrame());
+					out.writeObject(spiDoc.getType());
+					out.writeObject((SPIToDoPanel) spiDoc.getPanel());
+					break;
+				case FAVORITE:
+					out.writeObject(spiDoc.getFrame());
+					out.writeObject(spiDoc.getType());
+					out.writeObject((SPIFavoritePanel) spiDoc.getPanel());
+					break;
+				case GRAPHIC:
+					
+					break;
+				case CALCULATOR:
+					
+					break;
+				case VOICE_RECOGNITION:
+					
+					break;
+				case CHAR_RECOGNITION:
+					
+					break;
+				case CAMERA:
+					
+					break;
+				case CALENDAR:
+					
+					break;
+				case STOPWATCH:
+					
+					break;
+				default:
+					break;
+				}
+			}
+			
 			fileSaveFlag = false;
 			log.info("Successfully Serialized");
 		} catch (Exception e) {
@@ -149,10 +200,54 @@ class SPIClientFile extends Thread
 			//QQQQQQQQQQ Looks very very suspicious
 			//QQQQQQQQQQ Probably this would be more complicated
 			//@SuppressWarnings("unchecked")
-			spiDocs = (Vector<SPIDocument>) in.readObject();
-
-			//QQQQQQQQQQ Just for checking - will be removed
-			for (SPIDocument spiDoc: spiDocs)	log.debug(spiDoc.toString());
+			//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+			Vector<SPIDocument> tempDocs = new Vector<SPIDocument>();
+			tempDocs = (Vector<SPIDocument>) in.readObject();
+			
+			factory.createDeserializedSPIDocs(tempDocs);
+			/*
+			{
+				SPIDocument tmpDoc = new SPIDocument();
+	
+				tmpDoc.setFrame((SPIFrame) in.readObject());
+				tmpDoc.setType((SPIType) in.readObject());
+				switch (tmpDoc.getType()) {
+				case MEMO:
+					tmpDoc.setPanel((SPIMemoPanel) in.readObject());
+					break;
+				case TODO:
+					tmpDoc.setPanel((SPIToDoPanel) in.readObject());
+					break;
+				case FAVORITE:
+					tmpDoc.setPanel((SPIFavoritePanel) in.readObject());
+					break;
+				case GRAPHIC:
+					
+					break;
+				case CALCULATOR:
+					
+					break;
+				case VOICE_RECOGNITION:
+					
+					break;
+				case CHAR_RECOGNITION:
+					
+					break;
+				case CAMERA:
+					
+					break;
+				case CALENDAR:
+					
+					break;
+				case STOPWATCH:
+					
+					break;
+				default:
+					break;
+				}
+				
+				spiDocs.add(tmpDoc);
+			}*/
 			
 			fileSaveFlag = false;
 			log.info("Successfully Deserialized.");

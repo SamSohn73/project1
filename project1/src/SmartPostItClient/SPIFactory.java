@@ -138,4 +138,13 @@ class SPIFactory
 		}*/
 
 	}
+	
+	/**
+	 * 
+	 * @param tmpDocs
+	 */
+	public void createDeserializedSPIDocs(Vector<SPIDocument> tmpDocs)
+	{
+	
+	}
 }

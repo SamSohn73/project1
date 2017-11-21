@@ -26,7 +26,7 @@ import java.awt.event.WindowFocusListener;
 //class SPIFrame extends JFrame	// with minimize, maximize button
 class SPIFrame extends JDialog	// Without minimize, maximize button
 {
-	private static final long serialVersionUID = 7111347458428723034L;
+	private static final long serialVersionUID = 1L;
 	private static final transient Logger log = Logger.getLogger(SPIFrame.class);
 	
 	private JPanel panel;

@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 class SPIToDoAlarm extends JFrame
 {
-	private static final long serialVersionUID = 4475055436434896148L;
+	private static final long serialVersionUID = 1L;
 	private final static transient Logger log = Logger.getLogger(SPIToDoAlarm.class);
 
 	private JPanel contentPane;
