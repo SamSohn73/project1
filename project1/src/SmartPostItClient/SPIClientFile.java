@@ -191,7 +191,7 @@ class SPIClientFile extends Thread
 		}
 		
 		try {
-			//if exists, deserialize it
+			//if exists, deserialize it 
 			//if deserialize fail, return with message dialog.
 			fis = new FileInputStream(file);
 			bis = new BufferedInputStream(fis);
