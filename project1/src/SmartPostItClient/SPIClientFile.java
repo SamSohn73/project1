@@ -202,13 +202,11 @@ class SPIClientFile extends Thread
 			//@SuppressWarnings("unchecked")
 			//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 			Vector<SPIDocument> tempDocs = new Vector<SPIDocument>();
-			tempDocs = (Vector<SPIDocument>) in.readObject();
+			//tempDocs = (Vector<SPIDocument>) in.readObject();
 			
-			factory.createDeserializedSPIDocs(tempDocs);
-			/*
-			{
+			while (in.available() <= 0){
 				SPIDocument tmpDoc = new SPIDocument();
-	
+				
 				tmpDoc.setFrame((SPIFrame) in.readObject());
 				tmpDoc.setType((SPIType) in.readObject());
 				switch (tmpDoc.getType()) {
@@ -247,7 +245,9 @@ class SPIClientFile extends Thread
 				}
 				
 				spiDocs.add(tmpDoc);
-			}*/
+			}
+			
+			factory.createDeserializedSPIDocs(tempDocs);
 			
 			fileSaveFlag = false;
 			log.info("Successfully Deserialized.");
