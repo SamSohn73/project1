@@ -186,7 +186,6 @@ class SPIClientFile extends Thread
 		File file = new File(filePath);
 		// if not exists, it's first time running. return it
 		if (!file.isFile()) {
-			
 			log.info("Save file not exists.");
 			return spiDocs;
 		}
