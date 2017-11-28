@@ -1,4 +1,4 @@
-package project1;
+package projectTest;
 
 import java.io.*;
 import java.awt.*;

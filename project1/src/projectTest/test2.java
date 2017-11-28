@@ -1,4 +1,4 @@
-package project1;
+package projectTest;
 
 import javax.swing.JPanel;
 import javax.swing.UIManager;
