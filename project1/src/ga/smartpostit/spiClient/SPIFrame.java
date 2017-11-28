@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -45,7 +46,7 @@ class SPIFrame extends JFrame	// with minimize, maximize button
 	/**
 	 * Create the frame.
 	 */
-	public SPIFrame(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, Thread spiClientFileThread)
+	public SPIFrame(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, Thread spiClientFileThread, int x, int y)
 	{
 
 		//super();
@@ -63,7 +64,10 @@ class SPIFrame extends JFrame	// with minimize, maximize button
 		}*/
 		
 		setDefaultLookAndFeelDecorated(true);
-		setBounds(100, 100, 250, 250);
+		if (x >= 0 && y >= 0)
+			setBounds(x, y, 250, 250);
+		else
+			setBounds(100, 100, 250, 250);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));
 		getRootPane().setBorder(new EmptyBorder(0, 0, 0, 0));
 		//getRootPane().setBorder(new LineBorder(new Color(0xEE0000), 0));
@@ -90,11 +94,19 @@ class SPIFrame extends JFrame	// with minimize, maximize button
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					factory.createSPIDoc(spiDoc.getType());
+
+					spiDoc.getFrame().setResizable(false);
+					factory.createSPIDoc(spiDoc.getType(), spiDoc.getFrame().getX()-25, spiDoc.getFrame().getY()+25);
+
 					//Save to file
 					((SPIClientFile) spiClientFileThread).setFileSaveFlag(true);
 					log.info("File saving flag setted - Create New PostIt Document by mouse double click.");
 				}
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				spiDoc.getFrame().setResizable(true);
+				spiDoc.getFrame().repaint();
 			}
 		});
 		

@@ -117,7 +117,7 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 		JEditorPane		editorPane		= ((SPIMemoPanel) spiDoc.getPanel()).getEditorPane();
 		
 		if (e.getSource() == mntmAddNewNote) {
-			factory.createSPIDoc(SPIType.MEMO);
+			factory.createSPIDoc(SPIType.MEMO, spiDoc.getFrame().getX()-25, spiDoc.getFrame().getY()+25);
 			//Save to file
 			//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 			((SPIClientFile) spiClientFileThread).setFileSaveFlag(true);

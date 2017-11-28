@@ -6,10 +6,10 @@ import java.util.Vector;
 
 public class SPIData
 {
-	int			x;
-	int			y;
-	Dimension	dim;
-	Color		bgColor;
-	SPIType		type;
-	Vector		spiPane;
+	int				x;
+	int				y;
+	Dimension		dim;
+	Color			bgColor;
+	SPIType			type;
+	Vector<Object>	spiPane;
 }

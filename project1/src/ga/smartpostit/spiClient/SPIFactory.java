@@ -1,6 +1,8 @@
 package ga.smartpostit.spiClient;
 
+import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
@@ -57,12 +59,14 @@ class SPIFactory
 	}
 	
 	/**
-	 * Create real SPIDocument here
 	 * 
-	 * @param		type		type of the Post It to create 
-	 * @return					SPIDocument Object  
+	 * @param type		SPI Document Type
+	 * @param x			Frame Starting position X
+	 * @param y			Frame Starting position Y
+	 * @param dim		Frame Length and Height
+	 * @param bgColor	Frame Background Color
 	 */
-	public void createSPIDoc(SPIType type)
+	public void createSPIDoc(SPIType type, int x, int y)
 	{
 		log.info("Start to Create a new SPI Document.");
 
@@ -76,7 +80,7 @@ class SPIFactory
 				log.debug("Popup created successfully popup = " + popup.toString());
 				panel	= new SPIMemoPanel((SPIMemoPopup) popup, spiDocs, spiDoc);
 				log.debug("Panel creation successfully panel = " + panel.toString());
-				frame	= new SPIFrame(this, spiDocs, spiDoc, spiClientFileThread);
+				frame	= new SPIFrame(this, spiDocs, spiDoc, spiClientFileThread, x, y);
 				log.debug("Frame created successfully. frame = " + frame.toString());
 			} catch (Exception e){
 				log.fatal("Fail to Create Swing Object");
@@ -138,7 +142,6 @@ class SPIFactory
 		else if (type == SPIType.STOPWATCH) {
 			spi = new SPIDocument(SPIType.TODO);
 		}*/
-
 	}
 	
 	/**
