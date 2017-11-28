@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 
+import ga.smartpostit.spiData.SPIType;
+
 
 /**
  * SmartPostIt Object Class. One Post It Document.

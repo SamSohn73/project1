@@ -17,6 +17,9 @@ import java.awt.event.KeyEvent;
 import org.apache.log4j.Logger;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
+import ga.smartpostit.spiData.SPIType;
+import ga.smartpostit.spiData.SPIUtil;
+
 class SPIMemoPopup extends SPIPopup implements ActionListener
 {
 	private static final long serialVersionUID = 1L;

@@ -5,6 +5,8 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+import ga.smartpostit.spiData.SPIType;
+
 /**
  * Smart Post It 객체 생성 공장
  * 

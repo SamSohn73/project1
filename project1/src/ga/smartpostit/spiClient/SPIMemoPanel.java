@@ -24,6 +24,8 @@ import javax.swing.undo.UndoManager;
 
 import org.apache.log4j.Logger;
 
+import ga.smartpostit.spiData.SPIUtil;
+
 
 /**
  * SmartPostIt 메모장 화면. rtf 문서 형식을 이용. html 문서형식은 어떨까? 

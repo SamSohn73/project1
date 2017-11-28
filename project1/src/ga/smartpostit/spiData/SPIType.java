@@ -1,8 +1,8 @@
-package ga.smartpostit.spiClient;
+package ga.smartpostit.spiData;
 
 import java.io.Serializable;
 
-enum SPIType implements Serializable
+public enum SPIType implements Serializable
 {
 	MEMO,
 	TODO,

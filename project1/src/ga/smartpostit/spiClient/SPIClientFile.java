@@ -12,6 +12,8 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+import ga.smartpostit.spiData.SPIType;
+
 /**
  * SmartPostIt 파일 관리 기능 구현을 위한 클래스.
  * 벡터 컬렉션의 SmartPostIt 객체들을 직렬화하여 파일로 저장하거나

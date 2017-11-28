@@ -6,6 +6,8 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+import ga.smartpostit.spiData.SPIType;
+
 
 
 /**
