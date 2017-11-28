@@ -1,4 +1,4 @@
-package SmartPostItClient;
+package ga.smartpostit.spiClient;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -70,11 +70,27 @@ class SPIClientFile extends Thread
 			try {Thread.sleep(1000);} catch (InterruptedException e) {}
 			if (this.fileSaveFlag) {
 				log.info("QQQQQQQQQQ fileSaveFlag true");
-				doFileSerializing();
+				doSave();
 			}
 		}
 	}
 
+	/**
+	 * 
+	 */
+	private void doSave()
+	{
+	
+	}
+	
+	/**
+	 * 
+	 */
+	private void doLoad()
+	{
+	
+	}
+	
 	/**
 	 * 
 	 * 
@@ -83,8 +99,41 @@ class SPIClientFile extends Thread
 	public void init()
 	{
 		log.info("SPIClientFile Initialization.");
-		doFileDeserializing();
+		doLoad();
 	}
+	
+
+	
+	/**
+	 * 
+	 * @return
+	 */
+	static String getSaveFilePathByOS()
+	{
+		String	filePath	=	null;
+		
+		String osname = (System.getProperty("os.name")).toUpperCase();
+		if (osname.contains("WIN"))
+			filePath =  System.getenv("APPDATA") + "\\spiData";
+		else
+			filePath =  System.getProperty("user.home") + "/spiData";
+		
+		File targetDir = new File(filePath);
+		if(!targetDir.exists()) {
+			targetDir.mkdirs();
+			log.info(filePath + " Directory Created.");
+		}
+		
+		if (osname.contains("WIN"))
+			filePath =  System.getenv("APPDATA") + "\\spiData\\savedata.spi";
+		else
+			filePath =  System.getProperty("user.home") + "/spiData/savedata.spi";
+		
+		log.debug("file path= " + filePath);
+		
+		return filePath;
+	}
+	
 	
 	/**
 	 * 
@@ -98,7 +147,6 @@ class SPIClientFile extends Thread
 		
 		log.info("SPIClientFile Serialization Start.");
 		
-		//check save file exist	
 		String filePath = getSaveFilePathByOS();
 		File file = new File(filePath);
 		
@@ -181,7 +229,7 @@ class SPIClientFile extends Thread
 		ObjectInputStream	in			= null;
 
 		log.info("SPIClientFile Deserialization Start.");
-		//check save file exist	
+
 		String filePath = getSaveFilePathByOS();
 		File file = new File(filePath);
 		// if not exists, it's first time running. return it
@@ -269,35 +317,5 @@ class SPIClientFile extends Thread
 		}
 
 		return spiDocs;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	static String getSaveFilePathByOS()
-	{
-		String	filePath	=	null;
-		
-		String osname = (System.getProperty("os.name")).toUpperCase();
-		if (osname.contains("WIN"))
-			filePath =  System.getenv("APPDATA") + "\\spiData";
-		else
-			filePath =  System.getProperty("user.home") + "/spiData";
-		
-		File targetDir = new File(filePath);
-		if(!targetDir.exists()) {
-			targetDir.mkdirs();
-			log.info(filePath + " Directory Created.");
-		}
-		
-		if (osname.contains("WIN"))
-			filePath =  System.getenv("APPDATA") + "\\spiData\\savedata.dat";
-		else
-			filePath =  System.getProperty("user.home") + "/spiData/savedata.dat";
-		
-		log.debug("file path= " + filePath);
-		
-		return filePath;
 	}
 }

@@ -1,4 +1,4 @@
-package SmartPostItClient;
+package ga.smartpostit.spiClient;
 
 import javax.swing.JPanel;
 

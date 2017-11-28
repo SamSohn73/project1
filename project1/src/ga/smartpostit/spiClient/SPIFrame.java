@@ -1,9 +1,10 @@
-package SmartPostItClient;
+package ga.smartpostit.spiClient;
 
 
 import java.util.Vector;
 
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -23,8 +24,8 @@ import java.awt.event.WindowFocusListener;
  * @author		sam
  * @Version		0.1
  */
-//class SPIFrame extends JFrame	// with minimize, maximize button
-class SPIFrame extends JDialog	// Without minimize, maximize button
+class SPIFrame extends JFrame	// with minimize, maximize button
+//class SPIFrame extends JDialog	// Without minimize, maximize button
 {
 	private static final long serialVersionUID = 1L;
 	private static final transient Logger log = Logger.getLogger(SPIFrame.class);
@@ -48,7 +49,7 @@ class SPIFrame extends JDialog	// Without minimize, maximize button
 	{
 
 		//super();
-	
+		
 		//SyntheticaPlainLookAndFeel LookAndFeel is beautiful but you can't use Korean Language with it
 		/*try {UIManager.setLookAndFeel(new SyntheticaPlainLookAndFeel());} 
 		catch (Exception e) {e.printStackTrace();}*/
@@ -80,6 +81,7 @@ class SPIFrame extends JDialog	// Without minimize, maximize button
 		SyntheticaLookAndFeel.findComponent("RootPane.titlePane.toggleButton", root).setVisible(false);
 		SyntheticaLookAndFeel.findComponent("RootPane.titlePane.iconifyButton", root).setVisible(false);
 		SyntheticaLookAndFeel.findComponent("RootPane.titlePane.menuButton", root).setVisible(false);*/
+		
 		
 		/**
 		 * Open a new PostIt when you double click the frame.

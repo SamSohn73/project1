@@ -1,4 +1,4 @@
-package SmartPostItClient;
+package ga.smartpostit.spiClient;
 
 import org.apache.log4j.Logger;
 

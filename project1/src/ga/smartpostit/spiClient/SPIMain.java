@@ -1,4 +1,4 @@
-package SmartPostItClient;
+package ga.smartpostit.spiClient;
 
 
 import java.awt.EventQueue;
