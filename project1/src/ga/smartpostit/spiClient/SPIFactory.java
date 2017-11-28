@@ -138,7 +138,6 @@ class SPIFactory
 		}
 		else if (type == SPIType.CALENDAR) {
 			spi = new SPIDocument(SPIType.TODO);
-		}
 		else if (type == SPIType.STOPWATCH) {
 			spi = new SPIDocument(SPIType.TODO);
 		}*/
