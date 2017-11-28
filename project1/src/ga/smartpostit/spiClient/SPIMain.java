@@ -90,8 +90,8 @@ class SPIMain
 			{
 				try {
 					// Create a PostIt for test - remove first PostIt because the L&F is not the one I want.
-					spi.factory.createSPIDoc(SPIType.MEMO, 100, 100);
-					spi.factory.createSPIDoc(SPIType.MEMO, 100, 100);
+					spi.factory.createSPIDoc(SPIType.MEMO, -1, -1);
+					spi.factory.createSPIDoc(SPIType.MEMO, -1, -1);
 					spi.spiDocs.get(0).getFrame().dispose();
 					spi.spiDocs.remove(0);
 					log.info("One Document removed by the system. Doc count = " + spi.spiDocs.size());

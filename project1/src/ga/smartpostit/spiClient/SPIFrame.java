@@ -25,7 +25,7 @@ import java.awt.event.WindowFocusListener;
  * @author		sam
  * @Version		0.1
  */
-class SPIFrame extends JFrame	// with minimize, maximize button
+public class SPIFrame extends JFrame	// with minimize, maximize button
 //class SPIFrame extends JDialog	// Without minimize, maximize button
 {
 	private static final long serialVersionUID = 1L;
@@ -33,11 +33,11 @@ class SPIFrame extends JFrame	// with minimize, maximize button
 	
 	private JPanel panel;
 
-	JPanel getPanel()
+	public JPanel getPanel()
 	{
 		return panel;
 	}
-	void setPanel(JPanel panel)
+	public void setPanel(JPanel panel)
 	{
 		this.panel = panel;
 	}
@@ -148,7 +148,7 @@ class SPIFrame extends JFrame	// with minimize, maximize button
 			public void windowLostFocus(WindowEvent e) {
 				//Save to file
 				((SPIClientFile) spiClientFileThread).setFileSaveFlag(true);
-				log.info("File saving flag setted - WindowsLostFocus().");
+				log.info("WindowsLostFocus() - File saving flag setted.");
 			}
 		});
 	}

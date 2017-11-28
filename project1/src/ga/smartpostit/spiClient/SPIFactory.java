@@ -105,42 +105,33 @@ class SPIFactory
 
 			log.info("A New SPI Memo Created successfully. Doc count = " + spiDocs.size());
 		}
-		/*
 		else if (type == SPIType.TODO) {
-			spi		= null;
-			frame	= new SPIFrame();
-			content	= new SPIToDoView();
-			popup	= new SPIToDoPopup();
-			
-			spi.setFrame(frame);
-			spi.setType(type);
-			spi.setContent(content);
-			spi.setPopup(popup);
+
 		}
-		
 		else if (type == SPIType.FAVORITE) {
-			spi = new SPIDocument(SPIType.TODO);
+
 		}
 		else if (type == SPIType.GRAPHIC) {
-			spi = new SPIDocument(SPIType.TODO);
+
 		}
 		else if (type == SPIType.CALCULATOR) {
-			spi = new SPIDocument(SPIType.TODO);
+
 		}
 		else if (type == SPIType.VOICE_RECOGNITION) {
-			spi = new SPIDocument(SPIType.TODO);
+
 		}
 		else if (type == SPIType.CHAR_RECOGNITION) {
-			spi = new SPIDocument(SPIType.TODO);
+
 		}
 		else if (type == SPIType.CAMERA) {
-			spi = new SPIDocument(SPIType.TODO);
+
 		}
 		else if (type == SPIType.CALENDAR) {
-			spi = new SPIDocument(SPIType.TODO);
+			
+		}
 		else if (type == SPIType.STOPWATCH) {
-			spi = new SPIDocument(SPIType.TODO);
-		}*/
+
+		}
 	}
 	
 	/**

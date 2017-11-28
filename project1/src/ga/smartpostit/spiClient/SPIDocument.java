@@ -14,7 +14,7 @@ import ga.smartpostit.spiData.SPIType;
  * @Version		0.1
  *
  */
-class SPIDocument implements Serializable
+public class SPIDocument implements Serializable
 {
 	/**
 	 * @serial		SmartPostIt 객체 
@@ -31,38 +31,38 @@ class SPIDocument implements Serializable
 	private transient	SPIPopup	popup;
 	
 	
-	SPIFrame getFrame()
+	public SPIFrame getFrame()
 	{
 		return frame;
 	}
-	void setFrame(SPIFrame frame)
+	public void setFrame(SPIFrame frame)
 	{
 		this.frame = frame;
 	}
 	
-	SPIType getType()
+	public SPIType getType()
 	{
 		return type;
 	}
-	void setType(SPIType type)
+	public void setType(SPIType type)
 	{
 		this.type = type;
 	}
 	
-	SPIPanel getPanel()
+	public SPIPanel getPanel()
 	{
 		return panel;
 	}
-	void setPanel(SPIPanel panel)
+	public void setPanel(SPIPanel panel)
 	{
 		this.panel = panel;
 	}
 	
-	SPIPopup getPopup()
+	public SPIPopup getPopup()
 	{
 		return popup;
 	}
-	void setPopup(SPIPopup popup)
+	public void setPopup(SPIPopup popup)
 	{
 		this.popup = popup;
 	}

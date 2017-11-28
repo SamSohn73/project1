@@ -33,7 +33,7 @@ import ga.smartpostit.spiData.SPIUtil;
  * @author sam
  * @Version 0.1
  */
-class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListener, KeyListener
+public class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListener, KeyListener
 {
 	private static final long serialVersionUID	= 1L;
 	private final static transient Logger log	= Logger.getLogger(SPIMemoPanel.class);
@@ -46,7 +46,7 @@ class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListener, Key
 	transient private UndoManager			undoMgr;
 	
 	
-	JEditorPane getEditorPane()
+	public JEditorPane getEditorPane()
 	{
 		return editorPane;
 	}

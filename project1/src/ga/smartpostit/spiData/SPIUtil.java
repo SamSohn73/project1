@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 public class SPIUtil implements Serializable
 {
-	private static final long serialVersionUID = -5726585300553268829L;
+	private static final long serialVersionUID = 1L;
 
 	private final transient Logger log = Logger.getLogger(this.getClass());
 	

@@ -10,8 +10,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Vector;
 
+import javax.swing.JEditorPane;
+import javax.swing.text.Document;
+
 import org.apache.log4j.Logger;
 
+import ga.smartpostit.spiData.SPIDatum;
 import ga.smartpostit.spiData.SPIType;
 
 /**
@@ -69,7 +73,7 @@ class SPIClientFile extends Thread
 		
 		//QQQQQQQQQQ Need to make a thread pool or something
 		while(true) {
-			try {Thread.sleep(1000);} catch (InterruptedException e) {}
+			try {Thread.sleep(5000);} catch (InterruptedException e) {}
 			if (this.fileSaveFlag) {
 				log.info("QQQQQQQQQQ fileSaveFlag true");
 				doSave();
@@ -82,7 +86,7 @@ class SPIClientFile extends Thread
 	 */
 	private void doSave()
 	{
-	
+		doFileSerializing();
 	}
 	
 	/**
@@ -149,6 +153,9 @@ class SPIClientFile extends Thread
 		
 		log.info("SPIClientFile Serialization Start.");
 		
+		Vector<SPIDatum> spiData;
+		spiData = createSPIData(spiDocs); 
+
 		String filePath = getSaveFilePathByOS();
 		File file = new File(filePath);
 		
@@ -156,49 +163,9 @@ class SPIClientFile extends Thread
 			fos = new FileOutputStream(file);
 			bos = new BufferedOutputStream(fos);
 			out = new ObjectOutputStream(bos);
-			//out.writeObject(spiDocs); //Serialize all together. may not work properly
-			for (SPIDocument spiDoc: spiDocs)	{
-				switch (spiDoc.getType()) {
-				case MEMO:
-					out.writeObject(spiDoc.getFrame());
-					out.writeObject(spiDoc.getType());
-					out.writeObject((SPIMemoPanel) spiDoc.getPanel());
-					break;
-				case TODO:
-					out.writeObject(spiDoc.getFrame());
-					out.writeObject(spiDoc.getType());
-					out.writeObject((SPIToDoPanel) spiDoc.getPanel());
-					break;
-				case FAVORITE:
-					out.writeObject(spiDoc.getFrame());
-					out.writeObject(spiDoc.getType());
-					out.writeObject((SPIFavoritePanel) spiDoc.getPanel());
-					break;
-				case GRAPHIC:
-					
-					break;
-				case CALCULATOR:
-					
-					break;
-				case VOICE_RECOGNITION:
-					
-					break;
-				case CHAR_RECOGNITION:
-					
-					break;
-				case CAMERA:
-					
-					break;
-				case CALENDAR:
-					
-					break;
-				case STOPWATCH:
-					
-					break;
-				default:
-					break;
-				}
-			}
+			log.debug("QQQQQQQQQQQQQQQQQ 1");
+			out.writeObject(spiData); //QQQQQQQQQQ Serialize all together. may not work properly I guess.
+			log.debug("QQQQQQQQQQQQQQQQQ 2");
 			
 			fileSaveFlag = false;
 			log.info("Successfully Serialized");
@@ -236,8 +203,7 @@ class SPIClientFile extends Thread
 		File file = new File(filePath);
 		// if not exists, it's first time running. return it
 		if (!file.isFile()) {
-
-			log.info("Save file not exists.");
+			log.info("Save file not exists. Maybe first time running Smart Post It.");
 			return spiDocs;
 		}
 		
@@ -319,5 +285,72 @@ class SPIClientFile extends Thread
 		}
 
 		return spiDocs;
+	}
+	
+	/**
+	 * 
+	 * @param spiDocs
+	 * @return
+	 */
+	public Vector<SPIDatum> createSPIData(Vector<SPIDocument> spiDocs) {
+		Vector<SPIDatum> spiData = new Vector<SPIDatum>();
+		
+		for (SPIDocument spiDoc: spiDocs) {
+			log.debug("QQQQQQQQQQ 1");
+			SPIDatum spiDatum = new SPIDatum();
+			log.debug("QQQQQQQQQQ 2");
+			spiDatum.setX(spiDoc.getFrame().getX());
+			log.debug("QQQQQQQQQQ 3 x= " + spiDatum.getX());
+			spiDatum.setY(spiDoc.getFrame().getY());
+			log.debug("QQQQQQQQQQ 4 y= " + spiDatum.getY());
+			spiDatum.setDim(spiDoc.getFrame().getSize());
+			log.debug("QQQQQQQQQQ 5 Dim= " +spiDatum.getDim().toString());
+			spiDatum.setType(spiDoc.getType());
+			log.debug("QQQQQQQQQQ 6 type= " + spiDatum.getType());
+			
+			switch (spiDatum.getType()) {
+			case MEMO:
+				spiDatum.setBgColor(((SPIMemoPanel) spiDoc.getPanel()).getEditorPane().getBackground());
+				log.debug("QQQQQQQQQQ 7 bgColor = " + spiDatum.getBgColor().toString());
+				//QQQQQQQQQQQQQQQQQQQQ
+				spiDatum.setSpiPane((Document) ((SPIMemoPanel) spiDoc.getPanel()).getEditorPane().getDocument());
+				//log.debug("QQQQQQQQQQ 8 pane= " + spiDatum.getSpiPane().toString());
+				
+				spiData.add(spiDatum);
+				log.debug("QQQQQQQQQQ 9");
+				break;
+			case TODO:
+				
+				break;
+			case FAVORITE:
+
+				break;
+			case GRAPHIC:
+				
+				break;
+			case CALCULATOR:
+				
+				break;
+			case VOICE_RECOGNITION:
+				
+				break;
+			case CHAR_RECOGNITION:
+				
+				break;
+			case CAMERA:
+				
+				break;
+			case CALENDAR:
+				
+				break;
+			case STOPWATCH:
+				
+				break;
+			default:
+				break;
+			}
+		}
+		
+		return spiData;
 	}
 }
