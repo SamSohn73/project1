@@ -22,7 +22,6 @@ public class SPIDatum implements Serializable
 	SPIType			type;
 	Object			spiPane;
 	
-	
 	public int getX()
 	{
 		return x;
@@ -74,9 +73,30 @@ public class SPIDatum implements Serializable
 	}
 	public void setSpiPane(Object spiPane)
 	{
+/*		Copy spiPaneClone = new Copy(spiPane);
+		this.spiPane = spiPaneClone.clone();*/
 		this.spiPane = spiPane;
 	}
 
 }
 
-
+/*
+class Copy implements Cloneable
+{
+	Object obj; 
+	Copy(Object obj)
+	{ 
+		this.obj = obj; 
+	} 
+	
+	public Object clone()
+	{ 
+		Object obj = null; 
+		try { 
+			obj = super.clone(); 
+		}catch (Exception e) {}
+		
+		return obj; 
+	} 
+} 
+*/

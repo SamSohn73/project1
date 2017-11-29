@@ -3,12 +3,10 @@ package ga.smartpostit.spiClient;
 
 import java.util.Vector;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,6 +14,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import org.apache.log4j.Logger;
+
 import java.awt.event.WindowFocusListener;
 
 
@@ -64,22 +63,23 @@ public class SPIFrame extends JFrame	// with minimize, maximize button
 		}*/
 		
 		setDefaultLookAndFeelDecorated(true);
-		if (x >= 0 && y >= 0)
-			setBounds(x, y, 250, 250);
-		else
-			setBounds(100, 100, 250, 250);
+		if (x >= 0 && y >= 0)	setBounds(x, y, 250, 250);
+		else					setBounds(100, 100, 250, 250);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));
 		getRootPane().setBorder(new EmptyBorder(0, 0, 0, 0));
-		//getRootPane().setBorder(new LineBorder(new Color(0xEE0000), 0));
 		
+		
+		
+		//getRootPane().setBorder(new LineBorder(new Color(0xEE0000), 0));
 		//All frame Removed
 		//setUndecorated(true);
-		
+		//getRootPane().setBackground(SPIUtil.YELLOW);
 		//Closed All together if you open following line
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// www.javasoft.de
-/* 		JRootPane root = getRootPane();
+		/*
+ 		JRootPane root = getRootPane();
 		//getRootPane().putClientProperty("Synthetica.titlePane.enabled", false);
 		SyntheticaLookAndFeel.findComponent("RootPane.titlePane.closeButton", root).setVisible(true);
 		SyntheticaLookAndFeel.findComponent("RootPane.titlePane.toggleButton", root).setVisible(false);
@@ -130,8 +130,6 @@ public class SPIFrame extends JFrame	// with minimize, maximize button
 				}
 				//Finish if there's no Document left
 				if (spiDocs.isEmpty()) {
-					//QQQQQQQQQQ
-					//Need Code to Save File and Network here
 					log.info("**************************************************");
 					log.info("SPI Client Service Exited.");
 					log.info("**************************************************");

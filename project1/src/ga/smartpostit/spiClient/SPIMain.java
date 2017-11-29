@@ -46,7 +46,6 @@ class SPIMain
 		 */
 
 		//Thread for File Management (Serialization)
-		//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 		Thread spiClientFileThread = new SPIClientFile(spiDocs);
 		spiClientFileThread.start();
 		log.info("File Service Thread started.");
@@ -57,7 +56,7 @@ class SPIMain
 		log.info("SPI Factory Created.");
 	}
 	
-	
+	 
 	public static void main(String[] args)
 	{
 		//Variables

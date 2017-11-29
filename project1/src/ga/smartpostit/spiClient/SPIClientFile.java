@@ -10,8 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Vector;
 
-import javax.swing.JEditorPane;
-import javax.swing.text.Document;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.StyledDocument;
 
 import org.apache.log4j.Logger;
 
@@ -163,9 +163,51 @@ class SPIClientFile extends Thread
 			fos = new FileOutputStream(file);
 			bos = new BufferedOutputStream(fos);
 			out = new ObjectOutputStream(bos);
-			log.debug("QQQQQQQQQQQQQQQQQ 1");
-			out.writeObject(spiData); //QQQQQQQQQQ Serialize all together. may not work properly I guess.
-			log.debug("QQQQQQQQQQQQQQQQQ 2");
+			//out.writeObject(spiData); //QQQQQQQQQQ Serialize all together. may not work properly I guess.
+
+			for (SPIDatum spiDatum: spiData) {
+				out.writeObject(spiDatum.getX());
+				out.writeObject(spiDatum.getY());
+				out.writeObject(spiDatum.getDim());
+				out.writeObject(spiDatum.getBgColor());
+				out.writeObject(spiDatum.getType());
+				switch (spiDatum.getType()) {
+				case MEMO:
+					log.debug("QQQQQQQQQQ doFileSerializing 6 0 QQQQQQQQQQ");
+					out.writeObject((DefaultStyledDocument) spiDatum.getSpiPane());
+					log.debug("QQQQQQ doFileSerializing 6 2");
+					break;
+				case TODO:
+
+					break;
+				case FAVORITE:
+
+					break;
+				case GRAPHIC:
+					
+					break;
+				case CALCULATOR:
+					
+					break;
+				case VOICE_RECOGNITION:
+					
+					break;
+				case CHAR_RECOGNITION:
+					
+					break;
+				case CAMERA:
+					
+					break;
+				case CALENDAR:
+					
+					break;
+				case STOPWATCH:
+					
+					break;
+				default:
+					break;
+				}
+			}
 			
 			fileSaveFlag = false;
 			log.info("Successfully Serialized");
@@ -203,7 +245,7 @@ class SPIClientFile extends Thread
 		File file = new File(filePath);
 		// if not exists, it's first time running. return it
 		if (!file.isFile()) {
-			log.info("Save file not exists. Maybe first time running Smart Post It.");
+			log.info("Save file not exists. Maybe It's your first time running SmartPostIt.");
 			return spiDocs;
 		}
 		
@@ -296,28 +338,22 @@ class SPIClientFile extends Thread
 		Vector<SPIDatum> spiData = new Vector<SPIDatum>();
 		
 		for (SPIDocument spiDoc: spiDocs) {
-			log.debug("QQQQQQQQQQ 1");
 			SPIDatum spiDatum = new SPIDatum();
-			log.debug("QQQQQQQQQQ 2");
 			spiDatum.setX(spiDoc.getFrame().getX());
-			log.debug("QQQQQQQQQQ 3 x= " + spiDatum.getX());
 			spiDatum.setY(spiDoc.getFrame().getY());
-			log.debug("QQQQQQQQQQ 4 y= " + spiDatum.getY());
 			spiDatum.setDim(spiDoc.getFrame().getSize());
-			log.debug("QQQQQQQQQQ 5 Dim= " +spiDatum.getDim().toString());
 			spiDatum.setType(spiDoc.getType());
-			log.debug("QQQQQQQQQQ 6 type= " + spiDatum.getType());
 			
 			switch (spiDatum.getType()) {
 			case MEMO:
 				spiDatum.setBgColor(((SPIMemoPanel) spiDoc.getPanel()).getEditorPane().getBackground());
-				log.debug("QQQQQQQQQQ 7 bgColor = " + spiDatum.getBgColor().toString());
-				//QQQQQQQQQQQQQQQQQQQQ
-				spiDatum.setSpiPane((Document) ((SPIMemoPanel) spiDoc.getPanel()).getEditorPane().getDocument());
-				//log.debug("QQQQQQQQQQ 8 pane= " + spiDatum.getSpiPane().toString());
+				log.debug("QQQQQQQQQQ createSPIData 7 bgColor = " + spiDatum.getBgColor().toString());
 				
-				spiData.add(spiDatum);
-				log.debug("QQQQQQQQQQ 9");
+				// You get ""AWT-EventQueue-0" java.lang.NullPointerException
+				// if you touch the GUI Component in the run() method.
+				spiDatum.setSpiPane((DefaultStyledDocument) ((SPIMemoPanel) spiDoc.getPanel()).getEditorPane().getDocument());
+				log.debug("QQQQQQQQQQ createSPIData 888222 pane= " + spiDatum.getSpiPane().toString());
+				
 				break;
 			case TODO:
 				
@@ -349,6 +385,8 @@ class SPIClientFile extends Thread
 			default:
 				break;
 			}
+			spiData.add(spiDatum);
+			log.debug("QQQQQQQQQQ createSPIData 9");
 		}
 		
 		return spiData;
