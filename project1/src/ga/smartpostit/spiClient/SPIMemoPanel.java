@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -93,6 +94,10 @@ public class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListen
 		editorPane = new JEditorPane("text/rtf", "");
 		editorPane.setBackground(SPIUtil.YELLOW);
 		editorPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		//Setting font, for changing font in the editorPane, you need following line.
+		editorPane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+		editorPane.setFont(new Font("굴림", Font.PLAIN, 16));
+		
 		editorPane.addKeyListener(this);
 
 		
@@ -108,8 +113,9 @@ public class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListen
 		// Undo, Redo
 		undoMgr = new UndoManager();
 		StyledDocument doc = (StyledDocument) editorPane.getDocument();
-		doc.addUndoableEditListener(this);
 		
+		doc.addUndoableEditListener(this);
+
 
 		if (this.popup != null) {		addPopup(editorPane, this.popup);
 		} else {						log.fatal("popup object = null");}
@@ -249,6 +255,11 @@ public class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListen
 			undo();
 		}
 		if (e.getKeyCode() == KeyEvent.VK_Y && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+			redo();
+		}
+		
+		//QQQQQQQQQQ add ctrl+s save function
+		if (e.getKeyCode() == KeyEvent.VK_S && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
 			redo();
 		}
 		

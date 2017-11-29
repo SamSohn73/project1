@@ -61,7 +61,7 @@ class SPIMain
 	public static void main(String[] args)
 	{
 		//Variables
-
+		
 		
 		// Create a Main class
 		log.info("**************************************************");
