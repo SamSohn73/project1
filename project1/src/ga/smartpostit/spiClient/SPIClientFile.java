@@ -10,7 +10,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.Document;
 import javax.swing.text.StyledDocument;
 
 import org.apache.log4j.Logger;
@@ -174,7 +176,17 @@ class SPIClientFile extends Thread
 				switch (spiDatum.getType()) {
 				case MEMO:
 					log.debug("QQQQQQQQQQ doFileSerializing 6 0 QQQQQQQQQQ");
-					out.writeObject((DefaultStyledDocument) spiDatum.getSpiPane());
+					//out.writeObject((DefaultStyledDocument) spiDatum.getSpiPane());
+					//StyledDocument	doc = new DefaultStyledDocument();
+					//RTFEditorKit	kit = new RTFEditorKit();
+					//It looks I have to change this field to JEditorPane. Again!
+/*					try {
+						Document doc = (Document) spiDatum.getSpiPane();
+						editPane.getEditorKit().write(out, doc, 0, doc.getLength());
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(this, "Sorry, but an error occurred while trying to write the text:\n" + e);
+					}*/
+					
 					log.debug("QQQQQQ doFileSerializing 6 2");
 					break;
 				case TODO:

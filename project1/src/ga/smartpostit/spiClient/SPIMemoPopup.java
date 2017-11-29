@@ -166,7 +166,7 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 		}
 		if (e.getSource() == mntmExit) {
 			//QQQQQQQQQQ
-			//Save files and network
+			//Save files and network. Careful to to remove everything
 			
 			System.exit(0);
 		}

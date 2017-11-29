@@ -113,9 +113,7 @@ public class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListen
 		// Undo, Redo
 		undoMgr = new UndoManager();
 		StyledDocument doc = (StyledDocument) editorPane.getDocument();
-		
 		doc.addUndoableEditListener(this);
-
 
 		if (this.popup != null) {		addPopup(editorPane, this.popup);
 		} else {						log.fatal("popup object = null");}
