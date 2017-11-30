@@ -1,5 +1,7 @@
 package ga.smartpostit.spiClient;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -10,10 +12,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Vector;
 
-import javax.swing.JOptionPane;
+import javax.swing.JEditorPane;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Document;
-import javax.swing.text.StyledDocument;
+import javax.swing.text.rtf.RTFEditorKit;
 
 import org.apache.log4j.Logger;
 
@@ -36,9 +38,10 @@ class SPIClientFile extends Thread
 	private final static transient Logger log = Logger.getLogger(SPIClientFile.class);
 	
 	private Vector<SPIDocument> spiDocs;
+	private Vector<SPIDatum> spiData;
 	private SPIFactory factory;
-	private boolean fileSaveFlag;
-	
+	private boolean serviceStartedFlag = true;
+	private boolean fileSaveFlag = false;
 	
 	public boolean isFileSaveFlag()
 	{
@@ -58,12 +61,14 @@ class SPIClientFile extends Thread
 		this.factory = factory;
 	}
 
-	public SPIClientFile(Vector<SPIDocument> spiDocs)
+	public SPIClientFile(Vector<SPIDocument> spiDocs, SPIFactory factory)
 	{
-		this.fileSaveFlag = false;
-		this.spiDocs = spiDocs;
+		log.info("SPIClientFile Thread Initialization start.");
+		if (spiDocs != null)	this.spiDocs = spiDocs;	else	log.warn("spiDocs reference null.");
+		if (factory != null)	this.factory = factory;	else	log.warn("factory reference null. It will set later.");
 		
-		init();
+		spiData = new Vector<SPIDatum>();
+		log.info("SPIClientFile Thread Initialization End.");
 	}
 	
 	/**
@@ -71,14 +76,22 @@ class SPIClientFile extends Thread
 	 */
 	public void run()
 	{
-		log.info("SPIClientFile Thread Starts.");
+		log.info("SPIClientFile Thread Starts running.");
 		
 		//QQQQQQQQQQ Need to make a thread pool or something
 		while(true) {
-			try {Thread.sleep(5000);} catch (InterruptedException e) {}
+			if (this.serviceStartedFlag && this.factory != null) {
+				log.info("File loading - serviceStartedFlag true. Start loading data from file.");
+				doLoad();
+				this.serviceStartedFlag = false;
+				log.info("File loading - serviceStartedFlag false. End loading data from file.");
+			}
+			try {Thread.sleep(1000);} catch (InterruptedException e) {}
 			if (this.fileSaveFlag) {
-				log.info("QQQQQQQQQQ fileSaveFlag true");
+				log.info("File saving - fileSaveFlag true. Start saving data to file.");
 				doSave();
+				this.fileSaveFlag = false;
+				log.info("File loading - fileSaveFlag false. End saving data to file.");
 			}
 		}
 	}
@@ -96,21 +109,12 @@ class SPIClientFile extends Thread
 	 */
 	private void doLoad()
 	{
-	
+		log.info("spiData Loading start.");
+		doFileDeserializing();
+		if (spiData != null)		factory.createSPIDocFromFile(spiData);
+		else						log.error("spiData null.");
 	}
 	
-	/**
-	 * 
-	 * 
-	 * @return
-	 */
-	public void init()
-	{
-		log.info("SPIClientFile Initialization.");
-		doLoad();
-	}
-	
-
 	
 	/**
 	 * 
@@ -175,19 +179,15 @@ class SPIClientFile extends Thread
 				out.writeObject(spiDatum.getType());
 				switch (spiDatum.getType()) {
 				case MEMO:
-					log.debug("QQQQQQQQQQ doFileSerializing 6 0 QQQQQQQQQQ");
-					//out.writeObject((DefaultStyledDocument) spiDatum.getSpiPane());
-					//StyledDocument	doc = new DefaultStyledDocument();
-					//RTFEditorKit	kit = new RTFEditorKit();
-					//It looks I have to change this field to JEditorPane. Again!
-/*					try {
+					try {
 						Document doc = (Document) spiDatum.getSpiPane();
-						editPane.getEditorKit().write(out, doc, 0, doc.getLength());
+						out.writeObject(doc);
+						//((JEditorPane) spiDatum.getSpiPane()).getEditorKit().write(out, doc, 0, doc.getLength());
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(this, "Sorry, but an error occurred while trying to write the text:\n" + e);
-					}*/
+						log.fatal("Fail to save the Memo PostIt.");
+						e.printStackTrace();
+					}
 					
-					log.debug("QQQQQQ doFileSerializing 6 2");
 					break;
 				case TODO:
 
@@ -245,12 +245,12 @@ class SPIClientFile extends Thread
 	 * 
 	 * @return
 	 */
-	public Vector<SPIDocument> doFileDeserializing()
+	public void doFileDeserializing()
 	{
 		FileInputStream		fis			= null;
 		BufferedInputStream	bis			= null;
 		ObjectInputStream	in			= null;
-
+		
 		log.info("SPIClientFile Deserialization Start.");
 
 		String filePath = getSaveFilePathByOS();
@@ -258,7 +258,7 @@ class SPIClientFile extends Thread
 		// if not exists, it's first time running. return it
 		if (!file.isFile()) {
 			log.info("Save file not exists. Maybe It's your first time running SmartPostIt.");
-			return spiDocs;
+			return;
 		}
 		
 		try {
@@ -272,23 +272,29 @@ class SPIClientFile extends Thread
 			//QQQQQQQQQQ Probably this would be more complicated
 			//@SuppressWarnings("unchecked")
 			//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
-			Vector<SPIDocument> tempDocs = new Vector<SPIDocument>();
 			//tempDocs = (Vector<SPIDocument>) in.readObject();
-			
-			while (in.available() <= 0){
-				SPIDocument tmpDoc = new SPIDocument();
+			log.debug("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+			while (in.available() >= 0) {
+				SPIDatum spiDatum = new SPIDatum();
 				
-				tmpDoc.setFrame((SPIFrame) in.readObject());
-				tmpDoc.setType((SPIType) in.readObject());
-				switch (tmpDoc.getType()) {
+				spiDatum.setX((int) in.readObject());
+				spiDatum.setY((int) in.readObject());
+				spiDatum.setDim((Dimension) in.readObject());
+				spiDatum.setBgColor((Color) in.readObject());
+				spiDatum.setType((SPIType) in.readObject());
+
+				switch (spiDatum.getType()) {
 				case MEMO:
-					tmpDoc.setPanel((SPIMemoPanel) in.readObject());
+					//Document doc = new DefaultStyledDocument();					
+					//JEditorPane tmpEP = new JEditorPane();
+					//tmpEP.getEditorKit().read(in, doc, 0);
+					spiDatum.setSpiPane((Document) in.readObject());
 					break;
 				case TODO:
-					tmpDoc.setPanel((SPIToDoPanel) in.readObject());
+					
 					break;
 				case FAVORITE:
-					tmpDoc.setPanel((SPIFavoritePanel) in.readObject());
+					
 					break;
 				case GRAPHIC:
 					
@@ -315,15 +321,10 @@ class SPIClientFile extends Thread
 					break;
 				}
 				
-				spiDocs.add(tmpDoc);
+				spiData.add(spiDatum);
 			}
-			
-			factory.createDeserializedSPIDocs(tempDocs);
-			
-			fileSaveFlag = false;
 			log.info("Successfully Deserialized.");
 		} catch (Exception e) {
-			fileSaveFlag = false;
 			log.fatal("Deserialization Failed");
 			e.printStackTrace();
 		} finally {
@@ -332,13 +333,12 @@ class SPIClientFile extends Thread
 				bis.close();
 				in.close();
 			} catch (IOException e) {
-				fileSaveFlag = false;
 				log.fatal("Deserialization stream closing Failed");
 				e.printStackTrace();
 			}
 		}
 
-		return spiDocs;
+		return;
 	}
 	
 	/**
@@ -347,7 +347,7 @@ class SPIClientFile extends Thread
 	 * @return
 	 */
 	public Vector<SPIDatum> createSPIData(Vector<SPIDocument> spiDocs) {
-		Vector<SPIDatum> spiData = new Vector<SPIDatum>();
+		spiData = new Vector<SPIDatum>();
 		
 		for (SPIDocument spiDoc: spiDocs) {
 			SPIDatum spiDatum = new SPIDatum();
@@ -359,13 +359,10 @@ class SPIClientFile extends Thread
 			switch (spiDatum.getType()) {
 			case MEMO:
 				spiDatum.setBgColor(((SPIMemoPanel) spiDoc.getPanel()).getEditorPane().getBackground());
-				log.debug("QQQQQQQQQQ createSPIData 7 bgColor = " + spiDatum.getBgColor().toString());
 				
-				// You get ""AWT-EventQueue-0" java.lang.NullPointerException
-				// if you touch the GUI Component in the run() method.
-				spiDatum.setSpiPane((DefaultStyledDocument) ((SPIMemoPanel) spiDoc.getPanel()).getEditorPane().getDocument());
-				log.debug("QQQQQQQQQQ createSPIData 888222 pane= " + spiDatum.getSpiPane().toString());
-				
+				/* You get ""AWT-EventQueue-0" java.lang.NullPointerException
+				 if you try to get the GUI Component in the run() method.*/
+				spiDatum.setSpiPane((Document) ((JEditorPane) ((SPIMemoPanel) spiDoc.getPanel()).getEditorPane()).getDocument());
 				break;
 			case TODO:
 				
@@ -398,7 +395,6 @@ class SPIClientFile extends Thread
 				break;
 			}
 			spiData.add(spiDatum);
-			log.debug("QQQQQQQQQQ createSPIData 9");
 		}
 		
 		return spiData;

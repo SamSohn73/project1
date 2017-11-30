@@ -98,7 +98,7 @@ class SPIPopup extends JPopupMenu implements ActionListener
 		separator_e = new JSeparator();
 		add(separator_e);
 				
-		mntmExit = new JMenuItem("종료");
+		mntmExit = new JMenuItem("종료(저장됨)");
 		//QQQQQQQQQQ key does not work
 		mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.CTRL_MASK + InputEvent.ALT_MASK));
 		add(mntmExit);

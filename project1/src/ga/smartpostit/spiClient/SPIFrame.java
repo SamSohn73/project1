@@ -4,9 +4,12 @@ package ga.smartpostit.spiClient;
 import java.util.Vector;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -45,9 +48,9 @@ public class SPIFrame extends JFrame	// with minimize, maximize button
 	/**
 	 * Create the frame.
 	 */
-	public SPIFrame(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, Thread spiClientFileThread, int x, int y)
+	public SPIFrame(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, Thread spiClientFileThread, int x, int y, Dimension dim)
 	{
-
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		//super();
 		
 		//SyntheticaPlainLookAndFeel LookAndFeel is beautiful but you can't use Korean Language with it
@@ -65,11 +68,12 @@ public class SPIFrame extends JFrame	// with minimize, maximize button
 		setDefaultLookAndFeelDecorated(true);
 		if (x >= 0 && y >= 0)	setBounds(x, y, 250, 250);
 		else					setBounds(100, 100, 250, 250);
+		if (dim != null)		this.setPreferredSize(dim);
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));
 		getRootPane().setBorder(new EmptyBorder(0, 0, 0, 0));
 		
-		
-		
+
 		//getRootPane().setBorder(new LineBorder(new Color(0xEE0000), 0));
 		//All frame Removed
 		//setUndecorated(true);
@@ -119,21 +123,28 @@ public class SPIFrame extends JFrame	// with minimize, maximize button
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				//spiDocs.add
-				if (spiDocs.contains(spiDoc)) {
-					spiDocs.remove(spiDoc);
-					log.info("One Document removed by the user. Doc count = " + spiDocs.size());
-					
-					//Save to file
-					((SPIClientFile) spiClientFileThread).setFileSaveFlag(true);
-					log.info("File saving flag setted - One  Document removed.");
-				}
-				//Finish if there's no Document left
-				if (spiDocs.isEmpty()) {
-					log.info("**************************************************");
-					log.info("SPI Client Service Exited.");
-					log.info("**************************************************");
-					System.exit(0);
+				int dialogButton = JOptionPane.showConfirmDialog (null, 
+																"Would You Like to Delete this PostIt?",
+																"Warning",
+																JOptionPane.YES_NO_OPTION);
+				if(dialogButton == JOptionPane.YES_OPTION) {
+					//spiDocs.remove
+					if (spiDocs.contains(spiDoc)) {
+						spiDocs.remove(spiDoc);
+						log.info("One Document removed by the user. Doc count = " + spiDocs.size());
+						
+						//Save to file
+						((SPIClientFile) spiClientFileThread).setFileSaveFlag(true);
+						log.info("File saving flag setted - One  Document removed.");
+					}
+					//Finish if there's no Document left
+					if (spiDocs.isEmpty()) {
+						log.info("**************************************************");
+						log.info("SPI Client Service Exited.");
+						log.info("**************************************************");
+						System.exit(0);
+					}
+					dispose();
 				}
 			}
 		});
@@ -151,4 +162,12 @@ public class SPIFrame extends JFrame	// with minimize, maximize button
 		});
 	}
 	
+	/**
+	 * Create the frame.
+	 */
+/*	public SPIFrame(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, Thread spiClientFileThread, int x, int y, Dimension dim)
+	{	
+
+	}*/
+
 }

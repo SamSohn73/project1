@@ -118,9 +118,6 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 		
 		if (e.getSource() == mntmAddNewNote) {
 			factory.createSPIDoc(SPIType.MEMO, spiDoc.getFrame().getX()-25, spiDoc.getFrame().getY()+25);
-			//Save to file
-			//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
-			((SPIClientFile) spiClientFileThread).setFileSaveFlag(true);
 			log.info("File saving flag setted - Create New PostIt Document by click new memo menu.");
 		}
 		if (e.getSource() == mntmAddNewTodo) {
@@ -164,13 +161,15 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 		if (e.getSource() == mntmSelAll) {
 			editorPane.selectAll();
 		}
+		
+		//Save files and network. Careful not to to remove everything
+		((SPIClientFile) spiClientFileThread).setFileSaveFlag(true);
+		
 		if (e.getSource() == mntmExit) {
-			//QQQQQQQQQQ
-			//Save files and network. Careful to to remove everything
-			
+			log.info("**************************************************");
+			log.info("SPI Client Service Exited.");
+			log.info("**************************************************");
 			System.exit(0);
 		}
-		
 	}
-
 }

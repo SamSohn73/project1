@@ -3,6 +3,7 @@ package ga.smartpostit.spiClient;
 import java.util.Vector;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.InputEvent;
@@ -19,6 +20,8 @@ import javax.swing.JEditorPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.Document;
 import javax.swing.text.StyledDocument;
 import javax.swing.text.StyledEditorKit;
 import javax.swing.undo.UndoManager;
@@ -78,7 +81,7 @@ public class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListen
 	/**
 	 * Create the panel.
 	 */
-	public SPIMemoPanel(SPIMemoPopup popup, Vector<SPIDocument> spiDocs, SPIDocument spiDoc)
+	public SPIMemoPanel(SPIMemoPopup popup, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, JEditorPane loadedEditorPane, Color bgColor)
 	{
 		super();
 		this.popup = popup;
@@ -98,8 +101,8 @@ public class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListen
 		editorPane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 		editorPane.setFont(new Font("굴림", Font.PLAIN, 16));
 		
-		editorPane.addKeyListener(this);
-
+		if (bgColor != null)			editorPane.setBackground(bgColor);
+		if (loadedEditorPane != null)	editorPane.setDocument(loadedEditorPane.getDocument());
 		
 		//add(editorPane, BorderLayout.CENTER);
 		JScrollPane scrollPane = new JScrollPane();
@@ -189,6 +192,14 @@ public class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListen
 		editorPane.getInputMap().put(fontsizeSmallerKey, fontsizeSmallerAction);
 	}
 
+	/**
+	 * Create the panel.
+	 */
+/*	public SPIMemoPanel(SPIMemoPopup popup, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, JEditorPane editorPane, Color bgColor)
+	{
+	
+	}*/
+	
 	/*
 	 * For show Popup Menu
 	 * Because it's not added in the EditorPane, you can not use shotcut keys when it's not shown

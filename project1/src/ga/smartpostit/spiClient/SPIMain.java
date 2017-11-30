@@ -24,8 +24,8 @@ import ga.smartpostit.spiData.SPIType;
 class SPIMain
 {
 	//Variables
-	SPIFactory factory;
-	Vector<SPIDocument> spiDocs;
+	SPIFactory			factory;
+	Vector<SPIDocument>	spiDocs;
 	
 	// Logger. use transient when you want to serialize this object 
 	//private final transient static Logger logger = Logger.getLogger(SPIMain.class);
@@ -46,14 +46,18 @@ class SPIMain
 		 */
 
 		//Thread for File Management (Serialization)
-		Thread spiClientFileThread = new SPIClientFile(spiDocs);
+		log.info("File Service Thread start to load.");
+		Thread spiClientFileThread = new SPIClientFile(spiDocs, factory);
 		spiClientFileThread.start();
-		log.info("File Service Thread started.");
+		log.info("File Service Thread started OK.");
 		
 		// Create a Factory
+		log.info("SPI Factory Service Thread start to load.");
 		factory = new SPIFactory(spiDocs, spiClientFileThread);
 		((SPIClientFile) spiClientFileThread).setFactory(factory);
-		log.info("SPI Factory Created.");
+		log.info("SPI Factory Service Thread started OK.");
+		
+		((SPIClientFile) spiClientFileThread).setFactory(factory);
 	}
 	
 	 
@@ -88,21 +92,20 @@ class SPIMain
 			public void run()
 			{
 				try {
-					// Create a PostIt for test - remove first PostIt because the L&F is not the one I want.
+					// Create a PostIt for - remove first PostIt because the L&F is not the one I want.
+					//QQQQQQQQQQQQQQQQQQQQQQ do following only there's no Doc in the file
 					spi.factory.createSPIDoc(SPIType.MEMO, -1, -1);
 					spi.factory.createSPIDoc(SPIType.MEMO, -1, -1);
 					spi.spiDocs.get(0).getFrame().dispose();
 					spi.spiDocs.remove(0);
-					log.info("One Document removed by the system. Doc count = " + spi.spiDocs.size());
+					log.info("One Document removed by system. Doc count = " + spi.spiDocs.size());
 				} catch (Exception e) {
 					log.fatal("EventQueue.invokeLater Thread failed.");
 					e.printStackTrace();
 				}
 			}
 		});
-		
 	}
-
 }
 
 
