@@ -25,6 +25,7 @@ class SPIMain
 {
 	//Variables
 	SPIFactory			factory;
+	Thread				spiClientFileThread;
 	Vector<SPIDocument>	spiDocs;
 	
 	// Logger. use transient when you want to serialize this object 
@@ -38,6 +39,11 @@ class SPIMain
 		// Create Vector Document List
 		spiDocs = new Vector<SPIDocument>();
 		
+		// Create a Factory
+		log.info("SPI Factory Service Thread start to load.");
+		factory = new SPIFactory(spiDocs);
+		log.info("SPI Factory Service Thread started OK.");
+		
 		/*
 		//Thread for Network Management (Serialization)
 		Runnable spiNet = new SPIClientNet();
@@ -49,15 +55,9 @@ class SPIMain
 		log.info("File Service Thread start to load.");
 		Thread spiClientFileThread = new SPIClientFile(spiDocs, factory);
 		spiClientFileThread.start();
+		factory.setSpiClientFileThread((SPIClientFile) spiClientFileThread);
 		log.info("File Service Thread started OK.");
 		
-		// Create a Factory
-		log.info("SPI Factory Service Thread start to load.");
-		factory = new SPIFactory(spiDocs, spiClientFileThread);
-		((SPIClientFile) spiClientFileThread).setFactory(factory);
-		log.info("SPI Factory Service Thread started OK.");
-		
-		((SPIClientFile) spiClientFileThread).setFactory(factory);
 	}
 	
 	 
@@ -92,13 +92,15 @@ class SPIMain
 			public void run()
 			{
 				try {
-					// Create a PostIt for - remove first PostIt because the L&F is not the one I want.
-					//QQQQQQQQQQQQQQQQQQQQQQ do following only there's no Doc in the file
-					spi.factory.createSPIDoc(SPIType.MEMO, -1, -1);
-					spi.factory.createSPIDoc(SPIType.MEMO, -1, -1);
-					spi.spiDocs.get(0).getFrame().dispose();
-					spi.spiDocs.remove(0);
-					log.info("One Document removed by system. Doc count = " + spi.spiDocs.size());
+					//if (spi.spiClientFileThread != null && spi.spiDocs.isEmpty()) {
+						// Create a PostIt for - remove first PostIt because the L&F is not the one I want.
+						//QQQQQQQQQQQQQQQQQQQQQQ do following only there's no Doc in the file
+						spi.factory.createSPIDoc(SPIType.MEMO, -1, -1);
+						spi.factory.createSPIDoc(SPIType.MEMO, -1, -1);
+						spi.spiDocs.get(0).getFrame().dispose();
+						spi.spiDocs.remove(0);
+						log.info("One Document removed by system. Doc count = " + spi.spiDocs.size());
+					//}
 				} catch (Exception e) {
 					log.fatal("EventQueue.invokeLater Thread failed.");
 					e.printStackTrace();

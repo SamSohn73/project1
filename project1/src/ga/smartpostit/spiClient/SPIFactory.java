@@ -55,10 +55,19 @@ class SPIFactory
 		this.panel = panel;
 	}
 	
-	SPIFactory(Vector<SPIDocument> spiDocs, Thread spiClientFileThread)
+	public Thread getSpiClientFileThread()
+	{
+		return spiClientFileThread;
+	}
+	public void setSpiClientFileThread(Thread spiClientFileThread)
+	{
+		this.spiClientFileThread = spiClientFileThread;
+	}
+	
+	
+	SPIFactory(Vector<SPIDocument> spiDocs)
 	{
 		this.spiDocs = spiDocs;
-		this.spiClientFileThread = spiClientFileThread;
 	}
 	
 	/**
@@ -143,16 +152,17 @@ class SPIFactory
 	 */
 	public void createSPIDocFromFile(Vector<SPIDatum> spiData)
 	{
-		log.info("Start to Create a new SPI Document.");
+		log.info("Start to create SPI Document from loaded spiData.");
 		
 		//Check if spiData is null
 		//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQ if spiData is null, create basic PostIt, if not, don't.
 		if (spiData == null)	{
-			log.error("spiData null");
+			log.error("spiData null.");
 			return;
 		}
 		
 		for (SPIDatum spiDatum:spiData) {
+			log.debug("Start for looping.");
 			SPIDocument spiDoc = new SPIDocument();
 			SPIType type = spiDoc.getType();	spiDoc.setType(type);
 			if (type == SPIType.MEMO) {
@@ -216,5 +226,6 @@ class SPIFactory
 
 			}
 		}
+		log.info("End to create SPI Document from loaded spiData.");
 	}
 }

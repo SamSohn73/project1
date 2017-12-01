@@ -57,6 +57,15 @@ class SPIClientFile extends Thread
 		this.fileSaveFlag = fileSaveFlag;
 	}
 	
+	public boolean isServiceStartedFlag()
+	{
+		return serviceStartedFlag;
+	}
+	public void setServiceStartedFlag(boolean serviceStartedFlag)
+	{
+		this.serviceStartedFlag = serviceStartedFlag;
+	}
+	
 	public SPIFactory getFactory()
 	{
 		return factory;
@@ -85,12 +94,14 @@ class SPIClientFile extends Thread
 		
 		//QQQQQQQQQQ Need to make a thread pool or something
 		while(true) {
+			//First time loading
 			if (this.serviceStartedFlag && this.factory != null) {
 				log.info("File loading - serviceStartedFlag true. Start loading data from file.");
 				doLoad();
 				this.serviceStartedFlag = false;
 				log.info("File loading - serviceStartedFlag false. End loading data from file.");
 			}
+			// Saving to a file
 			try {Thread.sleep(1000);} catch (InterruptedException e) {}
 			if (this.fileSaveFlag) {
 				log.info("File saving - fileSaveFlag true. Start saving data to file.");
@@ -118,37 +129,6 @@ class SPIClientFile extends Thread
 		doFileDeserializing();
 		if (spiData != null)		factory.createSPIDocFromFile(spiData);
 		else						log.error("spiData null.");
-	}
-	
-	
-	/**
-	 * 
-	 * @return
-	 */
-	static String getSaveFilePathByOS()
-	{
-		String	filePath	=	null;
-		
-		String osname = (System.getProperty("os.name")).toUpperCase();
-		if (osname.contains("WIN"))
-			filePath =  System.getenv("APPDATA") + "\\spiData";
-		else
-			filePath =  System.getProperty("user.home") + "/spiData";
-		
-		File targetDir = new File(filePath);
-		if(!targetDir.exists()) {
-			targetDir.mkdirs();
-			log.info(filePath + " Directory Created.");
-		}
-		
-		if (osname.contains("WIN"))
-			filePath =  System.getenv("APPDATA") + "\\spiData\\savedata.spi";
-		else
-			filePath =  System.getProperty("user.home") + "/spiData/savedata.spi";
-		
-		log.debug("file path= " + filePath);
-		
-		return filePath;
 	}
 	
 	
@@ -398,7 +378,7 @@ class SPIClientFile extends Thread
 				try {
 					spiDatum.setSpiPane(editorPane.getDocument().getText(0, editorPane.getDocument().getLength()));
 				} catch (BadLocationException e) {
-					// TODO Auto-generated catch block
+					log.error("fail to createSPIData");
 					e.printStackTrace();
 				}
 				//spiDatum.setSpiPane(tempDoc);
@@ -441,5 +421,33 @@ class SPIClientFile extends Thread
 		return spiData;
 	}
 	
-
+	/**
+	 * 
+	 * @return
+	 */
+	static String getSaveFilePathByOS()
+	{
+		String	filePath	=	null;
+		
+		String osname = (System.getProperty("os.name")).toUpperCase();
+		if (osname.contains("WIN"))
+			filePath =  System.getenv("APPDATA") + "\\spiData";
+		else
+			filePath =  System.getProperty("user.home") + "/spiData";
+		
+		File targetDir = new File(filePath);
+		if(!targetDir.exists()) {
+			targetDir.mkdirs();
+			log.info(filePath + " Directory Created.");
+		}
+		
+		if (osname.contains("WIN"))
+			filePath =  System.getenv("APPDATA") + "\\spiData\\savedata.spi";
+		else
+			filePath =  System.getProperty("user.home") + "/spiData/savedata.spi";
+		
+		log.debug("file path= " + filePath);
+		
+		return filePath;
+	}
 }
