@@ -42,11 +42,11 @@ class SPIClientFile extends Thread
 {
 	private final static transient Logger log = Logger.getLogger(SPIClientFile.class);
 	
-	private Vector<SPIDocument> spiDocs;
-	private Vector<SPIDatum> spiData;
-	private SPIFactory factory;
-	private boolean serviceStartedFlag = true;
-	private boolean fileSaveFlag = false;
+	private Vector<SPIDocument>	spiDocs;
+	private Vector<SPIDatum>	spiData;
+	private SPIFactory			factory;
+	private boolean				serviceStartedFlag	= true;
+	private boolean				fileSaveFlag		= false;
 	
 	public boolean isFileSaveFlag()
 	{
@@ -78,8 +78,9 @@ class SPIClientFile extends Thread
 	public SPIClientFile(Vector<SPIDocument> spiDocs, SPIFactory factory)
 	{
 		log.info("SPIClientFile Thread Initialization start.");
-		if (spiDocs != null)	this.spiDocs = spiDocs;	else	log.warn("spiDocs reference null.");
-		if (factory != null)	this.factory = factory;	else	log.warn("factory reference null. It will set later.");
+		
+		this.spiDocs = spiDocs;
+		this.factory = factory;
 		
 		spiData = new Vector<SPIDatum>();
 		log.info("SPIClientFile Thread Initialization End.");
@@ -107,7 +108,7 @@ class SPIClientFile extends Thread
 				log.info("File saving - fileSaveFlag true. Start saving data to file.");
 				doSave();
 				this.fileSaveFlag = false;
-				log.info("File loading - fileSaveFlag false. End saving data to file.");
+				log.info("File saving - fileSaveFlag false. End saving data to file.");
 			}
 		}
 	}
