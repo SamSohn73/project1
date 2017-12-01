@@ -44,7 +44,7 @@ class SPIMain
 		Thread netThread = new Thread(spiNet);
 		netThread.start();
 		 */
-
+		//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ need to change the order of factory creation and file thread creation
 		//Thread for File Management (Serialization)
 		log.info("File Service Thread start to load.");
 		Thread spiClientFileThread = new SPIClientFile(spiDocs, factory);

@@ -161,7 +161,7 @@ class SPIFactory
 				try {
 					popup	= new SPIMemoPopup(this, spiDocs, spiDoc, spiClientFileThread);
 					log.debug("Popup created successfully popup = " + popup.toString());
-					panel	= new SPIMemoPanel((SPIMemoPopup) popup, spiDocs, spiDoc, (JEditorPane) spiDatum.getSpiPane(), spiDatum.getBgColor());
+					panel	= new SPIMemoPanel((SPIMemoPopup) popup, spiDocs, spiDoc, (String) spiDatum.getSpiPane(), spiDatum.getBgColor());
 					log.debug("Panel creation successfully panel = " + panel.toString());
 					//QQQQQQQQQQ Create new PostIt near the requested PostIt position.
 					frame	= new SPIFrame(this, spiDocs, spiDoc, spiClientFileThread, spiDatum.getX(), spiDatum.getY(), spiDatum.getDim());

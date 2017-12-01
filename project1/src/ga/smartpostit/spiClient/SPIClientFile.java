@@ -4,17 +4,22 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.StringReader;
 import java.util.Vector;
 
 import javax.swing.JEditorPane;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Document;
+import javax.swing.text.EditorKit;
 import javax.swing.text.rtf.RTFEditorKit;
 
 import org.apache.log4j.Logger;
@@ -177,11 +182,17 @@ class SPIClientFile extends Thread
 				out.writeObject(spiDatum.getDim());
 				out.writeObject(spiDatum.getBgColor());
 				out.writeObject(spiDatum.getType());
+				log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 111 spiDatum.getType()=" + spiDatum.getType());
 				switch (spiDatum.getType()) {
 				case MEMO:
+					log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 222 spiDatum.getType()=" + spiDatum.getType());
 					try {
-						Document doc = (Document) spiDatum.getSpiPane();
-						out.writeObject(doc);
+						String editorPane = (String) spiDatum.getSpiPane();
+						
+						log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 333 editorPane=" + editorPane);
+						log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 444 (Document) spiDatum.getSpiPane()=" + spiDatum.getSpiPane());
+						out.writeObject(editorPane);
+						log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 555 (Document) spiDatum.getSpiPane()=" + spiDatum.getSpiPane());
 						//((JEditorPane) spiDatum.getSpiPane()).getEditorKit().write(out, doc, 0, doc.getLength());
 					} catch (Exception e) {
 						log.fatal("Fail to save the Memo PostIt.");
@@ -273,22 +284,35 @@ class SPIClientFile extends Thread
 			//@SuppressWarnings("unchecked")
 			//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 			//tempDocs = (Vector<SPIDocument>) in.readObject();
-			log.debug("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
-			while (in.available() >= 0) {
+			log.debug("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ " + fis.available());
+			while (fis.available() > 0) {
 				SPIDatum spiDatum = new SPIDatum();
-				
+				if (fis.available() <= 0) {log.debug("ZZZZZZZZZZZZZZZZZZZZZZZZ 111 " + fis.available()); break;}
 				spiDatum.setX((int) in.readObject());
+				log.debug("spiDatum.getX()= " + spiDatum.getX());
+				if (fis.available() <= 0) {log.debug("ZZZZZZZZZZZZZZZZZZZZZZZZ 222 " + fis.available()); break;}
 				spiDatum.setY((int) in.readObject());
+				log.debug("spiDatum.getY()= " + spiDatum.getY());
+				if (fis.available() <= 0) {log.debug("ZZZZZZZZZZZZZZZZZZZZZZZZ 333 " + fis.available()); break;}
 				spiDatum.setDim((Dimension) in.readObject());
+				log.debug("spiDatum.getDim()= " + spiDatum.getDim());
+				if (fis.available() <= 0) {log.debug("ZZZZZZZZZZZZZZZZZZZZZZZZ444 " + fis.available()); break;}
 				spiDatum.setBgColor((Color) in.readObject());
+				log.debug("spiDatum.getBgColor()= " + spiDatum.getBgColor());
+				if (fis.available() <= 0) {log.debug("ZZZZZZZZZZZZZZZZZZZZZZZZ 555 " + fis.available()); break;}
 				spiDatum.setType((SPIType) in.readObject());
+				log.debug("spiDatum.getType()= " + spiDatum.getType());
 
+				if (fis.available() <= 0) {log.debug("ZZZZZZZZZZZZZZZZZZZZZZZZ 666" + fis.available()); break;}
 				switch (spiDatum.getType()) {
 				case MEMO:
 					//Document doc = new DefaultStyledDocument();					
 					//JEditorPane tmpEP = new JEditorPane();
 					//tmpEP.getEditorKit().read(in, doc, 0);
-					spiDatum.setSpiPane((Document) in.readObject());
+					log.debug("QQQQQQQQQQQQQQQQQQQQQQ in the MEMO switch");
+					spiDatum.setSpiPane((String) in.readObject());
+					log.debug("spiDatum.getSpiPane()= " + spiDatum.getSpiPane());
+					//log.debug("spiDatum.getSpiPane()= " + ((Document) spiDatum.getSpiPane()).getText(0, ((Document) spiDatum.getSpiPane()).getLength()));
 					break;
 				case TODO:
 					
@@ -323,7 +347,7 @@ class SPIClientFile extends Thread
 				
 				spiData.add(spiDatum);
 			}
-			log.info("Successfully Deserialized.");
+			log.info("Successfully Deserialized. " + fis.available());
 		} catch (Exception e) {
 			log.fatal("Deserialization Failed");
 			e.printStackTrace();
@@ -358,11 +382,28 @@ class SPIClientFile extends Thread
 			
 			switch (spiDatum.getType()) {
 			case MEMO:
-				spiDatum.setBgColor(((SPIMemoPanel) spiDoc.getPanel()).getEditorPane().getBackground());
+				JEditorPane editorPane = ((SPIMemoPanel) spiDoc.getPanel()).getEditorPane();
+				spiDatum.setBgColor(editorPane.getBackground());
+				//EditorKit editorKit = editorPane.getEditorKit();
+				//DefaultStyledDocument tempDoc = (DefaultStyledDocument) editorKit.clone();
+				/*RTFEditorKit rtfParser = new RTFEditorKit();
+				Document document = rtfParser.createDefaultDocument();
+				rtfParser.read(new ByteArrayInputStream(rtfBytes), document, 0);
+				String text = document.getText(0, document.getLength());*/
+
 				
 				/* You get ""AWT-EventQueue-0" java.lang.NullPointerException
 				 if you try to get the GUI Component in the run() method.*/
-				spiDatum.setSpiPane((Document) ((JEditorPane) ((SPIMemoPanel) spiDoc.getPanel()).getEditorPane()).getDocument());
+				log.debug("QQQQQQQQQQQQQQQ createSPIData 111 SpiPane= " + editorPane);
+				try {
+					spiDatum.setSpiPane(editorPane.getDocument().getText(0, editorPane.getDocument().getLength()));
+				} catch (BadLocationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//spiDatum.setSpiPane(tempDoc);
+				log.debug("QQQQQQQQQQQQQQQ createSPIData 222 SpiPane= " + editorPane);
+
 				break;
 			case TODO:
 				
@@ -399,4 +440,6 @@ class SPIClientFile extends Thread
 		
 		return spiData;
 	}
+	
+
 }
