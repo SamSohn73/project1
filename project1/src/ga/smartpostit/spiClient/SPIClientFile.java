@@ -40,6 +40,7 @@ import ga.smartpostit.spiData.SPIType;
  */
 class SPIClientFile extends Thread
 {
+	//QQQQQQQQQQQQQQQQQQQQQQQ make it Singleton
 	private final static transient Logger log = Logger.getLogger(SPIClientFile.class);
 	
 	private Vector<SPIDocument>	spiDocs;

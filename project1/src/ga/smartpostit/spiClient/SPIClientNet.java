@@ -10,10 +10,11 @@ import org.apache.log4j.Logger;
  */
 class SPIClientNet implements Runnable
 {
+	//QQQQQQQQQQQQQQQQQQQQQQQ make it Singleton
 	private final transient Logger log = Logger.getLogger(this.getClass());
 	
 	public void run()
 	{
-		//QQQQQQQQQQ Use watcher service to update server side file
+		//QQQQQQQQQQ Use watcher service to update server-side file
 	}
 }

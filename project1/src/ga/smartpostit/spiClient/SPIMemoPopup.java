@@ -6,6 +6,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
+import javax.swing.border.LineBorder;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -113,6 +114,7 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		SPIFrame		spiFrame		= (SPIFrame) spiDoc.getFrame();
 		SPIMemoPanel	spiMemoPanel	= (SPIMemoPanel) spiDoc.getPanel();
 		JEditorPane		editorPane		= ((SPIMemoPanel) spiDoc.getPanel()).getEditorPane();
 		
@@ -126,21 +128,27 @@ class SPIMemoPopup extends SPIPopup implements ActionListener
 		
 		if (e.getSource() == mntmBlue) {
 			editorPane.setBackground(SPIUtil.BLUE);
+			spiFrame.getRootPane().setBorder(new LineBorder(SPIUtil.BLUE, 3));
 		}
 		if (e.getSource() == mntmGreen) {
 			editorPane.setBackground(SPIUtil.GREEN);
+			spiFrame.getRootPane().setBorder(new LineBorder(SPIUtil.GREEN, 3));
 		}
 		if (e.getSource() == mntmPink) {
 			editorPane.setBackground(SPIUtil.PINK);
+			spiFrame.getRootPane().setBorder(new LineBorder(SPIUtil.PINK, 3));
 		}
 		if (e.getSource() == mntmPurple) {
 			editorPane.setBackground(SPIUtil.PURPLE);
+			spiFrame.getRootPane().setBorder(new LineBorder(SPIUtil.PURPLE, 3));
 		}
 		if (e.getSource() == mntmWhite) {
 			editorPane.setBackground(SPIUtil.WHITE);
+			spiFrame.getRootPane().setBorder(new LineBorder(SPIUtil.WHITE, 3));
 		}
 		if (e.getSource() == mntmYellow) {
 			editorPane.setBackground(SPIUtil.YELLOW);
+			spiFrame.getRootPane().setBorder(new LineBorder(SPIUtil.YELLOW, 3));
 		}
 		if (e.getSource() == mntmUndo) {
 			spiMemoPanel.undo();

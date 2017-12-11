@@ -18,6 +18,7 @@ import javax.swing.KeyStroke;
 import javax.swing.Action;
 import javax.swing.JEditorPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.text.DefaultStyledDocument;
@@ -92,11 +93,11 @@ public class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListen
 		setLayout(new BorderLayout(0, 0));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		
-		
 		//EditorPane Setting
 		editorPane = new JEditorPane("text/rtf", "");
 		editorPane.setBackground(SPIUtil.YELLOW);
 		editorPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		//editorPane.setBorder(new LineBorder(SPIUtil.YELLOW, 5));
 		//Setting font, for changing font in the editorPane, you need following line.
 		editorPane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 		editorPane.setFont(new Font("굴림", Font.PLAIN, 16));
@@ -106,6 +107,7 @@ public class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListen
 		
 		//add(editorPane, BorderLayout.CENTER);
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		add(scrollPane, BorderLayout.CENTER);
 		scrollPane.setViewportView(editorPane);
 		

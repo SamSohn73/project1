@@ -6,8 +6,13 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.plaf.synth.ColorType;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -18,7 +23,10 @@ import java.awt.event.WindowEvent;
 
 import org.apache.log4j.Logger;
 
+import ga.smartpostit.spiData.SPIUtil;
+
 import java.awt.event.WindowFocusListener;
+import java.awt.Color;
 
 
 /**
@@ -65,15 +73,19 @@ public class SPIFrame extends JFrame	// with minimize, maximize button
 			e.printStackTrace();
 		}*/
 		
+		//BasicFrameTitlePane titlePane = (BasicInternalFrameTitlePane) ((BasicInternalFrameUI) this.getRootPane().getUI()).getNorthPane();
+		
 		setDefaultLookAndFeelDecorated(true);
 		if (x >= 0 && y >= 0)	setBounds(x, y, 250, 250);
 		else					setBounds(100, 100, 250, 250);
 		if (dim != null)		this.setPreferredSize(dim);
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));
-		getRootPane().setBorder(new EmptyBorder(0, 0, 0, 0));
 		
-
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));
+		//getRootPane().setBorder(new EmptyBorder(3, 3, 3, 3));
+		getRootPane().setBorder(new LineBorder(SPIUtil.YELLOW, 3));
+		
+		
 		//getRootPane().setBorder(new LineBorder(new Color(0xEE0000), 0));
 		//All frame Removed
 		//setUndecorated(true);
@@ -89,6 +101,20 @@ public class SPIFrame extends JFrame	// with minimize, maximize button
 		SyntheticaLookAndFeel.findComponent("RootPane.titlePane.toggleButton", root).setVisible(false);
 		SyntheticaLookAndFeel.findComponent("RootPane.titlePane.iconifyButton", root).setVisible(false);
 		SyntheticaLookAndFeel.findComponent("RootPane.titlePane.menuButton", root).setVisible(false);*/
+		
+		/*
+		UIManager.getLookAndFeelDefaults().put("Desktop.background", Color.RED);
+		UIManager.getLookAndFeelDefaults().put("InternalFrame.background", Color.RED);
+		UIManager.getLookAndFeelDefaults().put("InternalFrame.inactiveTitleBackground", Color.RED);
+		UIManager.getLookAndFeelDefaults().put("InternalFrame.paletteBackground", Color.RED);
+		UIManager.getLookAndFeelDefaults().put("Panel.background", Color.RED);
+		UIManager.getLookAndFeelDefaults().put("Viewport.background", Color.RED);
+		UIManager.getLookAndFeelDefaults().put("control", Color.RED);
+		UIManager.getLookAndFeelDefaults().put("desktop", Color.RED);
+		UIManager.getLookAndFeelDefaults().put("window", Color.RED);
+		UIManager.getLookAndFeelDefaults().put("InternalFrame.activeTitleBackground", Color.RED);
+		UIManager.getLookAndFeelDefaults().put("InternalFrame.inactiveTitleBackground", Color.RED);
+		UIManager.getLookAndFeelDefaults().put("TitledBorder.titleColor", Color.RED);*/
 		
 		
 		/**

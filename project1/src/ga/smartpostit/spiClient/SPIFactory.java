@@ -20,6 +20,7 @@ import ga.smartpostit.spiData.SPIType;
  */
 class SPIFactory
 {
+	//QQQQQQQQQQQQQQQQQQQQQQQ make it Singleton
 	private final transient Logger log = Logger.getLogger(this.getClass());
 
 	private transient Thread spiClientFileThread;
