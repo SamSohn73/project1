@@ -187,13 +187,5 @@ public class SPIFrame extends JFrame	// with minimize, maximize button
 			}
 		});
 	}
-	
-	/**
-	 * Create the frame.
-	 */
-/*	public SPIFrame(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, Thread spiClientFileThread, int x, int y, Dimension dim)
-	{	
-
-	}*/
 
 }
