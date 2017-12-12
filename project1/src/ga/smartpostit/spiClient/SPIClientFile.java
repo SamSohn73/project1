@@ -20,6 +20,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Document;
 import javax.swing.text.EditorKit;
+import javax.swing.text.StyledDocument;
 import javax.swing.text.rtf.RTFEditorKit;
 
 import org.apache.log4j.Logger;
@@ -167,18 +168,25 @@ class SPIClientFile extends Thread
 				log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 111 spiDatum.getType()=" + spiDatum.getType());
 				switch (spiDatum.getType()) {
 				case MEMO:
-					log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 222 spiDatum.getType()=" + spiDatum.getType());
+					//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+					//I can't find any good way to save them in one file during these weeks this time.
+					//I will save them in separate files. Shit!
+
+					String saveFilePath			= getSavePathByOS() + spiData.indexOf(spiDatum);
+					BufferedOutputStream bOut	= new BufferedOutputStream(new FileOutputStream(saveFilePath));
+					log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 222 saveFilePath=" + saveFilePath);
 					try {
-						String editorPane = (String) spiDatum.getSpiPane();
+						JEditorPane editorPane	= (JEditorPane) spiDatum.getSpiPane();
+						StyledDocument doc		= (StyledDocument)editorPane.getDocument();
+						RTFEditorKit kit		= new RTFEditorKit();
 						
-						log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 333 editorPane=" + editorPane);
-						log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 444 (Document) spiDatum.getSpiPane()=" + spiDatum.getSpiPane());
-						out.writeObject(editorPane);
-						log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 555 (Document) spiDatum.getSpiPane()=" + spiDatum.getSpiPane());
-						//((JEditorPane) spiDatum.getSpiPane()).getEditorKit().write(out, doc, 0, doc.getLength());
+						kit.write(bOut, doc, doc.getStartPosition().getOffset(), doc.getLength());
+						log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 333 spiDatum.getType()=" + spiDatum.getType());
 					} catch (Exception e) {
-						log.fatal("Fail to save the Memo PostIt.");
+						log.error("Fail to save the Memo PostIt. " + saveFilePath);
 						e.printStackTrace();
+					} finally {
+						bOut.close();
 					}
 					
 					break;
@@ -288,13 +296,36 @@ class SPIClientFile extends Thread
 				if (fis.available() <= 0) {log.debug("ZZZZZZZZZZZZZZZZZZZZZZZZ 666" + fis.available()); break;}
 				switch (spiDatum.getType()) {
 				case MEMO:
+					//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+					//I can't find any good way to save them in one file during these weeks this time.
+					//I will save them in separate files. Shit!
 					//Document doc = new DefaultStyledDocument();					
 					//JEditorPane tmpEP = new JEditorPane();
 					//tmpEP.getEditorKit().read(in, doc, 0);
-					log.debug("QQQQQQQQQQQQQQQQQQQQQQ in the MEMO switch");
-					spiDatum.setSpiPane((String) in.readObject());
-					log.debug("spiDatum.getSpiPane()= " + spiDatum.getSpiPane());
+					//log.debug("QQQQQQQQQQQQQQQQQQQQQQ in the MEMO switch");
+					//spiDatum.setSpiPane((String) in.readObject());
+					//log.debug("spiDatum.getSpiPane()= " + spiDatum.getSpiPane());
 					//log.debug("spiDatum.getSpiPane()= " + ((Document) spiDatum.getSpiPane()).getText(0, ((Document) spiDatum.getSpiPane()).getLength()));
+					
+					//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+					JEditorPane editorPane = new JEditorPane();
+					spiDatum.setSpiPane(editorPane);
+					String loadFilePath			= getSavePathByOS() + spiData.indexOf(spiDatum);
+					BufferedInputStream bIn	= new BufferedInputStream(new FileInputStream(loadFilePath));
+					log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 222 loadFilePath=" + loadFilePath);
+					RTFEditorKit kit		= new RTFEditorKit();
+					try {
+						kit.read(bIn, ((JEditorPane) spiDatum.getSpiPane()).getDocument(), 0);
+						log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 333 spiDatum.getType()=" + spiDatum.getType());
+					} catch (Exception e) {
+						log.error("Fail to load the Memo PostIt. " + loadFilePath);
+						e.printStackTrace();
+					} finally {
+						try {
+							if (in != null)		bIn.close();
+						} catch (Exception e) {}
+					}
+					
 					break;
 				case TODO:
 					
@@ -372,20 +403,12 @@ class SPIClientFile extends Thread
 				Document document = rtfParser.createDefaultDocument();
 				rtfParser.read(new ByteArrayInputStream(rtfBytes), document, 0);
 				String text = document.getText(0, document.getLength());*/
-
 				
 				/* You get ""AWT-EventQueue-0" java.lang.NullPointerException
 				 if you try to get the GUI Component in the run() method.*/
 				log.debug("QQQQQQQQQQQQQQQ createSPIData 111 SpiPane= " + editorPane);
-				try {
-					spiDatum.setSpiPane(editorPane.getDocument().getText(0, editorPane.getDocument().getLength()));
-				} catch (BadLocationException e) {
-					log.error("fail to createSPIData");
-					e.printStackTrace();
-				}
-				//spiDatum.setSpiPane(tempDoc);
-				log.debug("QQQQQQQQQQQQQQQ createSPIData 222 SpiPane= " + editorPane);
-
+				//spiDatum.setSpiPane(editorPane.getDocument().getText(0, editorPane.getDocument().getLength()));
+				spiDatum.setSpiPane(editorPane);
 				break;
 			case TODO:
 				
@@ -422,6 +445,41 @@ class SPIClientFile extends Thread
 		
 		return spiData;
 	}
+	
+	
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	static String getSavePathByOS()
+	{
+		String	filePath	=	null;
+		
+		String osname = (System.getProperty("os.name")).toUpperCase();
+		if (osname.contains("WIN"))
+			filePath =  System.getenv("APPDATA") + "\\spiData";
+		else
+			filePath =  System.getProperty("user.home") + "/spiData";
+		
+		File targetDir = new File(filePath);
+		if(!targetDir.exists()) {
+			targetDir.mkdirs();
+			log.info(filePath + " Directory Created.");
+		}
+		
+		if (osname.contains("WIN"))
+			filePath =  System.getenv("APPDATA") + "\\spiData\\";
+		else
+			filePath =  System.getProperty("user.home") + "/spiData/";
+		
+		log.debug("file path= " + filePath);
+		
+		return filePath;
+	}
+	
+	
 	
 	/**
 	 * 

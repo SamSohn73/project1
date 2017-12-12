@@ -56,7 +56,7 @@ public class SPIFrame extends JFrame	// with minimize, maximize button
 	/**
 	 * Create the frame.
 	 */
-	public SPIFrame(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, Thread spiClientFileThread, int x, int y, Dimension dim)
+	public SPIFrame(SPIFactory factory, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, Thread spiClientFileThread, int x, int y, Dimension dim, Color bgColor)
 	{
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		//super();
@@ -83,7 +83,10 @@ public class SPIFrame extends JFrame	// with minimize, maximize button
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Program Files\\Java\\PostIt-Sam.png"));
 		//getRootPane().setBorder(new EmptyBorder(3, 3, 3, 3));
-		getRootPane().setBorder(new LineBorder(SPIUtil.YELLOW, 3));
+		if (bgColor != null)
+			getRootPane().setBorder(new LineBorder(bgColor, 3));
+		else
+			getRootPane().setBorder(new LineBorder(SPIUtil.YELLOW, 3));
 		
 		
 		//getRootPane().setBorder(new LineBorder(new Color(0xEE0000), 0));

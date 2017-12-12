@@ -82,7 +82,7 @@ public class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListen
 	/**
 	 * Create the panel.
 	 */
-	public SPIMemoPanel(SPIMemoPopup popup, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, String loadedEditorPane, Color bgColor)
+	public SPIMemoPanel(SPIMemoPopup popup, Vector<SPIDocument> spiDocs, SPIDocument spiDoc, JEditorPane loadedEditorPane, Color bgColor)
 	{
 		super();
 		this.popup = popup;
@@ -103,7 +103,9 @@ public class SPIMemoPanel extends JPanel implements SPIPanel, UndoableEditListen
 		editorPane.setFont(new Font("굴림", Font.PLAIN, 16));
 		
 		if (bgColor != null)			editorPane.setBackground(bgColor);
-		if (loadedEditorPane != null)	editorPane.setText(loadedEditorPane);
+		if (loadedEditorPane != null)	{
+			editorPane.setDocument(loadedEditorPane.getDocument());
+		}
 		
 		//add(editorPane, BorderLayout.CENTER);
 		JScrollPane scrollPane = new JScrollPane();

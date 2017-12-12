@@ -93,7 +93,7 @@ class SPIFactory
 				log.debug("Popup created successfully popup = " + popup.toString());
 				panel	= new SPIMemoPanel((SPIMemoPopup) popup, spiDocs, spiDoc, null, null);
 				log.debug("Panel creation successfully panel = " + panel.toString());
-				frame	= new SPIFrame(this, spiDocs, spiDoc, spiClientFileThread, x, y, null);
+				frame	= new SPIFrame(this, spiDocs, spiDoc, spiClientFileThread, x, y, null, null);
 				log.debug("Frame created successfully. frame = " + frame.toString());
 			} catch (Exception e){
 				log.fatal("Fail to Create Swing Object");
@@ -118,31 +118,31 @@ class SPIFactory
 
 			log.info("A New SPI Memo Created successfully. Doc count = " + spiDocs.size());
 		}
-		else if (type == SPIType.TODO) {
+		if (type == SPIType.TODO) {
 
 		}
-		else if (type == SPIType.FAVORITE) {
+		if (type == SPIType.FAVORITE) {
 
 		}
-		else if (type == SPIType.GRAPHIC) {
+		if (type == SPIType.GRAPHIC) {
 
 		}
-		else if (type == SPIType.CALCULATOR) {
+		if (type == SPIType.CALCULATOR) {
 
 		}
-		else if (type == SPIType.VOICE_RECOGNITION) {
+		if (type == SPIType.VOICE_RECOGNITION) {
 
 		}
-		else if (type == SPIType.CHAR_RECOGNITION) {
+		if (type == SPIType.CHAR_RECOGNITION) {
 
 		}
-		else if (type == SPIType.CAMERA) {
+		if (type == SPIType.CAMERA) {
 
 		}
-		else if (type == SPIType.CALENDAR) {
+		if (type == SPIType.CALENDAR) {
 			
 		}
-		else if (type == SPIType.STOPWATCH) {
+		if (type == SPIType.STOPWATCH) {
 
 		}
 	}
@@ -172,10 +172,10 @@ class SPIFactory
 				try {
 					popup	= new SPIMemoPopup(this, spiDocs, spiDoc, spiClientFileThread);
 					log.debug("Popup created successfully popup = " + popup.toString());
-					panel	= new SPIMemoPanel((SPIMemoPopup) popup, spiDocs, spiDoc, (String) spiDatum.getSpiPane(), spiDatum.getBgColor());
+					panel	= new SPIMemoPanel((SPIMemoPopup) popup, spiDocs, spiDoc, (JEditorPane) spiDatum.getSpiPane(), spiDatum.getBgColor());
 					log.debug("Panel creation successfully panel = " + panel.toString());
 					//QQQQQQQQQQ Create new PostIt near the requested PostIt position.
-					frame	= new SPIFrame(this, spiDocs, spiDoc, spiClientFileThread, spiDatum.getX(), spiDatum.getY(), spiDatum.getDim());
+					frame	= new SPIFrame(this, spiDocs, spiDoc, spiClientFileThread, spiDatum.getX(), spiDatum.getY(), spiDatum.getDim(), spiDatum.getBgColor());
 					log.debug("Frame created successfully. frame = " + frame.toString());
 				} catch (Exception e){
 					log.fatal("Fail to Create Swing Object");
@@ -199,31 +199,31 @@ class SPIFactory
 
 				log.info("A New SPI Memo Created successfully. Doc count = " + spiDocs.size());
 			}
-			else if (type == SPIType.TODO) {
+			if (type == SPIType.TODO) {
 
 			}
-			else if (type == SPIType.FAVORITE) {
+			if (type == SPIType.FAVORITE) {
 
 			}
-			else if (type == SPIType.GRAPHIC) {
+			if (type == SPIType.GRAPHIC) {
 
 			}
-			else if (type == SPIType.CALCULATOR) {
+			if (type == SPIType.CALCULATOR) {
 
 			}
-			else if (type == SPIType.VOICE_RECOGNITION) {
+			if (type == SPIType.VOICE_RECOGNITION) {
 
 			}
-			else if (type == SPIType.CHAR_RECOGNITION) {
+			if (type == SPIType.CHAR_RECOGNITION) {
 
 			}
-			else if (type == SPIType.CAMERA) {
+			if (type == SPIType.CAMERA) {
 
 			}
-			else if (type == SPIType.CALENDAR) {
+			if (type == SPIType.CALENDAR) {
 				
 			}
-			else if (type == SPIType.STOPWATCH) {
+			if (type == SPIType.STOPWATCH) {
 
 			}
 		}
