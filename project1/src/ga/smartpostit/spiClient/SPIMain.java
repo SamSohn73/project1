@@ -58,9 +58,11 @@ class SPIMain
 		factory.setSpiClientFileThread((SPIClientFile) spiClientFileThread);
 		log.info("File Service Thread started OK.");
 		
+		
+		
 	}
 	
-	 
+	
 	public static void main(String[] args)
 	{
 		//Variables

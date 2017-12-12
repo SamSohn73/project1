@@ -118,7 +118,7 @@ class SPIClientFile extends Thread
 	/**
 	 * 
 	 */
-	private void doSave()
+	public void doSave()
 	{
 		doFileSerializing();
 	}
@@ -126,7 +126,7 @@ class SPIClientFile extends Thread
 	/**
 	 * 
 	 */
-	private void doLoad()
+	public void doLoad()
 	{
 		log.info("spiData Loading start.");
 		doFileDeserializing();
@@ -453,7 +453,7 @@ class SPIClientFile extends Thread
 	 * 
 	 * @return
 	 */
-	static String getSavePathByOS()
+	public static String getSavePathByOS()
 	{
 		String	filePath	=	null;
 		
@@ -485,7 +485,7 @@ class SPIClientFile extends Thread
 	 * 
 	 * @return
 	 */
-	static String getSaveFilePathByOS()
+	public static String getSaveFilePathByOS()
 	{
 		String	filePath	=	null;
 		
