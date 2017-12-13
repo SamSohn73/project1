@@ -89,6 +89,7 @@ class SPIMain
 		//Login Window
 		//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ 1. loading contents in the PostIt
 		//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ 2. need to check the starting sequence
+		
 		//Start PostIt Swing thread
 		EventQueue.invokeLater(new Runnable()
 		{
