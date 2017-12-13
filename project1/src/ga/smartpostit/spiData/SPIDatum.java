@@ -20,7 +20,7 @@ public class SPIDatum implements Serializable
 	Dimension		dim;
 	Color			bgColor;
 	SPIType			type;
-	Object			spiPane;
+	transient		Object		spiPane;
 	
 	public int getX()
 	{

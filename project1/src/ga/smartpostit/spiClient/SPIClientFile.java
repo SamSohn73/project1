@@ -7,6 +7,7 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -157,21 +158,15 @@ class SPIClientFile extends Thread
 			fos = new FileOutputStream(file);
 			bos = new BufferedOutputStream(fos);
 			out = new ObjectOutputStream(bos);
-			//out.writeObject(spiData); //QQQQQQQQQQ Serialize all together. may not work properly I guess.
+			out.writeObject(spiData); //QQQQQQQQQQ Serialize all together. may not work properly I guess.
 
 			for (SPIDatum spiDatum: spiData) {
-				out.writeObject(spiDatum.getX());
-				out.writeObject(spiDatum.getY());
-				out.writeObject(spiDatum.getDim());
-				out.writeObject(spiDatum.getBgColor());
-				out.writeObject(spiDatum.getType());
 				log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 111 spiDatum.getType()=" + spiDatum.getType());
 				switch (spiDatum.getType()) {
 				case MEMO:
 					//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 					//I can't find any good way to save them in one file during these weeks this time.
-					//I will save them in separate files. Shit!
-
+					//I will save them in separate files. Shit!					
 					String saveFilePath			= getSavePathByOS() + spiData.indexOf(spiDatum);
 					BufferedOutputStream bOut	= new BufferedOutputStream(new FileOutputStream(saveFilePath));
 					log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 222 saveFilePath=" + saveFilePath);
@@ -246,6 +241,7 @@ class SPIClientFile extends Thread
 	 * 
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public void doFileDeserializing()
 	{
 		FileInputStream		fis			= null;
@@ -253,7 +249,6 @@ class SPIClientFile extends Thread
 		ObjectInputStream	in			= null;
 		
 		log.info("SPIClientFile Deserialization Start.");
-
 		String filePath = getSaveFilePathByOS();
 		File file = new File(filePath);
 		// if not exists, it's first time running. return it
@@ -262,105 +257,17 @@ class SPIClientFile extends Thread
 			return;
 		}
 		
+		log.info("Deserialization Start.");
 		try {
 			//if exists, deserialize it 
 			//if deserialize fail, return with message dialog.
 			fis = new FileInputStream(file);
 			bis = new BufferedInputStream(fis);
 			in = new ObjectInputStream(bis);
-			
-			//QQQQQQQQQQ Looks very very suspicious
-			//QQQQQQQQQQ Probably this would be more complicated
-			//@SuppressWarnings("unchecked")
-			//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
-			//tempDocs = (Vector<SPIDocument>) in.readObject();
-			log.debug("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ " + fis.available());
-			while (fis.available() > 0) {
-				SPIDatum spiDatum = new SPIDatum();
-				if (fis.available() <= 0) {log.debug("ZZZZZZZZZZZZZZZZZZZZZZZZ 111 " + fis.available()); break;}
-				spiDatum.setX((int) in.readObject());
-				log.debug("spiDatum.getX()= " + spiDatum.getX());
-				if (fis.available() <= 0) {log.debug("ZZZZZZZZZZZZZZZZZZZZZZZZ 222 " + fis.available()); break;}
-				spiDatum.setY((int) in.readObject());
-				log.debug("spiDatum.getY()= " + spiDatum.getY());
-				if (fis.available() <= 0) {log.debug("ZZZZZZZZZZZZZZZZZZZZZZZZ 333 " + fis.available()); break;}
-				spiDatum.setDim((Dimension) in.readObject());
-				log.debug("spiDatum.getDim()= " + spiDatum.getDim());
-				if (fis.available() <= 0) {log.debug("ZZZZZZZZZZZZZZZZZZZZZZZZ444 " + fis.available()); break;}
-				spiDatum.setBgColor((Color) in.readObject());
-				log.debug("spiDatum.getBgColor()= " + spiDatum.getBgColor());
-				if (fis.available() <= 0) {log.debug("ZZZZZZZZZZZZZZZZZZZZZZZZ 555 " + fis.available()); break;}
-				spiDatum.setType((SPIType) in.readObject());
-				log.debug("spiDatum.getType()= " + spiDatum.getType());
 
-				if (fis.available() <= 0) {log.debug("ZZZZZZZZZZZZZZZZZZZZZZZZ 666" + fis.available()); break;}
-				switch (spiDatum.getType()) {
-				case MEMO:
-					//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
-					//I can't find any good way to save them in one file during these weeks this time.
-					//I will save them in separate files. Shit!
-					//Document doc = new DefaultStyledDocument();					
-					//JEditorPane tmpEP = new JEditorPane();
-					//tmpEP.getEditorKit().read(in, doc, 0);
-					//log.debug("QQQQQQQQQQQQQQQQQQQQQQ in the MEMO switch");
-					//spiDatum.setSpiPane((String) in.readObject());
-					//log.debug("spiDatum.getSpiPane()= " + spiDatum.getSpiPane());
-					//log.debug("spiDatum.getSpiPane()= " + ((Document) spiDatum.getSpiPane()).getText(0, ((Document) spiDatum.getSpiPane()).getLength()));
-					
-					//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
-					JEditorPane editorPane = new JEditorPane();
-					spiDatum.setSpiPane(editorPane);
-					String loadFilePath			= getSavePathByOS() + spiData.indexOf(spiDatum);
-					BufferedInputStream bIn	= new BufferedInputStream(new FileInputStream(loadFilePath));
-					log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 222 loadFilePath=" + loadFilePath);
-					RTFEditorKit kit		= new RTFEditorKit();
-					try {
-						kit.read(bIn, ((JEditorPane) spiDatum.getSpiPane()).getDocument(), 0);
-						log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 333 spiDatum.getType()=" + spiDatum.getType());
-					} catch (Exception e) {
-						log.error("Fail to load the Memo PostIt. " + loadFilePath);
-						e.printStackTrace();
-					} finally {
-						try {
-							if (in != null)		bIn.close();
-						} catch (Exception e) {}
-					}
-					
-					break;
-				case TODO:
-					
-					break;
-				case FAVORITE:
-					
-					break;
-				case GRAPHIC:
-					
-					break;
-				case CALCULATOR:
-					
-					break;
-				case VOICE_RECOGNITION:
-					
-					break;
-				case CHAR_RECOGNITION:
-					
-					break;
-				case CAMERA:
-					
-					break;
-				case CALENDAR:
-					
-					break;
-				case STOPWATCH:
-					
-					break;
-				default:
-					break;
-				}
-				
-				spiData.add(spiDatum);
-			}
-			log.info("Successfully Deserialized. " + fis.available());
+			spiData = (Vector<SPIDatum>) in.readObject();
+			
+			log.info("Deserialization End.");
 		} catch (Exception e) {
 			log.fatal("Deserialization Failed");
 			e.printStackTrace();
@@ -370,11 +277,71 @@ class SPIClientFile extends Thread
 				bis.close();
 				in.close();
 			} catch (IOException e) {
-				log.fatal("Deserialization stream closing Failed");
+				log.fatal("Deserialization Closing Failed");
 				e.printStackTrace();
 			}
 		}
-
+		
+		log.info("Loading Data Files Start. ");
+		for (SPIDatum spiDatum: spiData) {
+			switch (spiDatum.getType()) {
+			case MEMO:
+				//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+				//I can't find any good way to save them in one file during these weeks this time.
+				//I will save them in separate files. Shit!
+				JEditorPane editorPane = new JEditorPane();
+				spiDatum.setSpiPane(editorPane);
+				String loadFilePath			= getSavePathByOS() + spiData.indexOf(spiDatum);
+				BufferedInputStream bIn = null;
+				try {
+					bIn = new BufferedInputStream(new FileInputStream(loadFilePath));
+					log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 222 loadFilePath=" + loadFilePath);
+					RTFEditorKit kit		= new RTFEditorKit();
+					kit.read(bIn, ((JEditorPane) spiDatum.getSpiPane()).getDocument(), 0);
+					log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 333 spiDatum.getSpiPane()).getDocument().getText()=" + ((JEditorPane) spiDatum.getSpiPane()).getDocument().getText(0, ((JEditorPane) spiDatum.getSpiPane()).getDocument().getLength()));
+				} catch (Exception e) {
+					log.error("Fail to load the Memo PostIt. " + loadFilePath);
+					e.printStackTrace();
+				} finally {
+					try {
+						if (in != null)		bIn.close();
+					} catch (Exception e) {}
+				}
+				
+				break;
+			case TODO:
+				
+				break;
+			case FAVORITE:
+				
+				break;
+			case GRAPHIC:
+				
+				break;
+			case CALCULATOR:
+				
+				break;
+			case VOICE_RECOGNITION:
+				
+				break;
+			case CHAR_RECOGNITION:
+				
+				break;
+			case CAMERA:
+				
+				break;
+			case CALENDAR:
+				
+				break;
+			case STOPWATCH:
+				
+				break;
+			default:
+				break;
+			}
+		}
+		log.info("Loading Data Files End. ");
+		log.info("SPIClientFile Deserialization End.");
 		return;
 	}
 	

@@ -165,7 +165,8 @@ class SPIFactory
 		for (SPIDatum spiDatum:spiData) {
 			log.debug("Start for looping.");
 			SPIDocument spiDoc = new SPIDocument();
-			SPIType type = spiDoc.getType();	spiDoc.setType(type);
+			SPIType type = spiDatum.getType();
+			spiDoc.setType(type);
 			if (type == SPIType.MEMO) {
 				log.debug("Document Type MEMO.");
 				//Create Frame, Panel, Popup Object
@@ -173,7 +174,7 @@ class SPIFactory
 					popup	= new SPIMemoPopup(this, spiDocs, spiDoc, spiClientFileThread);
 					log.debug("Popup created successfully popup = " + popup.toString());
 					panel	= new SPIMemoPanel((SPIMemoPopup) popup, spiDocs, spiDoc, (JEditorPane) spiDatum.getSpiPane(), spiDatum.getBgColor());
-					log.debug("Panel creation successfully panel = " + panel.toString());
+					log.debug("Panel creation successfully ((JEditorPane) spiDatum.getSpiPane()).getText() = " + ((JEditorPane) spiDatum.getSpiPane()).getText());
 					//QQQQQQQQQQ Create new PostIt near the requested PostIt position.
 					frame	= new SPIFrame(this, spiDocs, spiDoc, spiClientFileThread, spiDatum.getX(), spiDatum.getY(), spiDatum.getDim(), spiDatum.getBgColor());
 					log.debug("Frame created successfully. frame = " + frame.toString());
