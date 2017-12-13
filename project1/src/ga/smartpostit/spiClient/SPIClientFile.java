@@ -35,7 +35,7 @@ import ga.smartpostit.spiData.SPIType;
  * 파일에서 역직렬화하여 객체로 바꿔주는 기능을 수행.
  * 역직렬화의 경우는 최초 실행 시 한 번만 수행하면 되지만
  * 직렬화의 경우는 객체들 중 메모의 내용이 바뀌는 것이 있을 때마다 수행해주어야 하므로
- * 스레드에서 수행해주는 것이 좋다.
+ * 스레드에서 수행해주는 것이 좋겠다.
  * 
  * @author sam
  * @version 0.1
@@ -96,7 +96,7 @@ class SPIClientFile extends Thread
 	{
 		log.info("SPIClientFile Thread Starts running.");
 		
-		//QQQQQQQQQQ Need to make a thread pool or something
+		//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ Need to make a thread pool or something
 		while(true) {
 			//First time loading
 			if (this.serviceStartedFlag && this.factory != null) {
@@ -158,25 +158,21 @@ class SPIClientFile extends Thread
 			fos = new FileOutputStream(file);
 			bos = new BufferedOutputStream(fos);
 			out = new ObjectOutputStream(bos);
-			out.writeObject(spiData); //QQQQQQQQQQ Serialize all together. may not work properly I guess.
+			out.writeObject(spiData); //QQQQQQQQQQ Serialize all together not working properly.
 
 			for (SPIDatum spiDatum: spiData) {
-				log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 111 spiDatum.getType()=" + spiDatum.getType());
 				switch (spiDatum.getType()) {
 				case MEMO:
-					//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 					//I can't find any good way to save them in one file during these weeks this time.
 					//I will save them in separate files. Shit!					
 					String saveFilePath			= getSavePathByOS() + spiData.indexOf(spiDatum);
 					BufferedOutputStream bOut	= new BufferedOutputStream(new FileOutputStream(saveFilePath));
-					log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 222 saveFilePath=" + saveFilePath);
 					try {
 						JEditorPane editorPane	= (JEditorPane) spiDatum.getSpiPane();
 						StyledDocument doc		= (StyledDocument)editorPane.getDocument();
 						RTFEditorKit kit		= new RTFEditorKit();
 						
 						kit.write(bOut, doc, doc.getStartPosition().getOffset(), doc.getLength());
-						log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 333 spiDatum.getType()=" + spiDatum.getType());
 					} catch (Exception e) {
 						log.error("Fail to save the Memo PostIt. " + saveFilePath);
 						e.printStackTrace();
@@ -286,7 +282,6 @@ class SPIClientFile extends Thread
 		for (SPIDatum spiDatum: spiData) {
 			switch (spiDatum.getType()) {
 			case MEMO:
-				//QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 				//I can't find any good way to save them in one file during these weeks this time.
 				//I will save them in separate files. Shit!
 				JEditorPane editorPane = new JEditorPane();
@@ -295,10 +290,9 @@ class SPIClientFile extends Thread
 				BufferedInputStream bIn = null;
 				try {
 					bIn = new BufferedInputStream(new FileInputStream(loadFilePath));
-					log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 222 loadFilePath=" + loadFilePath);
 					RTFEditorKit kit		= new RTFEditorKit();
 					kit.read(bIn, ((JEditorPane) spiDatum.getSpiPane()).getDocument(), 0);
-					log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 333 spiDatum.getSpiPane()).getDocument().getText()=" + ((JEditorPane) spiDatum.getSpiPane()).getDocument().getText(0, ((JEditorPane) spiDatum.getSpiPane()).getDocument().getLength()));
+					//log.debug("QQQQQQQQQQQQQQQQ doFileSerializing 333 spiDatum.getSpiPane()).getDocument().getText()=" + ((JEditorPane) spiDatum.getSpiPane()).getDocument().getText(0, ((JEditorPane) spiDatum.getSpiPane()).getDocument().getLength()));
 				} catch (Exception e) {
 					log.error("Fail to load the Memo PostIt. " + loadFilePath);
 					e.printStackTrace();
@@ -373,7 +367,6 @@ class SPIClientFile extends Thread
 				
 				/* You get ""AWT-EventQueue-0" java.lang.NullPointerException
 				 if you try to get the GUI Component in the run() method.*/
-				log.debug("QQQQQQQQQQQQQQQ createSPIData 111 SpiPane= " + editorPane);
 				//spiDatum.setSpiPane(editorPane.getDocument().getText(0, editorPane.getDocument().getLength()));
 				spiDatum.setSpiPane(editorPane);
 				break;
@@ -414,8 +407,6 @@ class SPIClientFile extends Thread
 	}
 	
 	
-	
-	
 	/**
 	 * 
 	 * @return
@@ -425,10 +416,8 @@ class SPIClientFile extends Thread
 		String	filePath	=	null;
 		
 		String osname = (System.getProperty("os.name")).toUpperCase();
-		if (osname.contains("WIN"))
-			filePath =  System.getenv("APPDATA") + "\\spiData";
-		else
-			filePath =  System.getProperty("user.home") + "/spiData";
+		if (osname.contains("WIN"))		filePath =  System.getenv("APPDATA") + "\\spiData";
+		else							filePath =  System.getProperty("user.home") + "/spiData";
 		
 		File targetDir = new File(filePath);
 		if(!targetDir.exists()) {
@@ -436,12 +425,8 @@ class SPIClientFile extends Thread
 			log.info(filePath + " Directory Created.");
 		}
 		
-		if (osname.contains("WIN"))
-			filePath =  System.getenv("APPDATA") + "\\spiData\\";
-		else
-			filePath =  System.getProperty("user.home") + "/spiData/";
-		
-		log.debug("file path= " + filePath);
+		if (osname.contains("WIN"))		filePath =  System.getenv("APPDATA") + "\\spiData\\";
+		else							filePath =  System.getProperty("user.home") + "/spiData/";
 		
 		return filePath;
 	}
@@ -457,10 +442,8 @@ class SPIClientFile extends Thread
 		String	filePath	=	null;
 		
 		String osname = (System.getProperty("os.name")).toUpperCase();
-		if (osname.contains("WIN"))
-			filePath =  System.getenv("APPDATA") + "\\spiData";
-		else
-			filePath =  System.getProperty("user.home") + "/spiData";
+		if (osname.contains("WIN"))		filePath =  System.getenv("APPDATA") + "\\spiData";
+		else							filePath =  System.getProperty("user.home") + "/spiData";
 		
 		File targetDir = new File(filePath);
 		if(!targetDir.exists()) {
@@ -468,12 +451,8 @@ class SPIClientFile extends Thread
 			log.info(filePath + " Directory Created.");
 		}
 		
-		if (osname.contains("WIN"))
-			filePath =  System.getenv("APPDATA") + "\\spiData\\savedata.spi";
-		else
-			filePath =  System.getProperty("user.home") + "/spiData/savedata.spi";
-		
-		log.debug("file path= " + filePath);
+		if (osname.contains("WIN"))		filePath =  System.getenv("APPDATA") + "\\spiData\\savedata.spi";
+		else							filePath =  System.getProperty("user.home") + "/spiData/savedata.spi";
 		
 		return filePath;
 	}
