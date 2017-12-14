@@ -26,77 +26,50 @@ public class SPIDatum implements Serializable
 	{
 		return x;
 	}
-	public void setX(int x)
-	{
-		this.x = x;
-	}
-
 	public int getY()
 	{
 		return y;
+	}
+	public Dimension getDim()
+	{
+		return dim;
+	}
+	public Color getBgColor()
+	{
+		return bgColor;
+	}
+	public SPIType getType()
+	{
+		return type;
+	}
+	public Object getSpiPane()
+	{
+		return spiPane;
+	}
+	
+	
+	public void setX(int x)
+	{
+		this.x = x;
 	}
 	public void setY(int y)
 	{
 		this.y = y;
 	}
-
-	public Dimension getDim()
-	{
-		return dim;
-	}
 	public void setDim(Dimension dim)
 	{
 		this.dim = dim;
-	}
-
-	public Color getBgColor()
-	{
-		return bgColor;
 	}
 	public void setBgColor(Color bgColor)
 	{
 		this.bgColor = bgColor;
 	}
-
-	public SPIType getType()
-	{
-		return type;
-	}
 	public void setType(SPIType type)
 	{
 		this.type = type;
 	}
-
-	public Object getSpiPane()
-	{
-		return spiPane;
-	}
 	public void setSpiPane(Object spiPane)
 	{
-/*		Copy spiPaneClone = new Copy(spiPane);
-		this.spiPane = spiPaneClone.clone();*/
 		this.spiPane = spiPane;
 	}
-
 }
-
-/*
-class Copy implements Cloneable
-{
-	Object obj; 
-	Copy(Object obj)
-	{ 
-		this.obj = obj; 
-	} 
-	
-	public Object clone()
-	{ 
-		Object obj = null; 
-		try { 
-			obj = super.clone(); 
-		}catch (Exception e) {}
-		
-		return obj; 
-	} 
-} 
-*/

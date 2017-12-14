@@ -8,8 +8,6 @@ import org.apache.log4j.Logger;
 public class SPIUtil implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-
-	private final transient Logger log = Logger.getLogger(this.getClass());
 	
 	public static Color YELLOW	= new Color(255, 255, 153);	//YELLOW
 	public static Color GREEN	= new Color(204, 255, 153);	//GREEN
